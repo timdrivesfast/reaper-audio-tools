@@ -1,0 +1,445 @@
+/* Reaper Audio Tools store styles. Tokens and component styles come from the two design systems:
+   "Reaper Audio Tools" (plugin UI) and "Reaper Audio Tools Web" (store). Edit them there and re-copy. */
+
+@font-face { font-family: "Rubik"; src: url("/fonts/Rubik-Regular.ttf") format("truetype"); font-weight: 400; font-style: normal; font-display: swap; }
+@font-face { font-family: "Rubik"; src: url("/fonts/Rubik-Bold.ttf") format("truetype"); font-weight: 600 700; font-style: normal; font-display: swap; }
+@font-face { font-family: "Share Tech Mono"; src: url("/fonts/ShareTechMono-Regular.ttf") format("truetype"); font-weight: 400; font-style: normal; font-display: swap; }
+
+/* ---- Plugin system tokens ---- */
+:root, [data-theme="light"] {
+  --neutral-host: #4A4B50;
+  --neutral-window: #E9EAEF;
+  --neutral-panel: #ECEDF1;
+  --neutral-inset: #E3E4EA;
+  --neutral-cell: #EFF0F4;
+  --neutral-shadow: #C9CBD4;
+  --neutral-shadow-tight: #C6C8D1;
+  --neutral-shadow-knob: #BFC1CA;
+  --neutral-highlight: #FFFFFF;
+  --neutral-track: #8E9098;
+  --ink-900: #18191C;
+  --ink-700: #4A4C54;
+  --ink-600: #6A6C74;
+  --ink-500: #8E9098;
+  --ink-400: #9A9CA4;
+  --lcd-black: #1A1B1E;
+  --lcd-bezel: #CFD1D8;
+  --lcd-yellow: #F5D547;
+  --lcd-row-selected: #26272B;
+  --lcd-row-hover: #2C2D31;
+  --knob-face-light: #E6E6E8;
+  --knob-face-dark: #C9C9CC;
+  --knob-cap: #C4C4C8;
+  --cap-white: #FFFFFF;
+  --cap-grey: #EDEDF0;
+  --cap-grip: #B6B8BE;
+  --param-cyan: #7FDDF5;
+  --param-indigo: #4B4FB8;
+  --param-orange: #FAC38F;
+  --param-orange-tick: #F5AC6A;
+  --param-red: #F26B6B;
+  --pale-yellow: #FBF8C9;
+  --pale-pink: #FFD3D3;
+  --pale-cyan: #C9F4FB;
+  --pale-lime: #DDF7C8;
+  --pale-lilac: #E4DCFB;
+  --sig-coral: #F26B6B;
+  --sig-coral-ticker: #FA7F7F;
+  --sig-coral-fill: #F4A3A3;
+  --sig-coral-wash: #F8DCDC;
+  --sig-coral-soft: #FFD3D3;
+  --sig-cyan: #3FC6E8;
+  --sig-cyan-ticker: #7FE6FA;
+  --sig-cyan-fill: #9FE4F5;
+  --sig-cyan-wash: #D9F4FB;
+  --sig-cyan-soft: #C9F4FB;
+  --sig-lime: #6CC94A;
+  --sig-lime-ticker: #A9EE85;
+  --sig-lime-fill: #B5E99A;
+  --sig-lime-wash: #E2F6D6;
+  --sig-lime-soft: #DDF7C8;
+  --sig-indigo: #4B4FB8;
+  --sig-indigo-ticker: #9EA2F0;
+  --sig-indigo-fill: #A9ACE8;
+  --sig-indigo-wash: #DFE0F6;
+  --sig-indigo-soft: #D6D8F7;
+  --sig-orange: #EE8F3C;
+  --sig-orange-ticker: #FAC38F;
+  --sig-orange-fill: #F8C79A;
+  --sig-orange-wash: #FBE6D2;
+  --sig-orange-soft: #FDDDC0;
+  --sig-teal: #2FB5A3;
+  --sig-teal-ticker: #7FE0CF;
+  --sig-teal-fill: #9EE3D7;
+  --sig-teal-wash: #D8F3EE;
+  --sig-teal-soft: #CDEFE8;
+  --sig-pink: #E8609E;
+  --sig-pink-ticker: #F7A3C9;
+  --sig-pink-fill: #F5B3D0;
+  --sig-pink-wash: #FBE1ED;
+  --sig-pink-soft: #FAD3E5;
+  --sig-lilac: #9478E8;
+  --sig-lilac-ticker: #B9A3F4;
+  --sig-lilac-fill: #C8B8F6;
+  --sig-lilac-wash: #ECE6FC;
+  --sig-lilac-soft: #E4DCFB;
+  --screen-navy: #141B2E;
+  --screen-dot: #3A4A68;
+  --screen-line: #2A3A54;
+  --screen-zero: rgba(255,255,255,0.16);
+  --screen-trace: #FF8080;
+  --screen-signal: #7FDDF5;
+  --screen-hot: #FAC38F;
+  --screen-clip: #FF5A5A;
+  --transport-play: #4CAF72;
+  --juice-glow: #FF3B3B;
+  --juice-label-on: #BF1F1F;
+  --juice-ring: #B9A3F4;
+  --surface-host: var(--neutral-host);
+  --surface-window: var(--neutral-window);
+  --surface-panel: var(--neutral-panel);
+  --surface-inset: var(--neutral-inset);
+  --surface-cell: var(--neutral-cell);
+  --surface-track: var(--neutral-track);
+  --shade-dark: var(--neutral-shadow);
+  --shade-dark-tight: var(--neutral-shadow-tight);
+  --shade-knob: var(--neutral-shadow-knob);
+  --shade-light: var(--neutral-highlight);
+  --text-primary: var(--ink-900);
+  --text-value: var(--ink-700);
+  --text-secondary: var(--ink-600);
+  --text-inactive: var(--ink-500);
+  --text-muted: var(--ink-400);
+  --knob-face-1: var(--knob-face-light);
+  --knob-face-2: var(--knob-face-dark);
+  --knob-cap-fill: var(--knob-cap);
+  --lcd-bg: var(--lcd-black);
+  --lcd-border: var(--lcd-bezel);
+  --lcd-text: var(--lcd-yellow);
+  --tint-base: var(--neutral-panel);
+  --accent: var(--sig-coral);
+  --accent-ticker: var(--sig-coral-ticker);
+  --accent-fill: var(--sig-coral-fill);
+  --accent-wash: var(--sig-coral-wash);
+  --accent-soft: var(--sig-coral-soft);
+  --shadow-raised: 6px 6px 14px #C9CBD4, -6px -6px 14px #FFFFFF;
+  --shadow-raised-sm: 3px 3px 6px #C9CBD4, -3px -3px 6px #FFFFFF;
+  --shadow-raised-md: 3px 3px 7px #C9CBD4, -3px -3px 7px #FFFFFF;
+  --shadow-knob: 4px 5px 10px #BFC1CA, -3px -3px 8px #FFFFFF;
+  --shadow-thumb: 2px 3px 6px #C6C8D1, -2px -2px 5px #FFFFFF;
+  --shadow-cell: 1px 1px 2px #C9CBD4, -1px -1px 2px #FFFFFF;
+  --shadow-inset: inset 4px 4px 9px #C6C8D1, inset -4px -4px 9px #FFFFFF;
+  --shadow-inset-sm: inset 3px 3px 6px #C6C8D1, inset -3px -3px 6px #FFFFFF;
+  --shadow-inset-md: inset 3px 3px 7px #C6C8D1, inset -3px -3px 7px #FFFFFF;
+  --shadow-lcd: inset 0 2px 6px rgba(0,0,0,0.6);
+  --shadow-track: inset 1px 1px 3px rgba(0,0,0,0.35);
+  --shadow-cap: 0 3px 6px rgba(0,0,0,0.22);
+  --shadow-knob-face: inset 0 -3px 5px rgba(0,0,0,0.12);
+  --shadow-knob-cap: inset 1px 1px 3px rgba(0,0,0,0.18);
+  --shadow-menu: 0 12px 26px rgba(0,0,0,0.28);
+  --shadow-window: 0 30px 60px rgba(0,0,0,0.35);
+}
+[data-theme="dark"] {
+  --cap-white: #F4F4F6;
+  --cap-grey: #C9CAD0;
+  --cap-grip: #8E9098;
+  --pale-yellow: #5A5530;
+  --pale-pink: #5C3438;
+  --pale-cyan: #22505A;
+  --pale-lime: #34502A;
+  --pale-lilac: #3E3760;
+  --surface-host: #0E0F12;
+  --surface-window: #1E2026;
+  --surface-panel: #23252C;
+  --surface-inset: #1A1C21;
+  --surface-cell: #2B2E36;
+  --surface-track: #0F1014;
+  --shade-dark: #15161A;
+  --shade-dark-tight: #16171B;
+  --shade-knob: #131418;
+  --shade-light: #2A2D35;
+  --text-primary: #ECEDF1;
+  --text-value: #B9BCC6;
+  --text-secondary: #9A9DA8;
+  --text-inactive: #6E717C;
+  --text-muted: #5C5F69;
+  --knob-face-1: #4A4D56;
+  --knob-face-2: #2C2E35;
+  --knob-cap-fill: #3A3D45;
+  --lcd-bg: #0C0D0F;
+  --lcd-border: #3A3D46;
+  --lcd-text: #F5D547;
+  --tint-base: #23252C;
+  --shadow-raised: 6px 6px 14px #15161A, -6px -6px 14px #2A2D35;
+  --shadow-raised-sm: 3px 3px 6px #15161A, -3px -3px 6px #2A2D35;
+  --shadow-raised-md: 3px 3px 7px #15161A, -3px -3px 7px #2A2D35;
+  --shadow-knob: 4px 5px 10px #131418, -3px -3px 8px #2A2D35;
+  --shadow-thumb: 2px 3px 6px #16171B, -2px -2px 5px #2A2D35;
+  --shadow-cell: 1px 1px 2px #15161A, -1px -1px 2px #2A2D35;
+  --shadow-inset: inset 4px 4px 9px #16171B, inset -4px -4px 9px #2A2D35;
+  --shadow-inset-sm: inset 3px 3px 6px #16171B, inset -3px -3px 6px #2A2D35;
+  --shadow-inset-md: inset 3px 3px 7px #16171B, inset -3px -3px 7px #2A2D35;
+}
+:root {
+  --space-window-pad: 18px;
+  --space-row-gap: 10px;
+  --space-panel-pad: 14px;
+  --space-card-gap: 9px;
+  --space-inset-pad: 6px;
+  --space-grid-pad-y: 12px;
+  --space-grid-pad-x: 10px;
+  --space-pill-gap: 10px;
+  --space-label-gap: 8px;
+  --layout-pad: 28px;
+  --layout-gap: 24px;
+  --layout-cell-gap: 18px;
+  --knobcell-w-md: 82px;
+  --knobcell-w-sm: 70px;
+  --size-ticker: 20px;
+  --size-pill-h: 30px;
+  --size-switch-h: 28px;
+  --size-switch-w: 72px;
+  --size-round-btn: 26px;
+  --size-transport: 40px;
+  --size-knob-lg: 66px;
+  --size-knob-md: 52px;
+  --size-knob-sm: 34px;
+  --size-lcd-h: 22px;
+  --size-header-h: 30px;
+  --radius-window: 6px;
+  --radius-panel: 10px;
+  --radius-inset: 8px;
+  --radius-pill: 15px;
+  --radius-cell: 5px;
+  --radius-lcd: 3px;
+  --radius-cap: 7px;
+  --font-ui: "Rubik", system-ui, sans-serif;
+  --font-lcd: "Share Tech Mono", ui-monospace, monospace;
+}
+
+/* ---- Plugin system components ---- */
+/* Reaper Audio Tools: what tokens.json cannot hold. Colours, type, spacing, radii and shadows come from tokens.css. */
+
+/* Motion: quiet and mechanical, no bounces. */
+:root {
+  --dur-fast: 120ms;
+  --dur-base: 180ms;       /* switch thumb, contextual show/hide */
+  --ease-standard: cubic-bezier(.3,.7,.4,1);
+  --ticker-speed: 22;      /* px per second, marquee */
+  --knob-drag-px: 150;     /* vertical px for full knob sweep */
+  --knob-sweep-deg: 270;   /* -135..+135 */
+}
+
+/* Plugin signature scopes. Every plugin window sets data-signature; EasyDuck coral is the default. */
+[data-signature="coral"]  { --accent: var(--sig-coral);  --accent-ticker: var(--sig-coral-ticker);  --accent-fill: var(--sig-coral-fill);  --accent-wash: var(--sig-coral-wash);  --accent-soft: var(--sig-coral-soft); }
+[data-signature="cyan"]   { --accent: var(--sig-cyan);   --accent-ticker: var(--sig-cyan-ticker);   --accent-fill: var(--sig-cyan-fill);   --accent-wash: var(--sig-cyan-wash);   --accent-soft: var(--sig-cyan-soft); }
+[data-signature="lime"]   { --accent: var(--sig-lime);   --accent-ticker: var(--sig-lime-ticker);   --accent-fill: var(--sig-lime-fill);   --accent-wash: var(--sig-lime-wash);   --accent-soft: var(--sig-lime-soft); }
+[data-signature="indigo"] { --accent: var(--sig-indigo); --accent-ticker: var(--sig-indigo-ticker); --accent-fill: var(--sig-indigo-fill); --accent-wash: var(--sig-indigo-wash); --accent-soft: var(--sig-indigo-soft); }
+[data-signature="orange"] { --accent: var(--sig-orange); --accent-ticker: var(--sig-orange-ticker); --accent-fill: var(--sig-orange-fill); --accent-wash: var(--sig-orange-wash); --accent-soft: var(--sig-orange-soft); }
+[data-signature="teal"]   { --accent: var(--sig-teal);   --accent-ticker: var(--sig-teal-ticker);   --accent-fill: var(--sig-teal-fill);   --accent-wash: var(--sig-teal-wash);   --accent-soft: var(--sig-teal-soft); }
+[data-signature="pink"]   { --accent: var(--sig-pink);   --accent-ticker: var(--sig-pink-ticker);   --accent-fill: var(--sig-pink-fill);   --accent-wash: var(--sig-pink-wash);   --accent-soft: var(--sig-pink-soft); }
+[data-signature="lilac"]  { --accent: var(--sig-lilac);  --accent-ticker: var(--sig-lilac-ticker);  --accent-fill: var(--sig-lilac-fill);  --accent-wash: var(--sig-lilac-wash);  --accent-soft: var(--sig-lilac-soft); }
+
+/* Dark: accent tints are mixed into the dark panel, so text on them stays legible. */
+[data-theme="dark"][data-signature], [data-theme="dark"] [data-signature] {
+  --accent-wash: color-mix(in srgb, var(--accent) 24%, #23252C);
+  --accent-soft: color-mix(in srgb, var(--accent) 34%, #23252C);
+}
+
+
+/* ---- Web system tokens ---- */
+:root, [data-theme="light"] {
+  --page: #E9EAEF;
+  --surface: #ECEDF1;
+  --surface-sunk: #E3E4EA;
+  --ink: #18191C;
+  --ink-soft: #4A4C54;
+  --ink-muted: #5C5E66;
+  --coral: #F26B6B;
+  --coral-ticker: #FA7F7F;
+  --coral-wash: #F8DCDC;
+  --cyan: #3FC6E8;
+  --cyan-ticker: #7FE6FA;
+  --cyan-wash: #D9F4FB;
+  --lime: #6CC94A;
+  --lime-ticker: #A9EE85;
+  --lime-wash: #E2F6D6;
+  --orange: #EE8F3C;
+  --orange-ticker: #FAC38F;
+  --orange-wash: #FBE6D2;
+  --lilac: #9478E8;
+  --lilac-ticker: #B9A3F4;
+  --lilac-wash: #ECE6FC;
+  --indigo: #4B4FB8;
+  --indigo-ticker: #9EA2F0;
+  --indigo-wash: #DFE0F6;
+  --pink: #E8609E;
+  --pink-ticker: #F7A3C9;
+  --pink-wash: #FBE1ED;
+  --teal: #2FB5A3;
+  --teal-ticker: #7FE0CF;
+  --teal-wash: #D8F3EE;
+  --pale-yellow: #FBF8C9;
+  --pale-pink: #FFD3D3;
+  --pale-cyan: #C9F4FB;
+  --pale-lime: #DDF7C8;
+  --pale-lilac: #E4DCFB;
+  --lcd-black: #1A1B1E;
+  --lcd-bezel: #CFD1D8;
+  --lcd-yellow: #F5D547;
+  --screen-navy: #141B2E;
+  --screen-dot: #3A4A68;
+  --screen-trace: #FF8080;
+  --screen-signal: #7FDDF5;
+  --juice-red: #BF1F1F;
+  --juice-glow: #FF3B3B;
+  --play: #4CAF72;
+  --accent: var(--coral);
+  --accent-ticker: var(--coral-ticker);
+  --accent-wash: var(--coral-wash);
+  --on-color: #18191C;
+  --on-strong: #FFFFFF;
+  --fill-strong: #18191C;
+  --on-fill-strong: #FFFFFF;
+  --focus: #4B4FB8;
+  --shadow-raised: 6px 6px 14px #C9CBD4, -6px -6px 14px #FFFFFF;
+  --shadow-card: 10px 10px 24px #C9CBD4, -10px -10px 24px #FFFFFF;
+  --shadow-lift: 14px 14px 32px #C9CBD4, -12px -12px 28px #FFFFFF;
+  --shadow-inset: inset 4px 4px 9px #C6C8D1, inset -4px -4px 9px #FFFFFF;
+  --shadow-lcd: inset 0 2px 6px rgba(0,0,0,0.6);
+}
+[data-theme="dark"] {
+  --page: #1E2026;
+  --surface: #23252C;
+  --surface-sunk: #1A1C21;
+  --ink: #ECEDF1;
+  --ink-soft: #B9BCC6;
+  --ink-muted: #A9ACB6;
+  --coral-wash: #483237;
+  --cyan-wash: #28424E;
+  --lime-wash: #304331;
+  --orange-wash: #48382F;
+  --lilac-wash: #37344E;
+  --indigo-wash: #2A2D45;
+  --pink-wash: #463041;
+  --teal-wash: #253F41;
+  --pale-yellow: #5A5530;
+  --pale-pink: #5C3438;
+  --pale-cyan: #22505A;
+  --pale-lime: #34502A;
+  --pale-lilac: #3E3760;
+  --lcd-black: #0C0D0F;
+  --lcd-bezel: #3A3D46;
+  --fill-strong: #ECEDF1;
+  --on-fill-strong: #18191C;
+  --focus: #B9A3F4;
+  --shadow-raised: 6px 6px 14px #15161A, -6px -6px 14px #2A2D35;
+  --shadow-card: 10px 10px 24px #15161A, -10px -10px 24px #2A2D35;
+  --shadow-lift: 14px 14px 32px #15161A, -12px -12px 28px #2A2D35;
+  --shadow-inset: inset 4px 4px 9px #16171B, inset -4px -4px 9px #2A2D35;
+}
+:root {
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+  --space-8: 64px;
+  --space-9: 96px;
+  --space-10: 128px;
+  --container: 1200px;
+  --gutter: 24px;
+  --ticker-h: 28px;
+  --button-h: 48px;
+  --radius-lcd: 3px;
+  --radius-chip: 10px;
+  --radius-card: 20px;
+  --radius-block: 28px;
+  --radius-pill: 999px;
+  --font-ui: "Rubik", system-ui, sans-serif;
+  --font-lcd: "Share Tech Mono", ui-monospace, monospace;
+}
+
+/* ---- Web system components ---- */
+/* Reaper Audio Tools Web: component styles. Every colour, size and shadow comes from tokens.css. */
+:root {
+  --ratw-dur: 180ms;
+  --ratw-ease: cubic-bezier(.3,.7,.4,1);
+}
+/* Signature scopes: set data-signature on a page or section to recolour accent, ticker and wash. */
+[data-signature="coral"]  { --accent: var(--coral);  --accent-ticker: var(--coral-ticker);  --accent-wash: var(--coral-wash); }
+[data-signature="cyan"]   { --accent: var(--cyan);   --accent-ticker: var(--cyan-ticker);   --accent-wash: var(--cyan-wash); }
+[data-signature="lime"]   { --accent: var(--lime);   --accent-ticker: var(--lime-ticker);   --accent-wash: var(--lime-wash); }
+[data-signature="orange"] { --accent: var(--orange); --accent-ticker: var(--orange-ticker); --accent-wash: var(--orange-wash); }
+[data-signature="lilac"]  { --accent: var(--lilac);  --accent-ticker: var(--lilac-ticker);  --accent-wash: var(--lilac-wash); }
+[data-signature="indigo"] { --accent: var(--indigo); --accent-ticker: var(--indigo-ticker); --accent-wash: var(--indigo-wash); }
+[data-signature="pink"]   { --accent: var(--pink);   --accent-ticker: var(--pink-ticker);   --accent-wash: var(--pink-wash); }
+[data-signature="teal"]   { --accent: var(--teal);   --accent-ticker: var(--teal-ticker);   --accent-wash: var(--teal-wash); }
+
+.ratw { font-family: var(--font-ui); color: var(--ink); box-sizing: border-box; }
+.ratw *, .ratw *::before, .ratw *::after { box-sizing: border-box; }
+.ratw :focus-visible { outline: 2px solid var(--focus); outline-offset: 3px; }
+
+/* Ticker */
+.ratw-ticker { height: var(--ticker-h); overflow: hidden; display: flex; align-items: center; white-space: nowrap; font: 700 12px/1 var(--font-ui); letter-spacing: 1.5px; text-transform: uppercase; }
+.ratw-ticker__track { display: inline-flex; flex: none; animation: ratw-tick var(--ratw-tick-dur, 40s) linear infinite; }
+.ratw-ticker__track span { padding-right: 1.2em; }
+@keyframes ratw-tick { to { transform: translateX(-50%); } }
+
+/* Buttons */
+.ratw-btn { display: inline-flex; align-items: center; justify-content: center; gap: var(--space-2); height: var(--button-h); padding: 0 26px; border: 0; border-radius: var(--radius-pill); font: 600 13px/1 var(--font-ui); letter-spacing: .4px; text-transform: uppercase; text-decoration: none; cursor: pointer; white-space: nowrap; transition: box-shadow var(--ratw-dur) var(--ratw-ease), filter var(--ratw-dur) var(--ratw-ease), transform 80ms; }
+.ratw-btn--lg { height: 56px; padding: 0 32px; font-size: 14px; }
+.ratw-btn--strong { background: var(--fill-strong); color: var(--on-fill-strong); box-shadow: var(--shadow-raised); }
+.ratw-btn--color { background: var(--accent); color: var(--ratw-on, var(--on-color)); box-shadow: var(--shadow-raised); }
+.ratw-btn--soft { background: var(--surface); color: var(--ink); box-shadow: var(--shadow-raised); }
+.ratw-btn--ghost { background: transparent; color: var(--ink); padding: 0 14px; }
+.ratw-btn:hover:not(:disabled) { filter: brightness(.97); }
+.ratw-btn--ghost:hover { background: var(--surface-sunk); filter: none; }
+.ratw-btn:active:not(:disabled) { box-shadow: var(--shadow-inset); transform: translateY(1px); }
+.ratw-btn:disabled { opacity: .45; cursor: default; }
+
+/* Badges */
+.ratw-badge { display: inline-flex; align-items: center; height: 26px; padding: 0 10px; border-radius: var(--radius-chip); font: 700 11px/1 var(--font-ui); letter-spacing: 1px; text-transform: uppercase; color: var(--ink); box-shadow: var(--shadow-inset); }
+
+/* LCD */
+.ratw-lcd { display: inline-flex; align-items: baseline; gap: .5em; background: var(--lcd-black); color: var(--lcd-yellow); border: 3px solid var(--lcd-bezel); border-radius: var(--radius-lcd); box-shadow: var(--shadow-lcd); font-family: var(--font-lcd); white-space: nowrap; font-variant-numeric: tabular-nums; }
+.ratw-lcd--spec { font-size: 14px; padding: 3px 9px; }
+.ratw-lcd--price { font-size: 24px; letter-spacing: .5px; padding: 5px 12px; }
+.ratw-lcd--sm.ratw-lcd--price { font-size: 20px; padding: 4px 10px; }
+.ratw-was { font: 400 15px/1 var(--font-lcd); color: var(--ink-muted); text-decoration: line-through; text-decoration-color: var(--juice-red); text-decoration-thickness: 2px; }
+
+/* Cards */
+.ratw-card { background: var(--surface); border-radius: var(--radius-card); box-shadow: var(--shadow-card); transition: box-shadow var(--ratw-dur) var(--ratw-ease); }
+.ratw-card--hover:hover { box-shadow: var(--shadow-lift); }
+.ratw-product { background: var(--accent-wash); overflow: hidden; display: flex; flex-direction: column; min-width: 0; }
+.ratw-product__media { aspect-ratio: 16 / 10; max-width: 100%; background: var(--screen-navy); display: block; width: 100%; object-fit: cover; object-position: top left; }
+.ratw-product__body { padding: var(--space-5); display: flex; flex-direction: column; gap: var(--space-4); flex: 1; }
+.ratw-product__foot { margin-top: auto; display: flex; align-items: center; justify-content: space-between; gap: var(--space-3); flex-wrap: wrap; }
+
+/* Bands */
+.ratw-band { width: 100%; }
+.ratw-band__inner { max-width: calc(var(--container) + 2 * var(--gutter)); margin: 0 auto; padding-left: max(16px, var(--gutter)); padding-right: max(16px, var(--gutter)); }
+
+/* Inputs */
+.ratw-input { height: var(--button-h); min-width: 0; flex: 1; border: 0; border-radius: var(--radius-pill); padding: 0 22px; background: var(--surface-sunk); box-shadow: var(--shadow-inset); color: var(--ink); font: 400 16px/1 var(--font-ui); }
+.ratw-input::placeholder { color: var(--ink-muted); }
+
+/* FAQ */
+.ratw-faq summary { list-style: none; cursor: pointer; display: flex; justify-content: space-between; align-items: center; gap: var(--space-4); padding: var(--space-5); font: 600 20px/1.3 var(--font-ui); letter-spacing: -.3px; }
+.ratw-faq summary::-webkit-details-marker { display: none; }
+.ratw-faq__sign { flex: none; width: 32px; height: 32px; border-radius: 50%; background: var(--surface); box-shadow: var(--shadow-raised); display: grid; place-items: center; font: 400 18px/1 var(--font-lcd); transition: transform var(--ratw-dur) var(--ratw-ease); }
+.ratw-faq[open] .ratw-faq__sign { transform: rotate(45deg); box-shadow: var(--shadow-inset); }
+
+/* Demo screen */
+.ratw-screen { position: relative; background-color: var(--screen-navy); background-image: radial-gradient(var(--screen-dot) 1px, transparent 1.2px); background-size: 9px 9px; border-radius: var(--radius-card); overflow: hidden; }
+.ratw-toggle { display: inline-flex; padding: 4px; border-radius: var(--radius-pill); background: var(--surface-sunk); box-shadow: var(--shadow-inset); }
+.ratw-toggle button { height: 34px; padding: 0 16px; border: 0; border-radius: var(--radius-pill); background: transparent; color: var(--ink-muted); font: 600 12px/1 var(--font-ui); letter-spacing: .4px; cursor: pointer; transition: background var(--ratw-dur) var(--ratw-ease), box-shadow var(--ratw-dur) var(--ratw-ease), color var(--ratw-dur); }
+.ratw-toggle button[aria-pressed="true"] { background: var(--accent); color: var(--ratw-on, var(--on-color)); box-shadow: var(--shadow-raised); }
+
+@media (prefers-reduced-motion: reduce) {
+  .ratw-ticker__track { animation: none; }
+  .ratw-btn, .ratw-card, .ratw-faq__sign, .ratw-toggle button { transition: none; }
+}
+
