@@ -75,12 +75,11 @@ export function SectionHeading({ eyebrow, title, lede, align = 'left', color, st
   );
 }
 
-/** Catalogue card for one plugin, grounded in its signature wash with its ticker on top. */
+/** Catalogue card for one plugin, grounded in its signature wash. No ticker: the ticker runs once per page, along the top edge. */
 export function ProductCard({ name, tone = 'coral', tagline, image, imageAlt = '', formats = 'VST3 · AU · AUv3', price, was, badge, status = 'available', onBuy, href, style }) {
   const soon = status === 'soon';
   return (
     <article className="ratw ratw-card ratw-card--hover ratw-product" {...toneAttrs(tone, style)}>
-      <Ticker items={[name.toUpperCase(), 'REAPER AUDIO TOOLS']} tone={tone} speed={50} />
       {image ? <img className="ratw-product__media" src={image} alt={imageAlt} /> : <div className="ratw-product__media ratw-screen" style={{ borderRadius: 0 }} aria-hidden="true"></div>}
       <div className="ratw-product__body">
         <div style={{ display: 'flex', alignItems: 'center', gap: 10, flexWrap: 'wrap' }}>
@@ -307,7 +306,6 @@ export function SiteFooter({ columns = [], note = 'Reaper Audio Tools.', tone = 
         ))}
       </div>
       {fine && <div className="ratw-band__inner" style={{ paddingBottom: 'var(--space-6)', fontSize: 13, color: 'var(--on-strong)', opacity: 0.75 }}>{fine}</div>}
-      <Ticker items={['REAPER AUDIO TOOLS', 'MADE FOR PRODUCERS']} tone={tone} speed={60} />
     </footer>
   );
 }

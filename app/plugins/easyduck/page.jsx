@@ -33,7 +33,7 @@ export default function EasyDuckPage() {
           <div className="hero__copy">
             <a className="back" href="/#plugins">← INDEX</a>
             <div className="eyebrow"><span className="dot" aria-hidden="true"></span>01 / {duck.kind}</div>
-            <h1 style={{ margin: 0 }}><img className="wordmark" src="/images/easyduck-wordmark.png" width="928" height="209" alt="EasyDuck" /></h1>
+            <h1 className="display-xl" style={{ fontSize: 'clamp(48px, 7vw, 80px)' }}>EasyDuck</h1>
             <p className="lede">Sidechain ducking without a kick on another track. Draw the curve. Pick the rhythm. Done.</p>
             <div className="row" style={{ gap: 12 }}>
               <PriceTag price={duck.priceLabel} />
@@ -53,7 +53,10 @@ export default function EasyDuckPage() {
         <section id="interface" className="wrap section stack" style={{ scrollMarginTop: 24 }}>
           <SectionHeading eyebrow="Live" title="Interface" lede="The real interface, running in your browser. Drag anything." />
           <div className="scroller">
-            <div className="plugin-frame"><EasyDuckDemo /></div>
+            <div className="plugin-frame-wrap has-sticker">
+              <img className="sticker sticker--out" src="/images/sticker-angry.webp" width="640" height="639" alt="" />
+              <div className="plugin-frame"><EasyDuckDemo /></div>
+            </div>
           </div>
           <p className="fine" style={{ textAlign: 'center' }}>Visual only. Audio below.</p>
         </section>
@@ -78,7 +81,7 @@ export default function EasyDuckPage() {
         </section>
 
         <section className="wrap section row" style={{ gap: 24, alignItems: 'flex-start' }}>
-          <Panel title="Specs" style={{ flex: '1 1 420px' }}>
+          <Panel title="Specs" style={{ flex: '1 1 420px', maxWidth: 640 }}>
             <dl className="specs" style={{ margin: 0 }}>
               <dt>FORMATS</dt><dd><Lcd>{duck.formats}</Lcd></dd>
               <dt>SYSTEMS</dt><dd><Lcd>[macOS + Windows versions]</Lcd></dd>
@@ -86,22 +89,16 @@ export default function EasyDuckPage() {
               <dt>LICENSE</dt><dd><Lcd>[N] computers</Lcd></dd>
             </dl>
           </Panel>
-          <Panel title="Juice" tone="pink" tinted style={{ flex: '1 1 420px' }}>
-            <div className="row" style={{ gap: 20, flexWrap: 'nowrap' }}>
-              <img src="/images/juice-on.png" width="72" height="72" alt="Juice on" style={{ borderRadius: '50%', flex: 'none', boxShadow: '0 0 24px rgba(255, 59, 59, 0.5)' }} />
-              <p style={{ margin: 0, fontSize: 17, lineHeight: 1.55, color: 'var(--ink-soft)' }}>Tape. Saturation. Hiss. Wobble. The face bottom left. Click for dirt, click again for clean.</p>
-            </div>
-          </Panel>
         </section>
 
         <Faq items={easyDuckFaq} />
 
-        <ColorBand tone="cyan" ticker={['02 DRUMCRUSHER', 'SOON']} padding="var(--space-8)">
+        <ColorBand tone="cyan" padding="var(--space-8)">
           <div className="row" style={{ justifyContent: 'space-between', gap: 32 }}>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 10, minWidth: 0, flex: '1 1 380px' }}>
               <div className="eyebrow">02 / Soon</div>
               <h2 style={{ margin: 0, font: '700 40px/1.05 var(--font-ui)', letterSpacing: '-1px' }}>DrumCrusher</h2>
-              <p style={{ margin: 0, fontSize: 18, lineHeight: 1.5, color: 'var(--ink-soft)' }}>Drum bus processor. EQ, filters, faders and Juice in one window.</p>
+              <p style={{ margin: 0, fontSize: 18, lineHeight: 1.5, color: 'var(--ink-soft)' }}>Drum bus processor. EQ, filters and faders in one window.</p>
             </div>
             <Button variant="color" tone="cyan" size="lg" href="/#drumcrusher">Notify me</Button>
           </div>

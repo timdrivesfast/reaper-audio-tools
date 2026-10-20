@@ -1,7 +1,7 @@
 import { Header, Footer } from '../components/SiteChrome';
 import Faq from '../components/Faq';
 import WaitlistForm from '../components/WaitlistForm';
-import { Button, Lcd, SectionHeading, ProductCard, Panel, ColorBand } from '../components/web';
+import { Button, Lcd, SectionHeading, ProductCard, ColorBand } from '../components/web';
 import { products } from '../lib/site';
 import { homeFaq } from '../lib/faq';
 
@@ -24,7 +24,8 @@ export default function Home() {
             </div>
           </div>
           <a className="hero__media" href="/plugins/easyduck">
-            <img src={duck.image} width="1600" height="761" alt="The EasyDuck plugin: Trigger envelope, four knobs, a 16-step pattern and the Juice toggle" />
+            <img className="sticker sticker--tr" src="/images/sticker-calm.webp" width="624" height="640" alt="" />
+            <img src={duck.image} width="1600" height="761" alt="The EasyDuck plugin: Trigger envelope, four knobs, and a 16-step pattern" />
             <div className="row" style={{ justifyContent: 'space-between', padding: '16px 8px 4px' }}>
               <span style={{ font: '600 17px/1.2 var(--font-ui)' }}>EasyDuck <span style={{ color: 'var(--ink-muted)', fontWeight: 400 }}>· {duck.kind}</span></span>
               <span className="row" style={{ gap: 10 }}>
@@ -43,31 +44,19 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="wrap section">
-          <Panel tone="pink" tinted style={{ padding: 48 }}>
-            <div className="juice">
-              <div className="juice__faces">
-                <img className="juice__off" src="/images/juice-off.png" width="120" height="120" alt="Juice off: the coral face" />
-                <img className="juice__on" src="/images/juice-on.png" width="150" height="150" alt="Juice on: the angry red face" />
-              </div>
-              <div style={{ flex: '1 1 360px', minWidth: 0, display: 'flex', flexDirection: 'column', gap: 14 }}>
-                <div className="eyebrow">Standard in every plugin</div>
-                <h2 style={{ margin: 0, font: '700 40px/1.05 var(--font-ui)', letterSpacing: '-1px' }}>Juice.</h2>
-                <p style={{ margin: 0, fontSize: 18, lineHeight: 1.55, color: 'var(--ink-soft)', maxWidth: '52ch' }}>Tape. Saturation. Hiss. Wobble. The face in the corner of every plugin. Click for dirt, click again for clean.</p>
-              </div>
-            </div>
-          </Panel>
-        </section>
 
         <div id="drumcrusher" style={{ scrollMarginTop: 24 }}>
-          <ColorBand tone="cyan" variant="full" ticker={['02 DRUMCRUSHER', 'SOON']}>
+          <ColorBand tone="cyan" variant="full">
             <div className="band-split">
               <div>
                 <div className="eyebrow" style={{ color: 'var(--on-color)' }}>02 / Soon</div>
                 <h2 className="h2-band" style={{ color: 'var(--on-color)' }}>DrumCrusher</h2>
-                <p style={{ margin: 0, fontSize: 20, lineHeight: 1.5, color: 'var(--on-color)', maxWidth: '40ch' }}>Drum bus processor. EQ, filters, faders and Juice in one window. Join the list to hear it first.</p>
+                <p style={{ margin: 0, fontSize: 20, lineHeight: 1.5, color: 'var(--on-color)', maxWidth: '40ch' }}>Drum bus processor. EQ, filters and faders in one window. Join the list to hear it first.</p>
               </div>
-              <WaitlistForm list="drumcrusher" title="Waitlist" lede="One email when it ships." button="Join" />
+              <div className="has-sticker">
+                <img className="sticker sticker--tr" src="/images/sticker-angry.webp" width="640" height="639" alt="" />
+                <WaitlistForm list="drumcrusher" title="Waitlist" lede="One email when it ships." button="Join" />
+              </div>
             </div>
           </ColorBand>
         </div>
