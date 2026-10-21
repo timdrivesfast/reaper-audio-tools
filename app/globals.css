@@ -59,7 +59,7 @@ a { color: inherit; }
 
 /* Ticker tape: slapped diagonally across a section's background */
 .tape-host { position: relative; isolation: isolate; }
-.tape-host > :not(.tape) { position: relative; z-index: 1; }
+.tape-host > :not(.tape), .tape ~ * { position: relative; z-index: 1; }
 .tape { position: absolute; left: 50%; width: 170vw; margin-left: -85vw; z-index: 0; pointer-events: none; box-shadow: 0 6px 14px rgba(24,25,28,.18); }
 .tape .ratw-ticker { height: 46px; font-size: 15px; letter-spacing: 2px; }
 
