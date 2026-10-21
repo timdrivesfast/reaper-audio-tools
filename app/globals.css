@@ -26,6 +26,7 @@ a { color: inherit; }
 .cards .ratw-product__media { flex: 1; display: flex; align-items: center; }
 .cards .ratw-product__body { flex: none; }
 .tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr)); gap: var(--space-5); }
+.tiles--3 { grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)); }
 .split { display: flex; flex-wrap: wrap; gap: var(--space-7); align-items: flex-start; }
 .split > :first-child { flex: 1 1 300px; min-width: 0; }
 .split > :last-child { flex: 2 1 520px; min-width: 0; display: grid; gap: 16px; }

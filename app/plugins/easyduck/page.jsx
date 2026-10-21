@@ -11,7 +11,7 @@ const duck = products.easyduck;
 
 export const metadata = {
   title: 'EasyDuck, sidechain emulator plugin',
-  description: 'EasyDuck is a sidechain emulator plugin for VST3, AU and AUv3. It ducks a track in a pattern synced to your DAW, with no sidechain routing.',
+  description: "EasyDuck is a sidechain emulation plugin for VST3, AU and AUv3. It needs no input signal, so there's no routing. Put it on any track to duck or pump it.",
   openGraph: { images: [duck.image] },
 };
 
@@ -22,7 +22,7 @@ export default function EasyDuckPage() {
     name: 'EasyDuck',
     applicationCategory: 'MultimediaApplication',
     operatingSystem: 'macOS, Windows, iPadOS',
-    description: 'Sidechain emulator plugin. Ducks a track in a pattern synced to your DAW, with no sidechain routing. VST3, AU and AUv3.',
+    description: "EasyDuck is a sidechain emulation plugin for VST3, AU and AUv3. It needs no input signal, so there's no routing. Put it on any track to duck or pump it.",
     image: `${site.url}${duck.image}`,
     publisher: { '@type': 'Organization', name: site.name },
   };
@@ -35,7 +35,7 @@ export default function EasyDuckPage() {
             <a className="back" href="/#plugins">← ALL PLUGINS</a>
             <div className="eyebrow"><span className="dot" aria-hidden="true"></span>01 / {duck.kind}</div>
             <h1 className="display-xl" style={{ fontSize: 'clamp(48px, 7vw, 80px)' }}>EasyDuck</h1>
-            <p className="lede">Ducks a track's volume in a pattern synced to your DAW. No kick or sidechain routing needed.</p>
+            <p className="lede">A sidechain emulation plugin that doesn't need an input signal. No routing or busses. Put it on any track to duck or pump that track.</p>
             <div className="row" style={{ gap: 14, alignItems: 'baseline' }}>
               <PriceTag price={duck.priceLabel} />
               <Lcd small>{duck.formats}</Lcd>
@@ -79,11 +79,13 @@ export default function EasyDuckPage() {
 
         <section className="wrap section stack">
           <SectionHeading title="Controls" />
-          <div className="tiles">
-            <FeatureTile tone="cyan" stat="4 KNOBS" title="Envelope">Attack 1 to 150 ms, Decay 20 to 600 ms, Length 0 to 300 ms, Depth 0 to 100%. Turn the knobs or drag the curve.</FeatureTile>
-            <FeatureTile tone="orange" stat="1/4 – 1/16" title="Pattern">1/4, 1/8 or 1/16 notes. Triplets, swing, 1 or 2 bars, velocity per step.</FeatureTile>
+          <div className="tiles tiles--3">
+            <FeatureTile tone="cyan" stat="4 KNOBS" title="Trigger envelope">Shape the duck like a kick. A hard attack and deep cut for boom bap, or a softer pump with a longer decay for house. Attack 1 to 150 ms, Decay 20 to 600 ms, Length 0 to 300 ms, Depth 0 to 100%.</FeatureTile>
+            <FeatureTile tone="orange" stat="UP TO 1/16" title="Pattern">Velocity per step, swing and triplets. 1/4, 1/8 or 1/16 notes across 1 or 2 bars.</FeatureTile>
+            <FeatureTile tone="coral" stat="MANUAL" title="Manual trigger">A button that fires one duck. Automate it on your DAW's timeline to place ducks anywhere, or press it live while you adjust the envelope.</FeatureTile>
+            <FeatureTile tone="lime" stat="HOST CLOCK" title="Sync">Follows your DAW's tempo and time signature. Set them by hand when running standalone.</FeatureTile>
+            <FeatureTile tone="lilac" stat="ANALOG" title="Juice">Adds a little analog bump and noise to push the pump and add grit.</FeatureTile>
             <FeatureTile tone="indigo" stat="6 PRESETS" title="Presets">Disco, Boom Bap, Rock, Deep House, Techno and Trance.</FeatureTile>
-            <FeatureTile tone="coral" stat="HOST SYNC" title="Tempo">Follows your DAW's tempo. No sidechain input or routing.</FeatureTile>
           </div>
         </section>
 
