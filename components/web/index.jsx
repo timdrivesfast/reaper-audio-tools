@@ -231,7 +231,7 @@ export function Testimonial({ quote, name, credit, avatar, tone = 'coral', style
 }
 
 /** Email signup in an inset well with a strong button. The consumer handles the submit. */
-export function EmailCapture({ title = 'Get Juice free', lede, button = 'Send it', placeholder = 'you@studio.com', doneLabel = 'ON THE LIST', doneText = "You'll get one email when it ships.", onSubmit, done, style }) {
+export function EmailCapture({ title = 'Get notified', lede, button = 'Notify me', placeholder = 'you@studio.com', doneLabel = 'ON THE LIST', doneText = "You'll get one email when it ships.", onSubmit, done, style }) {
   const [email, setEmail] = React.useState('');
   const [state, setState] = React.useState('idle');
   const isDone = done !== undefined ? done : state === 'done';

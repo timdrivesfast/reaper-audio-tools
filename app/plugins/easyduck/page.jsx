@@ -11,7 +11,7 @@ const duck = products.easyduck;
 
 export const metadata = {
   title: 'EasyDuck, sidechain emulator plugin',
-  description: 'EasyDuck is a sidechain emulator plugin for VST3, AU and AUv3. Draw the duck curve, pick the rhythm, no kick routing needed.',
+  description: 'EasyDuck is a sidechain emulator plugin for VST3, AU and AUv3. It ducks a track in a pattern synced to your DAW, with no sidechain routing.',
   openGraph: { images: [duck.image] },
 };
 
@@ -22,7 +22,7 @@ export default function EasyDuckPage() {
     name: 'EasyDuck',
     applicationCategory: 'MultimediaApplication',
     operatingSystem: 'macOS, Windows, iPadOS',
-    description: 'Sidechain emulator plugin. Draw the duck curve and pick the rhythm, with no kick routing needed. VST3, AU and AUv3.',
+    description: 'Sidechain emulator plugin. Ducks a track in a pattern synced to your DAW, with no sidechain routing. VST3, AU and AUv3.',
     image: `${site.url}${duck.image}`,
     publisher: { '@type': 'Organization', name: site.name },
   };
@@ -35,16 +35,16 @@ export default function EasyDuckPage() {
             <a className="back" href="/#plugins">← ALL PLUGINS</a>
             <div className="eyebrow"><span className="dot" aria-hidden="true"></span>01 / {duck.kind}</div>
             <h1 className="display-xl" style={{ fontSize: 'clamp(48px, 7vw, 80px)' }}>EasyDuck</h1>
-            <p className="lede">Sidechain ducking without routing a kick from another track. Draw the curve, pick the rhythm, done.</p>
+            <p className="lede">Ducks a track's volume in a pattern synced to your DAW. No kick or sidechain routing needed.</p>
             <div className="row" style={{ gap: 14, alignItems: 'baseline' }}>
               <PriceTag price={duck.priceLabel} />
               <Lcd small>{duck.formats}</Lcd>
             </div>
             <div className="row" style={{ alignItems: 'flex-start' }}>
               <BuyButton product={duck} label="Buy EasyDuck" />
-              <Button variant="soft" size="lg" href="#interface">Try it in your browser</Button>
+              <Button variant="soft" size="lg" href="#interface">Try the interface</Button>
             </div>
-            <p className="fine">Secure checkout by Paddle. Prices in USD, tax added at checkout.</p>
+            <p className="fine">Checkout by Paddle. Prices in USD. Tax is added at checkout.</p>
           </div>
           <div className="hero__media">
             <Slate tilt label="EasyDuck: Trigger envelope on the left, Attack, Decay, Length and Depth knobs below, a 16-step pattern on the right">
@@ -57,9 +57,8 @@ export default function EasyDuckPage() {
           <ColorBand variant="screen" tone="coral">
             <div className="stack" style={{ gap: 48 }}>
               <div style={{ display: 'grid', gap: 12, maxWidth: 720 }}>
-                <div className="eyebrow">Live demo</div>
-                <h2 className="on-screen-title">Play with the real interface.</h2>
-                <p style={{ margin: 0, fontSize: 20, lineHeight: 1.5 }}>Drag the curve, turn the knobs, change the pattern. This is the plugin's own UI running in your browser. It doesn't make sound here; the audio examples are below.</p>
+                <h2 className="on-screen-title">Try the interface</h2>
+                <p style={{ margin: 0, fontSize: 20, lineHeight: 1.5 }}>EasyDuck's interface, running in your browser. The controls work, but it doesn't make sound here. Audio examples are below.</p>
               </div>
               <Slate interactive label="EasyDuck interface" sticker={<img className="sticker sticker--out" src="/images/sticker-angry.webp" width="640" height="639" alt="" />}>
                 <EasyDuckDemo />
@@ -70,7 +69,7 @@ export default function EasyDuckPage() {
 
         <div style={{ height: 'var(--space-9)' }} aria-hidden="true"></div>
         <section className="wrap section split" style={{ alignItems: 'center' }}>
-          <SectionHeading eyebrow="Audio" title="Hear the difference" lede="The same loop at the same level, with EasyDuck off and on. Switch between DRY and WET." />
+          <SectionHeading title="Audio examples" lede="The same loop with EasyDuck off (DRY) and on (WET)." />
           <div>
             {/* Add drySrc and wetSrc (files in /public/audio) to make these play. */}
             <AudioDemo title="[Loop name, BPM]" tone="coral" seed={7} />
@@ -79,17 +78,17 @@ export default function EasyDuckPage() {
         </section>
 
         <section className="wrap section stack">
-          <SectionHeading eyebrow="Controls" title="What you get" lede="Four knobs, one curve, one step grid." />
+          <SectionHeading title="Controls" />
           <div className="tiles">
-            <FeatureTile tone="cyan" stat="1–150 MS" title="Attack">From a hard click to a slow swell. The knob and the curve move together.</FeatureTile>
-            <FeatureTile tone="indigo" stat="6 PRESETS" title="Presets">Disco, Boom Bap, Rock, Deep House, Techno and Trance. Start from one and adjust.</FeatureTile>
-            <FeatureTile tone="orange" stat="1/4 – 1/16" title="Step grid">Triplets, swing, one or two bars, and velocity per step.</FeatureTile>
-            <FeatureTile tone="coral" stat="0 SENDS" title="No routing">No ghost kick and no send. It runs its own pattern in time with your DAW.</FeatureTile>
+            <FeatureTile tone="cyan" stat="4 KNOBS" title="Envelope">Attack 1 to 150 ms, Decay 20 to 600 ms, Length 0 to 300 ms, Depth 0 to 100%. Turn the knobs or drag the curve.</FeatureTile>
+            <FeatureTile tone="orange" stat="1/4 – 1/16" title="Pattern">1/4, 1/8 or 1/16 notes. Triplets, swing, 1 or 2 bars, velocity per step.</FeatureTile>
+            <FeatureTile tone="indigo" stat="6 PRESETS" title="Presets">Disco, Boom Bap, Rock, Deep House, Techno and Trance.</FeatureTile>
+            <FeatureTile tone="coral" stat="HOST SYNC" title="Tempo">Follows your DAW's tempo. No sidechain input or routing.</FeatureTile>
           </div>
         </section>
 
         <section className="wrap section stack" style={{ gap: 28 }}>
-          <SectionHeading eyebrow="Specs" title="Tech specs" />
+          <SectionHeading title="Specs" />
           <dl className="specs">
             <dt>Formats</dt><dd>{duck.formats.replace(/ · /g, ', ')}</dd>
             <dt>Systems</dt><dd>[macOS + Windows versions]</dd>
@@ -105,7 +104,7 @@ export default function EasyDuckPage() {
             <div style={{ display: 'flex', flexDirection: 'column', gap: 10, minWidth: 0, flex: '1 1 380px' }}>
               <div className="eyebrow">02 / In development</div>
               <h2 className="h2">DrumCrusher</h2>
-              <p style={{ margin: 0, fontSize: 18, lineHeight: 1.5, color: 'var(--ink-soft)' }}>A drum bus processor. Three-band EQ, filters and faders in one window.</p>
+              <p style={{ margin: 0, fontSize: 18, lineHeight: 1.5, color: 'var(--ink-soft)' }}>Drum bus processor with 3-band EQ, high-pass and low-pass filters, and a wet fader per band. No release date yet.</p>
             </div>
             <Button variant="color" tone="cyan" size="lg" href="/#drumcrusher">Get notified</Button>
           </div>

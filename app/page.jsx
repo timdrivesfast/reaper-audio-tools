@@ -17,13 +17,12 @@ export default function Home() {
       <main>
         <section className="wrap hero">
           <div className="hero__copy">
-            <div className="eyebrow"><span className="dot" aria-hidden="true"></span>Reaper Audio Tools</div>
-            <h1 className="display-xl">Precision audio tools.</h1>
-            <p className="lede">Plugins for every producer. Everyday tools to ignite your sound.</p>
+            <h1 className="display-xl">Audio plugins</h1>
+            <p className="lede">VST3, AU and AUv3 for Mac, Windows and iPad.</p>
             <div className="catalogue"><span>01 / EASYDUCK / OUT NOW</span><span>02 / DRUMCRUSHER / SOON</span></div>
             <div className="row">
               <Button variant="color" tone="coral" size="lg" href="/plugins/easyduck">Shop EasyDuck</Button>
-              <Button variant="soft" size="lg" href="#plugins">See all plugins</Button>
+              <Button variant="soft" size="lg" href="#plugins">All plugins</Button>
             </div>
           </div>
           <a className="hero__media" href="/plugins/easyduck" aria-label="EasyDuck, sidechain emulator">
@@ -41,7 +40,7 @@ export default function Home() {
         </section>
 
         <section id="plugins" className="wrap section stack" style={{ gap: 40, scrollMarginTop: 24 }}>
-          <SectionHeading eyebrow="Plugins" title="One job each. Done properly." lede="VST3, AU and AUv3. Mac, Windows and iPad." />
+          <SectionHeading title="Plugins" />
           <div className="cards">
             <ProductCard name={duck.name} tone={duck.tone} tagline={duck.tagline} price={duck.priceLabel} formats={duck.formats} href="/plugins/easyduck" buyLabel="View EasyDuck"
               media={<Slate label="EasyDuck plugin"><EasyDuckDemo /></Slate>} />
@@ -56,11 +55,11 @@ export default function Home() {
               <div>
                 <div className="eyebrow">02 / In development</div>
                 <h2 className="on-screen-title">DrumCrusher</h2>
-                <p style={{ margin: 0, fontSize: 20, lineHeight: 1.5, maxWidth: '40ch' }}>A drum bus processor. Three-band EQ, filters and faders in one window. Get one email when it ships.</p>
+                <p style={{ margin: 0, fontSize: 20, lineHeight: 1.5, maxWidth: '40ch' }}>Drum bus processor with 3-band EQ, high-pass and low-pass filters, and a wet fader per band. No release date yet.</p>
               </div>
               <div className="has-sticker">
                 <img className="sticker sticker--tr" src="/images/sticker-angry.webp" width="640" height="639" alt="" />
-                <WaitlistForm list="drumcrusher" title="Get notified" lede="One email on release day. Nothing else." button="Notify me" />
+                <WaitlistForm list="drumcrusher" title="Get notified" lede="We'll email you once when it's released." button="Notify me" />
               </div>
             </div>
           </ColorBand>

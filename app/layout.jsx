@@ -3,7 +3,7 @@ import { site } from '../lib/site';
 
 export const metadata = {
   metadataBase: new URL(site.url),
-  title: { default: `${site.name} | Precision audio tools`, template: `%s | ${site.name}` },
+  title: { default: `${site.name} | Audio plugins`, template: `%s | ${site.name}` },
   description: site.description,
   openGraph: { siteName: site.name, type: 'website', images: ['/images/easyduck.webp'] },
   twitter: { card: 'summary_large_image' },
