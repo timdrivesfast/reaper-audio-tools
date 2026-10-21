@@ -110,6 +110,7 @@
   --text-secondary: var(--ink-600);
   --text-inactive: var(--ink-500);
   --text-muted: var(--ink-400);
+  --k-hi: #FFFFFF; --k-lo: #C2C4CD; --k-face1: #FFFFFF; --k-face2: #DCDEE5; --k-print: #9A9CA4; /* 1a / 1e knob lighting */
   --knob-face-1: var(--knob-face-light);
   --knob-face-2: var(--knob-face-dark);
   --knob-cap-fill: var(--knob-cap);
@@ -163,6 +164,7 @@
   --text-secondary: #9A9DA8;
   --text-inactive: #6E717C;
   --text-muted: #5C5F69;
+  --k-hi: #2D3038; --k-lo: #131418; --k-face1: #41444D; --k-face2: #2A2C33; --k-print: #6A6C74;
   --knob-face-1: #4A4D56;
   --knob-face-2: #2C2E35;
   --knob-cap-fill: #3A3D45;
@@ -193,6 +195,7 @@
   --layout-pad: 28px;
   --layout-gap: 24px;
   --layout-cell-gap: 18px;
+  --type-knob-label-size: 11px; --type-knob-label-weight: 700; --type-knob-label-tracking: 0.4px; --type-knob-label-stroke: 0.4px;
   --knobcell-w-md: 82px;
   --knobcell-w-sm: 70px;
   --size-ticker: 20px;

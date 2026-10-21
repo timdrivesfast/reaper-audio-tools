@@ -16,70 +16,54 @@ function startDrag(e, onMove, onEnd) {
 }
 
 const JUICE_RING = 'conic-gradient(from 200deg, #B9A3F4, #7FDDF5, #A9EE85, #FAC38F, #FFB3C7, #B9A3F4)';
-const JUICE_FACE = 'radial-gradient(circle, #FFE3D2 0%, #F9BFC4 38%, #CDB9F5 66%, #E6E6E8 82%)';
+const ABS = { position: 'absolute', borderRadius: '50%' };
+const PLATE_SHADOW = '0.4em 0.45em 0.9em var(--k-lo), -0.35em -0.35em 0.8em var(--k-hi)';
 
-/** Rotary knob. Variants: dial (coloured ring), dot (small pad), fill (coloured disc), plain (no colour), juice (the one gradient). Vertical drag, 150px = full sweep, -135°..+135°. */
+/** Rotary knob. Refined ring (1a) for dial, fill, plain and juice; ceramic pastel (1e) for the mini dot knob.
+ *  Vertical drag, 150px = full sweep, -135°..+135°. Sizes are em-based: the box font-size is size/10. */
 export function Knob({ value, defaultValue = 50, min = 0, max = 100, onChange, onDragStart, onDragEnd, variant = 'dial', size, color = 'var(--accent)', tickColor, disabled = false, ariaLabel, style }) {
   const S = size || (variant === 'dot' ? 34 : variant === 'fill' || variant === 'plain' ? 88 : 66);
   const [v, setV] = useValue(value, defaultValue, onChange);
-  const [drag, setDrag] = React.useState(false);
   const t = max > min ? (v - min) / (max - min) : 0;
   const rot = -135 + t * 270;
-  const tick = tickColor || color;
   const down = (e) => {
     if (disabled) return;
     const start = v;
-    setDrag(true);
     if (onDragStart) onDragStart();
-    startDrag(e, (dx, dy) => setV(clamp(start + (-dy / 150) * (max - min), min, max)), () => { setDrag(false); if (onDragEnd) onDragEnd(); });
+    startDrag(e, (dx, dy) => setV(clamp(start + (-dy / 150) * (max - min), min, max)), () => { if (onDragEnd) onDragEnd(); });
   };
-  const glow = drag ? ', 0 0 0 2px color-mix(in srgb, ' + tick + ' 22%, transparent)' : '';
-  const base = { width: S, height: S, borderRadius: '50%', boxSizing: 'border-box', cursor: disabled ? 'default' : 'ns-resize', touchAction: 'none', flex: 'none', opacity: disabled ? 0.45 : 1, position: 'relative', ...style };
+  const kc = variant === 'plain' ? '#A3A6AE' : variant === 'juice' ? '#B9A3F4' : color;
   const aria = { role: 'slider', 'aria-label': ariaLabel, 'aria-valuemin': min, 'aria-valuemax': max, 'aria-valuenow': Math.round(v) };
-  const cap = (d) => <div style={{ position: 'absolute', left: '50%', top: '50%', width: d, height: d, margin: (-d / 2) + 'px 0 0 ' + (-d / 2) + 'px', borderRadius: '50%', background: 'var(--knob-cap-fill)', boxShadow: 'var(--shadow-knob-cap)' }}></div>;
+  const box = { '--kc': kc, position: 'relative', width: S, height: S, fontSize: S / 10, cursor: disabled ? 'default' : 'ns-resize', touchAction: 'none', flex: 'none', userSelect: 'none', opacity: disabled ? 0.45 : 1, ...style };
   const rotor = (child) => <div style={{ position: 'absolute', inset: 0, transform: 'rotate(' + rot + 'deg)' }}>{child}</div>;
-  const face = 'radial-gradient(circle at 40% 35%, var(--knob-face-1), var(--knob-face-2))';
 
   if (variant === 'dot') {
-    const d = S * 0.647;
+    const ticks = Array.from({ length: 11 }, (_, i) => {
+      const a = -135 + 27 * i, on = i / 10 <= t + 0.001, major = i % 5 === 0;
+      return <div key={i} style={{ position: 'absolute', left: '50%', top: '50%', width: '0.2em', height: major ? '0.75em' : '0.5em', marginLeft: '-0.1em', marginTop: major ? '-0.375em' : '-0.25em', borderRadius: '0.1em', background: on ? 'var(--kc)' : 'var(--k-print)', transform: 'rotate(' + a + 'deg) translateY(-4.5em)' }}></div>;
+    });
     return (
-      <div {...aria} onPointerDown={down} style={{ ...base, background: 'var(--surface-panel)', boxShadow: 'var(--shadow-raised-md)' + glow, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-        <div style={{ width: d, height: d, borderRadius: '50%', background: color, position: 'relative', transform: 'rotate(' + rot + 'deg)' }}>
-          <div style={{ position: 'absolute', left: '50%', top: d * 0.136, width: d * 0.18, height: d * 0.18, marginLeft: -d * 0.09, borderRadius: '50%', background: '#FFFFFF' }}></div>
-        </div>
+      <div {...aria} onPointerDown={down} style={box}>
+        {ticks}
+        <div style={{ ...ABS, inset: '14%', background: 'radial-gradient(circle at 36% 28%, color-mix(in srgb, var(--kc) 30%, #fff) 0%, var(--kc) 55%, color-mix(in srgb, var(--kc) 80%, #000) 100%)', boxShadow: '0.3em 0.5em 0.9em rgba(0,0,0,0.25), 0 0.1em 0.15em rgba(0,0,0,0.18), inset -0.1em -0.15em 0.3em rgba(0,0,0,0.1)' }}></div>
+        {rotor(<div style={{ position: 'absolute', left: '46.5%', top: '18%', width: '7%', height: '19%', borderRadius: '0.35em', background: tickColor || 'rgba(20,20,30,0.5)', boxShadow: 'inset 0 0.06em 0.08em rgba(0,0,0,0.5), 0 0.04em 0 rgba(255,255,255,0.4)' }}></div>)}
+        <div style={{ ...ABS, left: '25%', top: '20%', width: '30%', height: '17%', background: 'radial-gradient(ellipse at center, rgba(255,255,255,0.75), rgba(255,255,255,0) 70%)', transform: 'rotate(-32deg)' }}></div>
       </div>
     );
   }
-  if (variant === 'fill') {
-    const d = S * 0.66;
-    return (
-      <div {...aria} onPointerDown={down} style={{ ...base, background: 'var(--surface-panel)', boxShadow: 'var(--shadow-knob)' + glow, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-        <div style={{ width: d, height: d, borderRadius: '50%', position: 'relative', background: 'radial-gradient(circle, color-mix(in srgb, ' + color + ' 30%, #FFFFFF) 0%, ' + color + ' 72%)', boxShadow: 'inset 0 -3px 6px rgba(0,0,0,0.08)' }}>
-          {rotor(<div style={{ position: 'absolute', left: '50%', top: d * 0.09, width: d * 0.11, height: d * 0.11, marginLeft: -d * 0.055, borderRadius: '50%', background: 'var(--knob-cap-fill)', boxShadow: 'var(--shadow-knob-cap)' }}></div>)}
-          <div style={{ position: 'absolute', left: '50%', top: '50%', width: d * 0.4, height: d * 0.4, margin: (-d * 0.2) + 'px 0 0 ' + (-d * 0.2) + 'px', borderRadius: '50%', background: 'color-mix(in srgb, var(--knob-cap-fill) 60%, #FFFFFF)', boxShadow: '0 1px 3px rgba(0,0,0,0.15)' }}></div>
-          {cap(d * 0.24)}
-        </div>
-      </div>
-    );
-  }
-  if (variant === 'plain') {
-    return (
-      <div {...aria} onPointerDown={down} style={{ ...base, background: 'var(--surface-panel)', padding: S * 0.035, boxShadow: 'var(--shadow-knob)' + glow }}>
-        <div style={{ width: '100%', height: '100%', borderRadius: '50%', background: face, position: 'relative', boxShadow: 'var(--shadow-knob-face)' }}>
-          {rotor(<div style={{ position: 'absolute', left: '50%', top: S * 0.07, width: S * 0.1, height: S * 0.16, marginLeft: -S * 0.05, borderRadius: S * 0.05, background: 'var(--knob-cap-fill)', boxShadow: 'var(--shadow-knob-cap)' }}></div>)}
-          {cap(S * 0.27)}
-        </div>
-      </div>
-    );
-  }
-  const isJuice = variant === 'juice';
+
+  const k = variant === 'fill' || variant === 'juice' ? 0.13 : 0;
+  const plate = variant === 'fill'
+    ? 'radial-gradient(circle at 40% 30%, color-mix(in srgb, var(--kc) 50%, #fff), var(--kc) 72%)'
+    : variant === 'juice' ? JUICE_RING : null;
   return (
-    <div {...aria} onPointerDown={down} style={{ ...base, background: isJuice ? JUICE_RING : color, padding: Math.max(3, S * 0.06), boxShadow: 'var(--shadow-knob)' + glow }}>
-      <div style={{ width: '100%', height: '100%', borderRadius: '50%', background: isJuice ? JUICE_FACE : face, position: 'relative', boxShadow: 'var(--shadow-knob-face)' }}>
-        {rotor(isJuice
-          ? <div style={{ position: 'absolute', left: '50%', top: S * 0.08, width: S * 0.08, height: S * 0.08, marginLeft: -S * 0.04, borderRadius: '50%', background: 'var(--knob-cap-fill)' }}></div>
-          : <div style={{ position: 'absolute', left: '50%', top: S * 0.076, width: S * 0.106, height: S * 0.197, marginLeft: -S * 0.053, borderRadius: S * 0.06, background: tick }}></div>)}
-        {cap(S * 0.27)}
+    <div {...aria} onPointerDown={down} style={box}>
+      {plate && <div style={{ ...ABS, inset: 0, background: plate, boxShadow: PLATE_SHADOW }}></div>}
+      <div style={{ position: 'absolute', inset: k * 100 + '%', fontSize: S * (1 - 2 * k) / 10 }}>
+        <div style={{ ...ABS, inset: 0, background: 'linear-gradient(160deg, color-mix(in srgb, var(--kc) 62%, #fff), var(--kc) 50%, color-mix(in srgb, var(--kc) 82%, #000))', boxShadow: '0.5em 0.55em 1.1em var(--k-lo), -0.45em -0.45em 1em var(--k-hi), inset 0 0.06em 0.05em rgba(255,255,255,0.5), inset 0 -0.08em 0.12em rgba(0,0,0,0.15)' }}></div>
+        <div style={{ ...ABS, inset: '8%', background: 'radial-gradient(circle at 40% 28%, var(--k-face1), var(--k-face2) 78%)', boxShadow: '0 0.22em 0.45em rgba(0,0,0,0.28), 0 0.05em 0.08em rgba(0,0,0,0.2), inset 0 0.07em 0.05em rgba(255,255,255,0.75), inset 0 -0.18em 0.3em rgba(0,0,0,0.07)' }}></div>
+        {rotor(<div style={{ position: 'absolute', left: '47%', top: '15%', width: '6%', height: '22%', borderRadius: '0.3em', background: tickColor || 'color-mix(in srgb, var(--kc) 80%, #000)', boxShadow: 'inset 0 0.04em 0.06em rgba(0,0,0,0.35)' }}></div>)}
+        <div style={{ ...ABS, inset: '39%', background: 'radial-gradient(circle at 50% 70%, var(--k-face1), var(--k-face2))', boxShadow: 'inset 0 0.06em 0.12em rgba(0,0,0,0.2), 0 0.04em 0 rgba(255,255,255,0.6)' }}></div>
       </div>
     </div>
   );
