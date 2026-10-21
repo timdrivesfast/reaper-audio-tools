@@ -1,6 +1,6 @@
 import { Header, Footer } from '../../../components/SiteChrome';
 import Faq from '../../../components/Faq';
-import BuyButton from '../../../components/BuyButton';
+import GetFreeForm from '../../../components/GetFreeForm';
 import EasyDuckDemo from '../../../components/EasyDuckDemo';
 import Slate from '../../../components/Slate';
 import { Button, Lcd, PriceTag, SectionHeading, AudioDemo, FeatureTile, ColorBand } from '../../../components/web';
@@ -24,6 +24,7 @@ export default function EasyDuckPage() {
     operatingSystem: 'macOS, Windows, iPadOS',
     description: "EasyDuck is a sidechain emulation plugin for VST3, AU and AUv3. It needs no input signal, so there's no routing. Put it on any track to duck or pump it.",
     image: `${site.url}${duck.image}`,
+    offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
     publisher: { '@type': 'Organization', name: site.name },
   };
   return (
@@ -40,11 +41,8 @@ export default function EasyDuckPage() {
               <PriceTag price={duck.priceLabel} />
               <Lcd small>{duck.formats}</Lcd>
             </div>
-            <div className="row" style={{ alignItems: 'flex-start' }}>
-              <BuyButton product={duck} label="Buy EasyDuck" />
-              <Button variant="soft" size="lg" href="#interface">Try the interface</Button>
-            </div>
-            <p className="fine">Checkout by Paddle. Prices in USD. Tax is added at checkout.</p>
+            <GetFreeForm product={duck} />
+            <p className="fine">We'll email your license key and download links. No card needed. <a href="#interface">Try the interface first</a>.</p>
           </div>
           <div className="hero__media">
             <Slate tilt label="EasyDuck: Trigger envelope on the left, Attack, Decay, Length and Depth knobs below, a 16-step pattern on the right">

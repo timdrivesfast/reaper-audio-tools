@@ -19,13 +19,17 @@ npm run dev                  # http://localhost:3000
 3. Add every key from `.env.example` under Settings → Environment Variables.
 4. Deploy, then add your domain under Settings → Domains and set `NEXT_PUBLIC_SITE_URL` to it.
 
+## Free plugins
+
+EasyDuck is free (`free: true` in `lib/site.js`). Its page has an email form that posts to `/api/free-license`, which creates one license per email, emails the key and download links through Resend, and forwards the address to `WAITLIST_WEBHOOK_URL` (list `easyduck-free`) if that's set. It needs the same Supabase and Resend settings as paid orders.
+
 ## Connect Paddle
 
 1. Create a Paddle account and a sandbox account at sandbox-vendors.paddle.com.
-2. In sandbox: Catalog → Products → add **EasyDuck** with a one-time price. Copy the price ID (`pri_…`) into `NEXT_PUBLIC_PADDLE_PRICE_EASYDUCK`.
+2. In sandbox: Catalog → Products → add your first paid plugin (DrumCrusher) with a price. Copy the price ID (`pri_…`) into `NEXT_PUBLIC_PADDLE_PRICE_DRUMCRUSHER`. EasyDuck is free and doesn't go through Paddle (see Free plugins below).
 3. Developer tools → Authentication → create a client-side token (`test_…`) and put it in `NEXT_PUBLIC_PADDLE_CLIENT_TOKEN`.
 4. Checkout settings → add your site domain as an approved domain (and `localhost` for testing).
-5. Buy EasyDuck on your site with Paddle's test card `4242 4242 4242 4242`, any future date, any CVC.
+5. Buy a paid plugin on your site with Paddle's test card `4242 4242 4242 4242`, any future date, any CVC.
 6. When Paddle approves your live account, repeat steps 2 to 4 there, and set `NEXT_PUBLIC_PADDLE_ENV=production`.
 
 Paddle reviews the site before approving payouts. It checks that your terms show your seller name, that the refund policy is clear, and that checkout works. Fill in the legal pages first.

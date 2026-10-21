@@ -21,7 +21,7 @@ export default function Home() {
             <p className="lede">VST3, AU and AUv3 for Mac, Windows and iPad.</p>
             <div className="catalogue"><span>01 / EASYDUCK / OUT NOW</span><span>02 / DRUMCRUSHER / SOON</span></div>
             <div className="row">
-              <Button variant="color" tone="coral" size="lg" href="/plugins/easyduck">Shop EasyDuck</Button>
+              <Button variant="color" tone="coral" size="lg" href="/plugins/easyduck#get">Get EasyDuck</Button>
               <Button variant="soft" size="lg" href="#plugins">All plugins</Button>
             </div>
           </div>
@@ -42,7 +42,7 @@ export default function Home() {
         <section id="plugins" className="wrap section stack" style={{ gap: 40, scrollMarginTop: 24 }}>
           <SectionHeading title="Plugins" />
           <div className="cards">
-            <ProductCard name={duck.name} tone={duck.tone} tagline={duck.tagline} price={duck.priceLabel} formats={duck.formats} href="/plugins/easyduck" buyLabel="View EasyDuck"
+            <ProductCard name={duck.name} tone={duck.tone} tagline={duck.tagline} price={duck.priceLabel} formats={duck.formats} href="/plugins/easyduck" buyLabel="Get EasyDuck"
               media={<Slate label="EasyDuck plugin"><EasyDuckDemo /></Slate>} />
             <ProductCard name={crusher.name} tone={crusher.tone} tagline={crusher.tagline} status="soon" href="#drumcrusher"
               media={<Slate label="DrumCrusher concept"><DrumCrusherDemo animate={false} /></Slate>} />
