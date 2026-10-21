@@ -30,6 +30,8 @@ a { color: inherit; }
 .split { display: flex; flex-wrap: wrap; gap: var(--space-7); align-items: flex-start; }
 .split > :first-child { flex: 1 1 300px; min-width: 0; }
 .split > :last-child { flex: 2 1 520px; min-width: 0; display: grid; gap: 16px; }
+.faq { display: flex; flex-direction: column; gap: 28px; }
+.faq__list { width: 100%; max-width: 820px; display: grid; }
 .stack { display: flex; flex-direction: column; gap: 36px; }
 .scroller { overflow-x: auto; padding: 72px 80px 24px 24px; margin: -72px -80px -24px -24px; }
 .plugin-frame-wrap { width: max-content; margin: 0 auto; }

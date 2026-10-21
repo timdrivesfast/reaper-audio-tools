@@ -9,9 +9,9 @@ export default function Faq({ items, id = 'faq' }) {
   };
   return (
     <>
-      <section id={id} className="wrap section split" style={{ scrollMarginTop: 24 }}>
-        <SectionHeading eyebrow="FAQ" title="Questions, answered" />
-        <div>
+      <section id={id} className="wrap section faq" style={{ scrollMarginTop: 24 }}>
+        <SectionHeading title="FAQ" />
+        <div className="faq__list">
           {items.map((f, i) => <FaqItem key={f.q} question={f.q} defaultOpen={i === 0}>{f.a}</FaqItem>)}
         </div>
       </section>
