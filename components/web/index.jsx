@@ -270,21 +270,47 @@ export function FaqItem({ question, children, defaultOpen = false, style }) {
 const asLink = (l) => (typeof l === 'string' ? { label: l, href: '#' } : l);
 
 /** Site header: the ticker on top, stark and square, then the name, nav links and an optional action. The bar's shadow falls downward only, so nothing washes over the ticker. */
-export function SiteHeader({ tone = 'coral', ticker = ['EASYDUCK', 'REAPER AUDIO TOOLS'], links = [], action, logo, homeHref = '/', style }) {
+export function SiteHeader({ tone = 'coral', ticker = ['EASYDUCK', 'REAPER AUDIO TOOLS'], links = [], action, logo, logoAlt = 'Reaper Audio Tools', homeHref = '/', style }) {
+  const [open, setOpen] = React.useState(false);
+  const btnRef = React.useRef(null);
+  const menuRef = React.useRef(null);
+  React.useEffect(() => {
+    if (!open) return undefined;
+    const onKey = (e) => { if (e.key === 'Escape') { setOpen(false); if (btnRef.current) btnRef.current.focus(); } };
+    const onDown = (e) => { if (menuRef.current && !menuRef.current.contains(e.target) && btnRef.current && !btnRef.current.contains(e.target)) setOpen(false); };
+    document.addEventListener('keydown', onKey);
+    document.addEventListener('pointerdown', onDown);
+    return () => { document.removeEventListener('keydown', onKey); document.removeEventListener('pointerdown', onDown); };
+  }, [open]);
+  const items = links.map(asLink);
   return (
-    <header className="ratw" {...toneAttrs(tone, style)}>
+    <header className="ratw ratw-header" {...toneAttrs(tone, style)}>
       <Ticker items={ticker} tone={tone} />
       <div style={{ background: 'var(--surface)', boxShadow: '0 12px 24px -14px rgba(24,25,28,.28)', borderBottom: '1px solid var(--line, rgba(24,25,28,.08))', position: 'relative', zIndex: 2 }}>
-        <div className="ratw-band__inner" style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-4)', minHeight: 72, flexWrap: 'wrap', paddingTop: 10, paddingBottom: 10 }}>
-          <a href={homeHref} style={{ display: 'flex', alignItems: 'center', gap: 10, textDecoration: 'none', color: 'var(--ink)' }}>
-            {logo ? <img src={logo} alt="" width="40" height="40" style={{ borderRadius: 10 }} /> : null}
-            <span style={{ font: '700 20px/1 var(--font-ui)', letterSpacing: '-.4px' }}>Reaper Audio Tools</span>
+        <div className="ratw-band__inner" style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-3)', minHeight: 72, paddingTop: 10, paddingBottom: 10 }}>
+          <a href={homeHref} aria-label={logoAlt + ', home'} style={{ display: 'flex', alignItems: 'center', textDecoration: 'none', color: 'var(--ink)', marginRight: 'auto' }}>
+            {logo
+              ? <img className="ratw-header__mark" src={logo} alt={logoAlt} height="40" style={{ height: 40, width: 'auto', display: 'block', filter: 'var(--logo-filter, none)' }} />
+              : <span style={{ font: '700 20px/1 var(--font-ui)', letterSpacing: '-.4px' }}>{logoAlt}</span>}
           </a>
-          <nav aria-label="Main" style={{ display: 'flex', gap: 4, flexWrap: 'wrap', marginLeft: 'auto' }}>
-            {links.map(asLink).map((l) => <a key={l.label} href={l.href} className="ratw-btn ratw-btn--ghost" style={{ height: 40 }}>{l.label}</a>)}
-          </nav>
           {action}
+          {items.length > 0 && (
+            <button ref={btnRef} type="button" className="ratw-burger" aria-expanded={open} aria-controls="ratw-menu" aria-label={open ? 'Close menu' : 'Open menu'} onClick={() => setOpen(!open)}>
+              <svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round">
+                {open
+                  ? <><path d="M4.5 4.5l11 11" /><path d="M15.5 4.5l-11 11" /></>
+                  : <><path d="M3 5.5h14" /><path d="M3 10h14" /><path d="M3 14.5h14" /></>}
+              </svg>
+            </button>
+          )}
         </div>
+        {items.length > 0 && (
+          <nav id="ratw-menu" ref={menuRef} aria-label="Main" className="ratw-menu" hidden={!open}>
+            <div className="ratw-band__inner ratw-menu__list">
+              {items.map((l) => <a key={l.label} href={l.href} onClick={() => setOpen(false)}>{l.label}</a>)}
+            </div>
+          </nav>
+        )}
       </div>
     </header>
   );

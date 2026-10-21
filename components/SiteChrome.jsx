@@ -7,7 +7,7 @@ export function Header({ tone = 'coral', ticker }) {
       tone={tone}
       ticker={ticker || ['01 EASYDUCK', 'OUT NOW', '02 DRUMCRUSHER', 'SOON']}
       links={nav}
-      logo="/images/reaper-ghost.png"
+      logo="/images/typemark.png"
       action={<Button variant="soft" href="/plugins/easyduck" style={{ height: 44, padding: '0 18px' }}>Shop EasyDuck</Button>}
     />
   );
