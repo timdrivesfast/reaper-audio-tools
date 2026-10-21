@@ -405,7 +405,10 @@
 
 /* LCD */
 .ratw-lcd { display: inline-flex; align-items: baseline; gap: .5em; background: var(--lcd-black); color: var(--lcd-yellow); border: 3px solid var(--lcd-bezel); border-radius: var(--radius-lcd); box-shadow: var(--shadow-lcd); font-family: var(--font-lcd); white-space: nowrap; font-variant-numeric: tabular-nums; }
-.ratw-lcd--spec { font-size: 14px; padding: 3px 9px; }
+.ratw-lcd--spec { font-size: 13px; padding: 2px 8px; border-width: 2px; }
+.ratw-lcd--sm.ratw-lcd--spec { font-size: 11px; padding: 2px 6px; letter-spacing: .3px; }
+.ratw-price { font: 700 32px/1 var(--font-ui); letter-spacing: -.6px; font-variant-numeric: tabular-nums; color: var(--ink); }
+.ratw-price--sm { font-size: 24px; letter-spacing: -.4px; }
 .ratw-lcd--price { font-size: 24px; letter-spacing: .5px; padding: 5px 12px; }
 .ratw-lcd--sm.ratw-lcd--price { font-size: 20px; padding: 4px 10px; }
 .ratw-was { font: 400 15px/1 var(--font-lcd); color: var(--ink-muted); text-decoration: line-through; text-decoration-color: var(--juice-red); text-decoration-thickness: 2px; }
@@ -413,9 +416,12 @@
 /* Cards */
 .ratw-card { background: var(--surface); border-radius: var(--radius-card); box-shadow: var(--shadow-card); transition: box-shadow var(--ratw-dur) var(--ratw-ease); }
 .ratw-card--hover:hover { box-shadow: var(--shadow-lift); }
-.ratw-product { background: var(--accent-wash); overflow: hidden; display: flex; flex-direction: column; min-width: 0; }
-.ratw-product__media { aspect-ratio: 16 / 10; max-width: 100%; background: var(--screen-navy); display: block; width: 100%; object-fit: cover; object-position: top left; }
-.ratw-product__body { padding: var(--space-5); display: flex; flex-direction: column; gap: var(--space-4); flex: 1; }
+.ratw-product { display: flex; flex-direction: column; min-width: 0; border-radius: 0; }
+.ratw-product__media { background: var(--accent-wash); padding: clamp(24px, 4vw, 44px) clamp(20px, 4vw, 40px) clamp(32px, 5vw, 56px); display: block; width: 100%; min-width: 0; }
+.ratw-product__media img { display: block; width: 100%; height: auto; }
+.ratw-product .slate__stage { transition: transform var(--ratw-dur) var(--ratw-ease); }
+.ratw-product:hover .slate__stage { transform: translateY(-4px); }
+.ratw-product__body { padding: var(--space-5) 0 0; display: flex; flex-direction: column; gap: var(--space-3); flex: 1; }
 .ratw-product__foot { margin-top: auto; display: flex; align-items: center; justify-content: space-between; gap: var(--space-3); flex-wrap: wrap; }
 
 /* Bands */
@@ -427,7 +433,11 @@
 .ratw-input::placeholder { color: var(--ink-muted); }
 
 /* FAQ */
-.ratw-faq summary { list-style: none; cursor: pointer; display: flex; justify-content: space-between; align-items: center; gap: var(--space-4); padding: var(--space-5); font: 600 20px/1.3 var(--font-ui); letter-spacing: -.3px; }
+.ratw-faq { border-top: 1px solid rgba(24, 25, 28, .14); }
+.ratw-faq:last-child { border-bottom: 1px solid rgba(24, 25, 28, .14); }
+.ratw-feature { border-top: 3px solid var(--accent); padding-top: 18px; }
+.ratw-band--screen .ratw-faq, .ratw-band--screen .ratw-faq:last-child { border-color: rgba(255, 255, 255, .18); }
+.ratw-faq summary { list-style: none; cursor: pointer; display: flex; justify-content: space-between; align-items: center; gap: var(--space-4); padding: var(--space-5) 0; font: 600 20px/1.3 var(--font-ui); letter-spacing: -.3px; }
 .ratw-faq summary::-webkit-details-marker { display: none; }
 .ratw-faq__sign { flex: none; width: 32px; height: 32px; border-radius: 50%; background: var(--surface); box-shadow: var(--shadow-raised); display: grid; place-items: center; font: 400 18px/1 var(--font-lcd); transition: transform var(--ratw-dur) var(--ratw-ease); }
 .ratw-faq[open] .ratw-faq__sign { transform: rotate(45deg); box-shadow: var(--shadow-inset); }

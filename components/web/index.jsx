@@ -37,27 +37,27 @@ export function Badge({ kind = 'new', children, style }) {
   return <span className="ratw-badge" style={{ background: bg, color: sale ? 'var(--on-strong)' : 'var(--ink)', boxShadow: sale ? 'none' : undefined, ...style }}>{children || text}</span>;
 }
 
-/** Black LCD box with yellow mono digits, for every price, spec and number on the site. */
+/** Small black LCD with yellow mono digits, for specs and formats. Not for prices. */
 export function Lcd({ children, size = 'spec', small = false, style }) {
   return <span className={'ratw-lcd ratw-lcd--' + size + (small ? ' ratw-lcd--sm' : '')} style={style}>{children}</span>;
 }
 
-/** Price in an LCD, with an optional struck-through original price beside it. */
+/** Price in plain bold numerals, with an optional struck-through original price beside it. Prices never go in an LCD. */
 export function PriceTag({ price, was, small = false, note, style }) {
   return (
-    <span style={{ display: 'inline-flex', alignItems: 'center', gap: 10, flexWrap: 'wrap', ...style }}>
-      <Lcd size="price" small={small}>{price}</Lcd>
+    <span style={{ display: 'inline-flex', alignItems: 'baseline', gap: 10, flexWrap: 'wrap', ...style }}>
+      <span className={'ratw-price' + (small ? ' ratw-price--sm' : '')}>{price}</span>
       {was && <span className="ratw-was" aria-label={'was ' + was}>{was}</span>}
       {note && <span style={{ fontSize: 14, color: 'var(--ink-muted)' }}>{note}</span>}
     </span>
   );
 }
 
-/** Full-bleed section tinted in a signature colour (wash by default, full value for the one loud moment), with an optional ticker along its top edge. */
-export function ColorBand({ tone = 'coral', variant = 'wash', ticker, padding = 'var(--space-9)', children, style }) {
-  const full = variant === 'full';
+/** Full-bleed, square-cornered section: a pale signature wash, or the navy dot-grid screen for contrast. Signature colours at full strength are never section backgrounds. */
+export function ColorBand({ tone = 'coral', variant = 'wash', ticker, padding = 'var(--space-9)', className = '', children, style }) {
+  const screen = variant === 'screen';
   return (
-    <section className="ratw ratw-band" {...toneAttrs(tone, { background: full ? 'var(--accent)' : 'var(--accent-wash)', color: full ? onTone(tone) : 'var(--ink)', ...style })}>
+    <section className={'ratw ratw-band' + (screen ? ' ratw-screen ratw-band--screen' : '') + (className ? ' ' + className : '')} {...toneAttrs(tone, screen ? { borderRadius: 0, color: 'var(--on-strong)', ...style } : { background: 'var(--accent-wash)', color: 'var(--ink)', ...style })}>
       {ticker && <Ticker items={ticker} tone={tone} />}
       <div className="ratw-band__inner" style={{ paddingTop: padding, paddingBottom: padding }}>{children}</div>
     </section>
@@ -75,12 +75,12 @@ export function SectionHeading({ eyebrow, title, lede, align = 'left', color, st
   );
 }
 
-/** Catalogue card for one plugin, grounded in its signature wash. No ticker: the ticker runs once per page, along the top edge. */
-export function ProductCard({ name, tone = 'coral', tagline, image, imageAlt = '', formats = 'VST3 · AU · AUv3', price, was, badge, status = 'available', onBuy, href, style }) {
+/** Catalogue tile for one plugin: square corners, a pale signature wash behind the plugin's hardware slate, and plain text below. */
+export function ProductCard({ name, tone = 'coral', tagline, media, image, imageAlt = '', formats = 'VST3 · AU · AUv3', price, was, badge, status = 'available', onBuy, href, buyLabel = 'Buy', style }) {
   const soon = status === 'soon';
   return (
-    <article className="ratw ratw-card ratw-card--hover ratw-product" {...toneAttrs(tone, style)}>
-      {image ? <img className="ratw-product__media" src={image} alt={imageAlt} /> : <div className="ratw-product__media ratw-screen" style={{ borderRadius: 0 }} aria-hidden="true"></div>}
+    <article className="ratw ratw-product" {...toneAttrs(tone, style)}>
+      <div className="ratw-product__media">{media || (image ? <img src={image} alt={imageAlt} /> : null)}</div>
       <div className="ratw-product__body">
         <div style={{ display: 'flex', alignItems: 'center', gap: 10, flexWrap: 'wrap' }}>
           <h3 style={{ margin: 0, font: '700 28px/1.05 var(--font-ui)', letterSpacing: '-.6px' }}>{name}</h3>
@@ -88,10 +88,10 @@ export function ProductCard({ name, tone = 'coral', tagline, image, imageAlt = '
           {soon && !badge && <Badge kind="soon" />}
         </div>
         {tagline && <p style={{ margin: 0, fontSize: 17, lineHeight: 1.5, color: 'var(--ink-soft)' }}>{tagline}</p>}
-        <div><Lcd>{formats}</Lcd></div>
+        <div><Lcd small>{formats}</Lcd></div>
         <div className="ratw-product__foot">
-          {soon ? <span style={{ fontSize: 14, color: 'var(--ink-muted)' }}>Join the waitlist</span> : <PriceTag price={price} was={was} small />}
-          <Button variant={soon ? 'soft' : 'color'} tone={tone} href={href} onClick={onBuy}>{soon ? 'Notify me' : 'Add to cart'}</Button>
+          {soon ? <span style={{ fontSize: 15, color: 'var(--ink-muted)' }}>In development</span> : <PriceTag price={price} was={was} small />}
+          <Button variant={soon ? 'soft' : 'color'} tone={tone} href={href} onClick={onBuy}>{soon ? 'Get notified' : buyLabel}</Button>
         </div>
       </div>
     </article>
@@ -115,9 +115,7 @@ export function ProductHero({ name, tone = 'coral', eyebrow, tagline, price, was
           </div>
         </div>
         {media && (
-          <div style={{ flex: '1 1 460px', minWidth: 0, padding: 'var(--space-4)', borderRadius: 'var(--radius-block)', background: 'var(--surface)', boxShadow: 'var(--shadow-card)' }}>
-            <div style={{ borderRadius: 'var(--radius-card)', overflow: 'hidden', background: 'var(--accent-wash)' }}>{media}</div>
-          </div>
+          <div style={{ flex: '1 1 460px', minWidth: 0 }}>{media}</div>
         )}
       </div>
     </section>
@@ -182,11 +180,11 @@ export function AudioDemo({ title = 'House loop', tone = 'coral', drySrc, wetSrc
   );
 }
 
-/** Tinted tile with one number in an LCD and a short explanation: the web version of a knob cell. */
+/** A flat feature cell: a signature-coloured rule, a short label in a small LCD, a title and one line. Not a card. */
 export function FeatureTile({ tone = 'cyan', stat, title, children, style }) {
   return (
-    <div className="ratw ratw-card" {...toneAttrs(tone, { background: 'var(--accent-wash)', padding: 'var(--space-5)', display: 'grid', gap: 12, alignContent: 'start', ...style })}>
-      {stat && <div><Lcd size="price" small>{stat}</Lcd></div>}
+    <div className="ratw ratw-feature" {...toneAttrs(tone, { display: 'grid', gap: 12, alignContent: 'start', ...style })}>
+      {stat && <div><Lcd small>{stat}</Lcd></div>}
       <h3 style={{ margin: 0, font: '600 22px/1.2 var(--font-ui)', letterSpacing: '-.3px' }}>{title}</h3>
       {children && <p style={{ margin: 0, fontSize: 17, lineHeight: 1.55, color: 'var(--ink-soft)' }}>{children}</p>}
     </div>
@@ -262,21 +260,21 @@ export function EmailCapture({ title = 'Get Juice free', lede, button = 'Send it
 /** One expandable question and answer. */
 export function FaqItem({ question, children, defaultOpen = false, style }) {
   return (
-    <details className="ratw ratw-card ratw-faq" open={defaultOpen} style={style}>
+    <details className="ratw ratw-faq" open={defaultOpen} style={style}>
       <summary>{question}<span className="ratw-faq__sign" aria-hidden="true">+</span></summary>
-      <div style={{ padding: '0 var(--space-5) var(--space-5)', fontSize: 17, lineHeight: 1.6, color: 'var(--ink-soft)', maxWidth: '65ch' }}>{children}</div>
+      <div style={{ padding: '0 0 var(--space-5)', fontSize: 17, lineHeight: 1.6, color: 'var(--ink-soft)', maxWidth: '65ch' }}>{children}</div>
     </details>
   );
 }
 
 const asLink = (l) => (typeof l === 'string' ? { label: l, href: '#' } : l);
 
-/** Site header: the ticker on top, then the name, nav links and an optional action on a raised bar. */
+/** Site header: the ticker on top, stark and square, then the name, nav links and an optional action. The bar's shadow falls downward only, so nothing washes over the ticker. */
 export function SiteHeader({ tone = 'coral', ticker = ['EASYDUCK', 'REAPER AUDIO TOOLS'], links = [], action, logo, homeHref = '/', style }) {
   return (
     <header className="ratw" {...toneAttrs(tone, style)}>
       <Ticker items={ticker} tone={tone} />
-      <div style={{ background: 'var(--surface)', boxShadow: 'var(--shadow-card)', position: 'relative' }}>
+      <div style={{ background: 'var(--surface)', boxShadow: '0 12px 24px -14px rgba(24,25,28,.28)', borderBottom: '1px solid var(--line, rgba(24,25,28,.08))', position: 'relative', zIndex: 2 }}>
         <div className="ratw-band__inner" style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-4)', minHeight: 72, flexWrap: 'wrap', paddingTop: 10, paddingBottom: 10 }}>
           <a href={homeHref} style={{ display: 'flex', alignItems: 'center', gap: 10, textDecoration: 'none', color: 'var(--ink)' }}>
             {logo ? <img src={logo} alt="" width="40" height="40" style={{ borderRadius: 10 }} /> : null}

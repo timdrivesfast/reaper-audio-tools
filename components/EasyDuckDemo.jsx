@@ -31,7 +31,7 @@ function makePattern(total, perBeat) {
   return Array.from({ length: total }, (_, i) => (Math.abs(perBeat - pb) < 0.01 && i % pb === 0 ? 100 : 0));
 }
 
-export default function EasyDuckDemo() {
+export default function EasyDuckDemo({ autoplay = false }) {
   const [preset, setPreset] = React.useState(3);
   const [env, setEnv] = React.useState({ attack: 12, decay: 220, length: 60, depth: 80 });
   const [denom, setDenom] = React.useState(2);
@@ -43,7 +43,7 @@ export default function EasyDuckDemo() {
   const total = perBar * (bars + 1);
   const [steps, setSteps] = React.useState(() => makePattern(16, 4));
   const [sel, setSel] = React.useState(8);
-  const [playing, setPlaying] = React.useState(false);
+  const [playing, setPlaying] = React.useState(autoplay);
   const [step, setStep] = React.useState(-1);
   const first = React.useRef(true);
 

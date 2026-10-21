@@ -1,7 +1,11 @@
 import { Header, Footer } from '../components/SiteChrome';
 import Faq from '../components/Faq';
 import WaitlistForm from '../components/WaitlistForm';
-import { Button, Lcd, SectionHeading, ProductCard, ColorBand } from '../components/web';
+import Slate from '../components/Slate';
+import Tape from '../components/Tape';
+import EasyDuckDemo from '../components/EasyDuckDemo';
+import DrumCrusherDemo from '../components/DrumCrusherDemo';
+import { Button, Lcd, PriceTag, SectionHeading, ProductCard, ColorBand } from '../components/web';
 import { products } from '../lib/site';
 import { homeFaq } from '../lib/faq';
 
@@ -12,50 +16,54 @@ export default function Home() {
     <div className="ratw" data-signature="coral">
       <Header />
       <main>
-        <section className="wrap hero">
+        <section className="wrap hero tape-host">
+          <Tape items={['PRECISION AUDIO TOOLS', '01 EASYDUCK', 'OUT NOW']} angle={-3} bottom="clamp(18px, 4.5vw, 72px)" />
           <div className="hero__copy">
-            <div className="eyebrow"><span className="dot" aria-hidden="true"></span>Reaper Audio Tools / Lab</div>
+            <div className="eyebrow"><span className="dot" aria-hidden="true"></span>Reaper Audio Tools</div>
             <h1 className="display-xl">Precision audio tools.</h1>
             <p className="lede">Plugins for every producer. Everyday tools to ignite your sound.</p>
             <div className="catalogue"><span>01 / EASYDUCK / OUT NOW</span><span>02 / DRUMCRUSHER / SOON</span></div>
             <div className="row">
-              <Button variant="color" tone="coral" size="lg" href="/plugins/easyduck">Shop 01</Button>
-              <Button variant="soft" size="lg" href="#plugins">Index</Button>
+              <Button variant="color" tone="coral" size="lg" href="/plugins/easyduck">Shop EasyDuck</Button>
+              <Button variant="soft" size="lg" href="#plugins">See all plugins</Button>
             </div>
           </div>
-          <a className="hero__media" href="/plugins/easyduck">
-            <img className="sticker sticker--tr" src="/images/sticker-calm.webp" width="624" height="640" alt="" />
-            <img src={duck.image} width="1600" height="761" alt="The EasyDuck plugin: Trigger envelope, four knobs, and a 16-step pattern" />
-            <div className="row" style={{ justifyContent: 'space-between', padding: '16px 8px 4px' }}>
+          <a className="hero__media" href="/plugins/easyduck" aria-label="EasyDuck, sidechain emulator">
+            <Slate tilt label="The EasyDuck plugin: Trigger envelope, four knobs and a 16-step pattern" sticker={<img className="sticker sticker--tr" src="/images/sticker-calm.webp" width="624" height="640" alt="" />}>
+              <EasyDuckDemo autoplay />
+            </Slate>
+            <div className="hero__caption">
               <span style={{ font: '600 17px/1.2 var(--font-ui)' }}>EasyDuck <span style={{ color: 'var(--ink-muted)', fontWeight: 400 }}>· {duck.kind}</span></span>
-              <span className="row" style={{ gap: 10 }}>
-                <Lcd size="price" small>{duck.priceLabel}</Lcd>
-                <Lcd>{duck.formats}</Lcd>
+              <span className="row" style={{ gap: 12, alignItems: 'baseline' }}>
+                <PriceTag price={duck.priceLabel} small />
+                <Lcd small>{duck.formats}</Lcd>
               </span>
             </div>
           </a>
         </section>
 
         <section id="plugins" className="wrap section stack" style={{ gap: 40, scrollMarginTop: 24 }}>
-          <SectionHeading eyebrow="Index" title="Plugins" lede="One job per plugin. VST3 / AU / AUv3 on Mac, Windows and iPad." />
+          <SectionHeading eyebrow="Plugins" title="One job each. Done properly." lede="VST3, AU and AUv3. Mac, Windows and iPad." />
           <div className="cards">
-            <ProductCard name={duck.name} tone={duck.tone} tagline={duck.tagline} image={duck.image} imageAlt="EasyDuck plugin" price={duck.priceLabel} formats={duck.formats} href="/plugins/easyduck" />
-            <ProductCard name={crusher.name} tone={crusher.tone} tagline={crusher.tagline} image={crusher.image} imageAlt="DrumCrusher concept" status="soon" href="#drumcrusher" />
+            <ProductCard name={duck.name} tone={duck.tone} tagline={duck.tagline} price={duck.priceLabel} formats={duck.formats} href="/plugins/easyduck" buyLabel="View EasyDuck"
+              media={<Slate label="EasyDuck plugin"><EasyDuckDemo /></Slate>} />
+            <ProductCard name={crusher.name} tone={crusher.tone} tagline={crusher.tagline} status="soon" href="#drumcrusher"
+              media={<Slate label="DrumCrusher concept"><DrumCrusherDemo animate={false} /></Slate>} />
           </div>
         </section>
 
-
         <div id="drumcrusher" style={{ scrollMarginTop: 24 }}>
-          <ColorBand tone="cyan" variant="full">
+          <ColorBand variant="screen" tone="cyan" className="tape-host">
+            <Tape items={['02 DRUMCRUSHER', 'IN DEVELOPMENT', 'REAPER AUDIO TOOLS']} tone="cyan" angle={4} top="14%" speed={90} />
             <div className="band-split">
               <div>
-                <div className="eyebrow" style={{ color: 'var(--on-color)' }}>02 / Soon</div>
-                <h2 className="h2-band" style={{ color: 'var(--on-color)' }}>DrumCrusher</h2>
-                <p style={{ margin: 0, fontSize: 20, lineHeight: 1.5, color: 'var(--on-color)', maxWidth: '40ch' }}>Drum bus processor. EQ, filters and faders in one window. Join the list to hear it first.</p>
+                <div className="eyebrow">02 / In development</div>
+                <h2 className="on-screen-title">DrumCrusher</h2>
+                <p style={{ margin: 0, fontSize: 20, lineHeight: 1.5, maxWidth: '40ch' }}>A drum bus processor. Three-band EQ, filters and faders in one window. Get one email when it ships.</p>
               </div>
               <div className="has-sticker">
                 <img className="sticker sticker--tr" src="/images/sticker-angry.webp" width="640" height="639" alt="" />
-                <WaitlistForm list="drumcrusher" title="Waitlist" lede="One email when it ships." button="Join" />
+                <WaitlistForm list="drumcrusher" title="Get notified" lede="One email on release day. Nothing else." button="Notify me" />
               </div>
             </div>
           </ColorBand>
