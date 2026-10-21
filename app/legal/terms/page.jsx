@@ -5,20 +5,18 @@ export const metadata = { title: 'Terms of Service' };
 
 export default function Terms() {
   return (
-    <LegalPage title="Terms of Service" updated="[date]">
+    <LegalPage title="Terms of Service" updated="October 21, 2026">
       <h2>Who we are</h2>
       <p>Reaper Audio Tools is operated by {site.sellerName}, a sole proprietor based in [city, state, country]. In these terms, "we" and "us" mean {site.sellerName} trading as Reaper Audio Tools, and "you" means the person buying or using our plugins. Contact: {site.supportEmail}.</p>
 
       <h2>Orders and payment</h2>
+      <p>Free plugins don't need payment. Enter your email and we send a license key and download links.</p>
       <p>Our order process is conducted by our online reseller Paddle.com. Paddle.com is the Merchant of Record for all our orders. Paddle provides all customer service inquiries and handles returns. Paddle's buyer terms apply to your purchase and are available at <a href="https://www.paddle.com/legal" rel="noopener">paddle.com/legal</a>.</p>
       <p>Prices are shown in US dollars. Sales tax or VAT is calculated and added by Paddle at checkout based on your location.</p>
 
       <h2>Your license</h2>
-      <p>When you buy a plugin, you get a personal, non-exclusive, non-transferable license to install and use it on up to [N] computers you own or control. You can use it to make music for any purpose, including commercial releases. Audio you make with our plugins belongs to you.</p>
+      <p>When you buy or download a plugin, including free plugins like EasyDuck, you get a personal, non-exclusive, non-transferable license to install and use it on up to {process.env.LICENSE_MAX_ACTIVATIONS || 2} computers you own or control. You can use it to make music for any purpose, including commercial releases. Audio you make with our plugins belongs to you.</p>
       <p>You may not resell, share, sublicense, rent or distribute the plugin or your license key, or reverse engineer, decompile or modify the plugin except where the law allows it.</p>
-
-      <h2>Trials</h2>
-      <p>[If you offer a trial: its length, what is limited during it, and what happens when it ends.]</p>
 
       <h2>Updates and support</h2>
       <p>[Say whether updates are free, for how long, and what support you offer.] Email {site.supportEmail} with the plugin name, your DAW and your operating system.</p>

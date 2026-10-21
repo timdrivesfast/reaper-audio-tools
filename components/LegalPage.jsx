@@ -9,7 +9,6 @@ export default function LegalPage({ title, updated, children }) {
         <article className="legal">
           <h1>{title}</h1>
           {updated && <p className="fine">Last updated {updated}</p>}
-          <p className="placeholder-note">Template. Replace every [bracketed] item and have it checked before launch. This is not legal advice.</p>
           {children}
         </article>
       </main>

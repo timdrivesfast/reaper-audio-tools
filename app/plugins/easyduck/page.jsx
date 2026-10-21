@@ -8,6 +8,10 @@ import { products, site } from '../../../lib/site';
 import { easyDuckFaq } from '../../../lib/faq';
 
 const duck = products.easyduck;
+const licenseComputers = process.env.LICENSE_MAX_ACTIVATIONS || '2';
+
+// Audio examples: add { title, drySrc, wetSrc } entries (files in /public/audio) and the section appears.
+const audioExamples = [];
 
 export const metadata = {
   title: 'EasyDuck, sidechain emulator plugin',
@@ -56,7 +60,7 @@ export default function EasyDuckPage() {
             <div className="stack" style={{ gap: 48 }}>
               <div style={{ display: 'grid', gap: 12, maxWidth: 720 }}>
                 <h2 className="on-screen-title">Try the interface</h2>
-                <p style={{ margin: 0, fontSize: 20, lineHeight: 1.5 }}>EasyDuck's interface, running in your browser. The controls work, but it doesn't make sound here. Audio examples are below.</p>
+                <p style={{ margin: 0, fontSize: 20, lineHeight: 1.5 }}>EasyDuck's interface, running in your browser. The controls work, but it doesn't make sound here.</p>
               </div>
               <Slate interactive label="EasyDuck interface" sticker={<img className="sticker sticker--out" src="/images/sticker-angry.webp" width="640" height="639" alt="" />}>
                 <EasyDuckDemo />
@@ -66,14 +70,14 @@ export default function EasyDuckPage() {
         </div>
 
         <div style={{ height: 'var(--space-9)' }} aria-hidden="true"></div>
-        <section className="wrap section split" style={{ alignItems: 'center' }}>
-          <SectionHeading title="Audio examples" lede="The same loop with EasyDuck off (DRY) and on (WET)." />
-          <div>
-            {/* Add drySrc and wetSrc (files in /public/audio) to make these play. */}
-            <AudioDemo title="[Loop name, BPM]" tone="coral" seed={7} />
-            <AudioDemo title="[Second loop, BPM]" tone="coral" seed={19} />
-          </div>
-        </section>
+        {audioExamples.length > 0 && (
+          <section className="wrap section split" style={{ alignItems: 'center' }}>
+            <SectionHeading title="Audio examples" lede="The same loop with EasyDuck off (DRY) and on (WET)." />
+            <div>
+              {audioExamples.map((a, i) => <AudioDemo key={a.title} title={a.title} drySrc={a.drySrc} wetSrc={a.wetSrc} tone="coral" seed={7 + i * 12} />)}
+            </div>
+          </section>
+        )}
 
         <section className="wrap section stack">
           <SectionHeading title="Controls" />
@@ -91,9 +95,9 @@ export default function EasyDuckPage() {
           <SectionHeading title="Specs" />
           <dl className="specs">
             <dt>Formats</dt><dd>{duck.formats.replace(/ · /g, ', ')}</dd>
-            <dt>Systems</dt><dd>[macOS + Windows versions]</dd>
-            <dt>Version</dt><dd>[v1.0]</dd>
-            <dt>License</dt><dd>[N] computers per license</dd>
+            <dt>Platforms</dt><dd>Mac (VST3, AU), Windows (VST3), iPad (AUv3)</dd>
+            <dt>Price</dt><dd>Free</dd>
+            <dt>License</dt><dd>{licenseComputers} computers per license</dd>
           </dl>
         </section>
 
