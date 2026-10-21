@@ -16,8 +16,7 @@ export default function Home() {
     <div className="ratw" data-signature="coral">
       <Header />
       <main>
-        <section className="wrap hero tape-host">
-          <Tape items={['PRECISION AUDIO TOOLS', '01 EASYDUCK', 'OUT NOW']} angle={-3} bottom="clamp(18px, 4.5vw, 72px)" />
+        <section className="wrap hero hero--no-tape">
           <div className="hero__copy">
             <div className="eyebrow"><span className="dot" aria-hidden="true"></span>Reaper Audio Tools</div>
             <h1 className="display-xl">Precision audio tools.</h1>
