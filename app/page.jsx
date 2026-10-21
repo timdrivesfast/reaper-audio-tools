@@ -2,7 +2,6 @@ import { Header, Footer } from '../components/SiteChrome';
 import Faq from '../components/Faq';
 import WaitlistForm from '../components/WaitlistForm';
 import Slate from '../components/Slate';
-import Tape from '../components/Tape';
 import EasyDuckDemo from '../components/EasyDuckDemo';
 import DrumCrusherDemo from '../components/DrumCrusherDemo';
 import { Button, Lcd, PriceTag, SectionHeading, ProductCard, ColorBand } from '../components/web';
@@ -52,8 +51,7 @@ export default function Home() {
         </section>
 
         <div id="drumcrusher" style={{ scrollMarginTop: 24 }}>
-          <ColorBand variant="screen" tone="cyan" className="tape-host">
-            <Tape items={['02 DRUMCRUSHER', 'IN DEVELOPMENT', 'REAPER AUDIO TOOLS']} tone="cyan" angle={4} top="14%" speed={90} />
+          <ColorBand variant="screen" tone="cyan">
             <div className="band-split">
               <div>
                 <div className="eyebrow">02 / In development</div>
