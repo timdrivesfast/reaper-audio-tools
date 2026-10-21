@@ -3,7 +3,6 @@ import Faq from '../../../components/Faq';
 import BuyButton from '../../../components/BuyButton';
 import EasyDuckDemo from '../../../components/EasyDuckDemo';
 import Slate from '../../../components/Slate';
-import Tape from '../../../components/Tape';
 import { Button, Lcd, PriceTag, SectionHeading, AudioDemo, FeatureTile, ColorBand } from '../../../components/web';
 import { products, site } from '../../../lib/site';
 import { easyDuckFaq } from '../../../lib/faq';
@@ -31,8 +30,7 @@ export default function EasyDuckPage() {
     <div className="ratw" data-signature="coral">
       <Header ticker={['01 EASYDUCK', 'SIDECHAIN', 'REAPER AUDIO TOOLS']} />
       <main>
-        <section className="wrap hero tape-host" style={{ paddingTop: 64 }}>
-          <Tape items={['01 EASYDUCK', 'SIDECHAIN EMULATOR', 'NO ROUTING']} angle={-3} bottom="clamp(18px, 4.5vw, 72px)" />
+        <section className="wrap hero" style={{ paddingTop: 64 }}>
           <div className="hero__copy">
             <a className="back" href="/#plugins">← ALL PLUGINS</a>
             <div className="eyebrow"><span className="dot" aria-hidden="true"></span>01 / {duck.kind}</div>

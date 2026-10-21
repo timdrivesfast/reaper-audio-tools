@@ -15,7 +15,7 @@ export default function Home() {
     <div className="ratw" data-signature="coral">
       <Header />
       <main>
-        <section className="wrap hero hero--no-tape">
+        <section className="wrap hero">
           <div className="hero__copy">
             <div className="eyebrow"><span className="dot" aria-hidden="true"></span>Reaper Audio Tools</div>
             <h1 className="display-xl">Precision audio tools.</h1>

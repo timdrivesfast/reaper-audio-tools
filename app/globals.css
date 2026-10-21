@@ -11,8 +11,7 @@ a { color: inherit; }
 /* Page layout */
 .wrap { max-width: 1248px; margin: 0 auto; padding-left: max(16px, 24px, env(safe-area-inset-left, 0px)); padding-right: max(16px, 24px, env(safe-area-inset-right, 0px)); }
 .section { padding-bottom: var(--space-9); }
-.hero { display: flex; flex-wrap: wrap; gap: var(--space-7); align-items: center; padding-top: 72px; padding-bottom: calc(var(--space-9) + 72px); }
-.hero--no-tape { padding-bottom: var(--space-9); }
+.hero { display: flex; flex-wrap: wrap; gap: var(--space-7); align-items: center; padding-top: 72px; padding-bottom: var(--space-9); }
 .hero__copy { flex: 1 1 380px; min-width: 0; display: flex; flex-direction: column; gap: 22px; }
 .hero__media { position: relative; flex: 1 1 560px; min-width: 0; text-decoration: none; color: var(--ink); display: block; }
 .hero__caption { display: flex; justify-content: space-between; align-items: baseline; gap: 14px; flex-wrap: wrap; padding-top: 28px; border-bottom: 1px solid rgba(24, 25, 28, .14); padding-bottom: 12px; }
@@ -60,11 +59,6 @@ a { color: inherit; }
 @keyframes slate-float { 0%, 100% { translate: 0 0; } 50% { translate: 0 -8px; } }
 @media (prefers-reduced-motion: reduce) { .slate--tilt .slate__stage { animation: none; } }
 
-/* Ticker tape: slapped diagonally across a section's background */
-.tape-host { position: relative; isolation: isolate; }
-.tape-host > :not(.tape), .tape ~ * { position: relative; z-index: 1; }
-.tape { position: absolute; left: 50%; width: 170vw; margin-left: -85vw; z-index: 0; pointer-events: none; box-shadow: 0 6px 14px rgba(24,25,28,.18); }
-.tape .ratw-ticker { height: 46px; font-size: 15px; letter-spacing: 2px; }
 
 /* Navy dot-grid sections */
 .ratw-band--screen .eyebrow { color: var(--screen-signal); }
@@ -92,8 +86,7 @@ main { overflow-x: clip; }
 @media (max-width: 640px) {
   .ratw-header__mark { height: 34px !important; }
   .ratw-header .ratw-btn--soft { height: 40px !important; padding: 0 14px !important; font-size: 12px; }
-  .hero { padding-top: 40px; padding-bottom: calc(var(--space-8) + 64px); }
-  .hero--no-tape { padding-bottom: var(--space-8); }
+  .hero { padding-top: 40px; padding-bottom: var(--space-8); }
   .section { padding-bottom: var(--space-8); }
   .display-xl { letter-spacing: -1.6px; }
 }
