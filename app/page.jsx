@@ -21,7 +21,7 @@ export default function Home() {
             <p className="lede">VST3, AU and AUv3 for Mac, Windows and iPad.</p>
             <div className="catalogue"><span>01 / EASYDUCK / OUT NOW</span><span>02 / DRUMCRUSHER / SOON</span></div>
             <div className="row">
-              <Button variant="color" tone="coral" size="lg" href="/plugins/easyduck#get">Get EasyDuck</Button>
+              <Button variant="color" tone="coral" size="lg" href="/plugins/easyduck">Get EasyDuck</Button>
               <Button variant="soft" size="lg" href="#plugins">All plugins</Button>
             </div>
           </div>
