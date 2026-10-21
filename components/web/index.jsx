@@ -76,7 +76,7 @@ export function SectionHeading({ eyebrow, title, lede, align = 'left', color, st
 }
 
 /** Catalogue tile for one plugin: square corners, a pale signature wash behind the plugin's hardware slate, and plain text below. */
-export function ProductCard({ name, tone = 'coral', tagline, media, image, imageAlt = '', formats = 'VST3 · AU · AUv3', price, was, badge, status = 'available', onBuy, href, buyLabel = 'Buy', style }) {
+export function ProductCard({ name, tone = 'coral', tagline, media, image, imageAlt = '', formats = 'VST3 · AU', price, was, badge, status = 'available', onBuy, href, buyLabel = 'Buy', style }) {
   const soon = status === 'soon';
   return (
     <article className="ratw ratw-product" {...toneAttrs(tone, style)}>
@@ -99,7 +99,7 @@ export function ProductCard({ name, tone = 'coral', tagline, media, image, image
 }
 
 /** The opening block of a product page, built like the plugin window: its ticker edge to edge, the Soft Studio ground, the pitch on the left and the plugin itself in a raised panel on the right. */
-export function ProductHero({ name, tone = 'coral', eyebrow, tagline, price, was, formats = 'VST3 · AU · AUv3', media, primaryLabel = 'Add to cart', secondaryLabel = 'Try free for 14 days', onPrimary, onSecondary, style }) {
+export function ProductHero({ name, tone = 'coral', eyebrow, tagline, price, was, formats = 'VST3 · AU', media, primaryLabel = 'Add to cart', secondaryLabel = 'Try free for 14 days', onPrimary, onSecondary, style }) {
   return (
     <section className="ratw" {...toneAttrs(tone, { background: 'var(--page)', ...style })}>
       <Ticker items={[name.toUpperCase(), 'REAPER AUDIO TOOLS']} tone={tone} />
