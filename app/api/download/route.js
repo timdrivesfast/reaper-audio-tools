@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { db } from '../../../lib/server/supabase';
 import { KEY_PATTERN, normalizeKey } from '../../../lib/server/license';
+import { products } from '../../../lib/site';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -32,7 +33,11 @@ export async function GET(request) {
   const file = (files || []).find((f) => f.name.toLowerCase().startsWith(platform + '.'));
   if (!file) return new NextResponse(`The ${platform} installer isn't uploaded yet.`, { status: 404 });
 
-  const { data: signed, error: signErr } = await supabase.storage.from('installers').createSignedUrl(`${product}/${file.name}`, 600, { download: true });
+  // Save as e.g. EasyDuck-macOS.pkg rather than the stored mac.pkg.
+  const ext = file.name.slice(file.name.indexOf('.'));
+  const label = platform === 'mac' ? 'macOS' : platform === 'windows' ? 'Windows-Setup' : platform;
+  const downloadName = `${(products[product] && products[product].name) || product}-${label}${ext}`;
+  const { data: signed, error: signErr } = await supabase.storage.from('installers').createSignedUrl(`${product}/${file.name}`, 600, { download: downloadName });
   if (signErr) return new NextResponse('Downloads are unavailable right now. Try again in a minute.', { status: 500 });
   return NextResponse.redirect(signed.signedUrl, 302);
 }
