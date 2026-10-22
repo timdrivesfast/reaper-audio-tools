@@ -17,8 +17,8 @@ export default function Home() {
       <main>
         <section className="wrap hero">
           <div className="hero__copy">
-            <h1 className="display-xl">Audio plugins</h1>
-            <p className="lede">VST3 and AU plugins for Mac and Windows.</p>
+            <h1 className="display-xl">Simple tools for making beats.</h1>
+            <p className="lede">VST3 and AU plugins for Mac and Windows. Fewer knobs, same sound.</p>
             <div className="catalogue"><span>01 / EASYDUCK / OUT NOW</span><span>02 / DRUMCRUSHER / SOON</span></div>
             <div className="row">
               <Button variant="color" tone="coral" size="lg" href="/plugins/easyduck">Get EasyDuck</Button>
