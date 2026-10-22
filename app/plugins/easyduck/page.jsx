@@ -6,12 +6,17 @@ import Slate from '../../../components/Slate';
 import { Button, Lcd, PriceTag, SectionHeading, AudioDemo, FeatureTile, ColorBand } from '../../../components/web';
 import { products, site } from '../../../lib/site';
 import { easyDuckFaq } from '../../../lib/faq';
+import { audioPeaks } from '../../../lib/audioPeaks';
 
 const duck = products.easyduck;
 const licenseComputers = process.env.LICENSE_MAX_ACTIVATIONS || '2';
 
-// Audio examples: add { title, drySrc, wetSrc } entries (files in /public/audio) and the section appears.
-const audioExamples = [];
+// Audio examples. WET is the DRY loop with the chords and bass run through the EasyDuck
+// v1.2.0 DSP at the named preset; the drums are the same in both. Files in /public/audio.
+const audioExamples = [
+  { title: 'Deep House preset, 124 BPM', drySrc: '/audio/easyduck/house-dry.mp3', wetSrc: '/audio/easyduck/house-wet.mp3', peaks: audioPeaks.house },
+  { title: 'Techno preset, 130 BPM', drySrc: '/audio/easyduck/techno-dry.mp3', wetSrc: '/audio/easyduck/techno-wet.mp3', peaks: audioPeaks.techno },
+];
 
 export const metadata = {
   title: 'EasyDuck, sidechain emulator plugin',
@@ -72,9 +77,9 @@ export default function EasyDuckPage() {
         <div style={{ height: 'var(--space-9)' }} aria-hidden="true"></div>
         {audioExamples.length > 0 && (
           <section className="wrap section split" style={{ alignItems: 'center' }}>
-            <SectionHeading title="Audio examples" lede="The same loop with EasyDuck off (DRY) and on (WET)." />
+            <SectionHeading title="Audio examples" lede="The same loop with EasyDuck off (DRY) and on (WET). It's on the chords and bass. The drums are untouched." />
             <div>
-              {audioExamples.map((a, i) => <AudioDemo key={a.title} title={a.title} drySrc={a.drySrc} wetSrc={a.wetSrc} tone="coral" seed={7 + i * 12} />)}
+              {audioExamples.map((a, i) => <AudioDemo key={a.title} title={a.title} drySrc={a.drySrc} wetSrc={a.wetSrc} peaks={a.peaks} tone="coral" seed={7 + i * 12} />)}
             </div>
           </section>
         )}

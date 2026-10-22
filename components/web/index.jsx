@@ -124,30 +124,55 @@ export function ProductHero({ name, tone = 'coral', eyebrow, tagline, price, was
 
 function seeded(seed) { let s = seed; return () => { s = (s * 9301 + 49297) % 233280; return s / 233280; }; }
 /** Before/after audio demo on the navy screen: play button, DRY/WET toggle and a waveform that reacts. */
-export function AudioDemo({ title = 'House loop', tone = 'coral', drySrc, wetSrc, bars = 72, seed = 7, style }) {
+export function AudioDemo({ title = 'House loop', tone = 'coral', drySrc, wetSrc, peaks, bars = 72, seed = 7, style }) {
   const [playing, setPlaying] = React.useState(false);
   const [wet, setWet] = React.useState(true);
   const [t, setT] = React.useState(0);
-  const audio = React.useRef(null);
+  const players = React.useRef(null);
+  const id = React.useRef(Math.random());
+  const real = !!(drySrc && wetSrc);
+  const count = peaks ? peaks.dry.length : bars;
   const heights = React.useMemo(() => { const r = seeded(seed); return Array.from({ length: bars }, (_, i) => 0.25 + r() * 0.75 * (i % 8 === 0 ? 1 : 0.7)); }, [bars, seed]);
+  // Both versions play together in sync; DRY/WET only switches which one you hear.
+  const ensure = () => {
+    if (!players.current && real) {
+      const make = (src) => { const a = new Audio(src); a.loop = true; a.preload = 'auto'; return a; };
+      players.current = { dry: make(drySrc), wet: make(wetSrc) };
+    }
+    return players.current;
+  };
   React.useEffect(() => {
-    if (!playing) return undefined;
+    const p = players.current; if (!p) return;
+    p.dry.muted = wet; p.wet.muted = !wet;
+  }, [wet, playing]);
+  React.useEffect(() => {
+    const stopOthers = (e) => { if (e.detail !== id.current) setPlaying(false); };
+    window.addEventListener('ratw-audio-play', stopOthers);
+    return () => window.removeEventListener('ratw-audio-play', stopOthers);
+  }, []);
+  React.useEffect(() => {
+    const p = real ? ensure() : null;
+    if (!playing) { if (p) { p.dry.pause(); p.wet.pause(); } return undefined; }
+    window.dispatchEvent(new CustomEvent('ratw-audio-play', { detail: id.current }));
+    if (p) {
+      p.dry.muted = wet; p.wet.muted = !wet;
+      p.wet.currentTime = p.dry.currentTime;
+      Promise.all([p.dry.play(), p.wet.play()]).catch(() => setPlaying(false));
+    }
     let raf; const start = performance.now() - t * 4000;
-    const tick = (now) => { setT(((now - start) / 4000) % 1); raf = requestAnimationFrame(tick); };
+    const tick = (now) => {
+      if (p && p.dry.duration) {
+        if (Math.abs(p.wet.currentTime - p.dry.currentTime) > 0.05) p.wet.currentTime = p.dry.currentTime;
+        setT(p.dry.currentTime / p.dry.duration);
+      } else if (!p) setT(((now - start) / 4000) % 1);
+      raf = requestAnimationFrame(tick);
+    };
     raf = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(raf);
   }, [playing]);
-  React.useEffect(() => {
-    const src = wet ? wetSrc : drySrc;
-    if (!src) return undefined;
-    if (!audio.current) audio.current = new Audio();
-    const a = audio.current; const pos = a.currentTime || 0;
-    a.src = src; a.loop = true; a.currentTime = pos;
-    if (playing) a.play().catch(() => setPlaying(false)); else a.pause();
-    return undefined;
-  }, [wet, playing, drySrc, wetSrc]);
-  React.useEffect(() => () => { if (audio.current) audio.current.pause(); }, []);
-  const W = 600, H = 150, bw = W / bars;
+  React.useEffect(() => () => { const p = players.current; if (p) { p.dry.pause(); p.wet.pause(); } }, []);
+  const pt = peaks && peaks.repeats ? (t * peaks.repeats) % 1 : t;
+  const W = 600, H = 150, bw = W / count;
   return (
     <div className="ratw ratw-card" {...toneAttrs(tone, { padding: 'var(--space-5)', display: 'grid', gap: 'var(--space-4)', ...style })}>
       <div style={{ display: 'flex', alignItems: 'center', gap: 14, flexWrap: 'wrap' }}>
@@ -166,14 +191,15 @@ export function AudioDemo({ title = 'House loop', tone = 'coral', drySrc, wetSrc
       <div className="ratw-screen" style={{ aspectRatio: W + ' / ' + H, maxWidth: '100%' }}>
         <svg viewBox={'0 0 ' + W + ' ' + H} preserveAspectRatio="none" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%' }} aria-hidden="true">
           <line x1="0" y1={H / 2} x2={W} y2={H / 2} stroke="rgba(255,255,255,.16)" strokeWidth="1"></line>
-          {heights.map((h, i) => {
-            const beat = i % 8;
-            const duck = wet ? (beat === 0 ? 0.25 : Math.min(1, 0.25 + beat * 0.16)) : 1;
-            const v = h * duck * (H * 0.42);
-            const past = i / bars <= t && (playing || t > 0);
-            return <rect key={i} x={i * bw + bw * 0.2} y={H / 2 - v} width={bw * 0.6} height={v * 2} rx={bw * 0.3} fill="var(--screen-signal)" opacity={past ? 1 : 0.45}></rect>;
+          {Array.from({ length: count }, (_, i) => {
+            let h;
+            if (peaks) h = (wet ? peaks.wet : peaks.dry)[i];
+            else { const beat = i % 8; h = heights[i] * (wet ? (beat === 0 ? 0.25 : Math.min(1, 0.25 + beat * 0.16)) : 1); }
+            const v = Math.max(1, h * (H * 0.44));
+            const past = i / count <= pt && (playing || t > 0);
+            return <rect key={i} x={i * bw + bw * 0.2} y={H / 2 - v} width={bw * 0.6} height={v * 2} rx={Math.min(bw * 0.3, 3)} fill="var(--screen-signal)" opacity={past ? 1 : 0.45}></rect>;
           })}
-          {(playing || t > 0) && <rect x={t * W} y="0" width="2" height={H} fill="var(--screen-trace)"></rect>}
+          {(playing || t > 0) && <rect x={pt * W} y="0" width="2" height={H} fill="var(--screen-trace)"></rect>}
         </svg>
       </div>
     </div>
