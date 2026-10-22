@@ -49,7 +49,7 @@ Until a client token and price ID are set, the Buy button shows "Checkout opens 
 - **Seller name:** `NEXT_PUBLIC_SELLER_NAME` must match your Paddle account exactly.
 - **Plugin activation (JUCE side):** the server is ready (see Licensing below). Each plugin still needs an activation screen that calls `/api/license/activate` and checks the signed license.
 - **Audio demos:** put dry and wet MP3s of the same loop in `public/audio/` and pass `drySrc` and `wetSrc` to the `AudioDemo` components in `app/plugins/easyduck/page.jsx`.
-- **Waitlist:** set `WAITLIST_WEBHOOK_URL` to a Zapier, Make or email-tool webhook. Without it, signups only appear in the Vercel logs.
+- **Waitlist:** signups are saved to the Supabase `waitlist` table (run `supabase/migrations/0002_waitlist.sql`). Optionally set `WAITLIST_WEBHOOK_URL` to also forward them to an email tool.
 - **Logo:** the header uses the reaper ghost icon until there's a Reaper Audio Tools logo file.
 - **DrumCrusher image:** replace `public/images/drumcrusher-concept.webp` when the real UI exists.
 - **EasyDuck numbers:** check the control ranges in `lib/faq.js` against the shipped plugin.
