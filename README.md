@@ -23,6 +23,13 @@ npm run dev                  # http://localhost:3000
 
 EasyDuck is free (`free: true` in `lib/site.js`). Its page has an email form that posts to `/api/free-license`, which creates one license per email, emails the key and download links through Resend, and forwards the address to `WAITLIST_WEBHOOK_URL` (list `easyduck-free`) if that's set. It needs the same Supabase and Resend settings as paid orders.
 
+## Plugin updates and support links
+
+The plugins' Settings menu calls two site URLs (set in each plugin repo's `plugin/Source/Brand.h`):
+
+- **Check for updates:** `GET /api/updates/<product>` returns `{"version":"x.y.z","url":"<site>/plugins/<product>"}`. The version is read from `installers/<product>/latest.json` in Supabase Storage, which the plugin's release workflow writes along with the installers. Set `EASYDUCK_LATEST_VERSION` in Vercel to override it.
+- **Contact support:** `/contact`.
+
 ## Connect Paddle
 
 1. Create a Paddle account and a sandbox account at sandbox-vendors.paddle.com.
