@@ -3,6 +3,7 @@ import { db } from '../../../lib/server/supabase';
 import { generateLicenseKey, maxActivations } from '../../../lib/server/license';
 import { sendLicenseEmail } from '../../../lib/server/email';
 import { products } from '../../../lib/site';
+import { allowEmailSend, clientIp, TOO_MANY } from '../../../lib/server/ratelimit';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -28,6 +29,9 @@ export async function POST(request) {
   try { supabase = db(); } catch (err) {
     console.error('[free-license] db', err);
     return NextResponse.json({ error: "Downloads aren't set up yet. Try again later." }, { status: 503 });
+  }
+  if (!(await allowEmailSend({ kind: 'free-license', email, ip: clientIp(request) }))) {
+    return NextResponse.json({ error: TOO_MANY }, { status: 429 });
   }
   const { data: existing } = await supabase.from('licenses').select('key')
     .eq('product', product).eq('status', 'active').eq('email', email).limit(1).maybeSingle();

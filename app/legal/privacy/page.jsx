@@ -15,6 +15,7 @@ export default function Privacy() {
         <li><strong>Purchases:</strong> Paddle collects your name, email, billing address and payment details to process your order. We receive your name, email, country and order details from Paddle. We never see your full card number.</li>
         <li><strong>License activation:</strong> your license key and an ID and name for your computer, so we can count how many computers use the license.</li>
         <li><strong>Signing in:</strong> when you sign in to see your plugins, we set one cookie that keeps you signed in for 30 days. It holds your email address and nothing else.</li>
+        <li><strong>Abuse protection:</strong> when a form sends an email, we keep the address and a one-way hash of your IP address for a short time to stop the forms being used for spam.</li>
         <li><strong>Site analytics:</strong> we don't use analytics or tracking cookies on this site.</li>
       </ul>
 

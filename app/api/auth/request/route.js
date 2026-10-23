@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { isEmail, loginToken, normalizeEmail } from '../../../../lib/server/auth';
 import { sendSignInEmail } from '../../../../lib/server/email';
 import { site } from '../../../../lib/site';
+import { allowEmailSend, clientIp, TOO_MANY } from '../../../../lib/server/ratelimit';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -13,6 +14,9 @@ export async function POST(request) {
   const email = normalizeEmail(body?.email);
   if (!isEmail(email)) return NextResponse.json({ error: 'That email address looks wrong.' }, { status: 400 });
   const next = typeof body?.next === 'string' && /^\/account(\?[\w=&%-]*)?$/.test(body.next) ? body.next : '/account';
+  if (!(await allowEmailSend({ kind: 'signin', email, ip: clientIp(request) }))) {
+    return NextResponse.json({ error: TOO_MANY }, { status: 429 });
+  }
   const link = `${site.url}/api/auth/verify?token=${encodeURIComponent(loginToken(email))}&next=${encodeURIComponent(next)}`;
   try {
     await sendSignInEmail({ to: email, link });
