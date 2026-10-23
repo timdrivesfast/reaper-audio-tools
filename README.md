@@ -112,3 +112,12 @@ Supabase → Table Editor → `licenses`, filter by email. To reset someone's co
 ## Adding a plugin page
 
 Copy `app/plugins/easyduck/` to a new folder, add the product to `lib/site.js` with its signature colour as `tone` (DrumCrusher is `cyan`), and add a Paddle price ID env var for it.
+
+
+## Accounts and updates
+
+- **Sign in:** `/account`. People enter their email and get a sign-in link (Resend). The link sets a signed cookie for 30 days. No passwords, no user table: an account is every active license on that email. Optional `AUTH_SECRET` signs the links and cookies; without it one is derived from `SUPABASE_SERVICE_ROLE_KEY`.
+- **Account page:** each plugin they own with its license key, the latest version and its notes, Mac and Windows downloads, and for paid plugins the activated computers with a Remove button.
+- **Update check:** the plugins' Check for updates calls `/api/updates/<slug>`, which returns the latest version and links to `/account?product=<slug>`.
+- **Update emails:** run `supabase/migrations/0003_accounts.sql` once. `/api/releases/check` emails every owner when `installers/<slug>/latest.json` has a version newer than any already announced, once per version, with an unsubscribe link. The plugin release workflow calls it after uploading; a daily Vercel cron (`vercel.json`) is the backup. The first run for a plugin records its current version without sending.
+- **Release notes:** the release workflow copies the GitHub release text into `latest.json` as `notes`. The account page and the update email show it.
