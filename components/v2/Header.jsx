@@ -4,7 +4,7 @@ import React from 'react';
 import { nav } from '../../lib/site';
 
 /** Sticky indigo header: typemark, links, and a menu button on small screens. */
-export default function Header({ cta = { label: 'Get EasyDuck', href: '/plugins/easyduck' } }) {
+export default function Header({ cta = { label: 'Shop', href: '/plugins' } }) {
   const [open, setOpen] = React.useState(false);
   const ref = React.useRef(null);
   React.useEffect(() => {

@@ -1,5 +1,6 @@
 import { Shell, Frame } from '../components/v2/Chrome';
 import BuyButton from '../components/v2/BuyButton';
+import PluginCard from '../components/v2/PluginCard';
 import Faq from '../components/v2/Faq';
 import NotifyForm from '../components/v2/NotifyForm';
 import { products, site } from '../lib/site';
@@ -46,19 +47,7 @@ export default function Home() {
           <p className="v-body" style={{ maxWidth: 380 }}>EasyDuck is free. DrumCrusher is $29. Both come with Mac and Windows installers.</p>
         </div>
         <div className="v-grid2">
-          {[duck, crusher].map((p, i) => (
-            <article key={p.slug} id={p.slug} className="v-card">
-              <div className="v-card__media v-stone" style={{ backgroundPosition: i ? '70% 60%' : '30% 40%' }}><Frame src={p.ui} alt={`${p.name} plugin`} /></div>
-              <div className="v-card__body">
-                <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}><h3 className="v-h3">{p.name}</h3><span className="v-tag">{p.free ? 'FREE' : p.priceLabel}</span></div>
-                <p className="v-body">{p.tagline}</p>
-                <div className="v-card__foot">
-                  <span className="v-mono" style={{ fontSize: 12, letterSpacing: '.06em', color: 'var(--v-ink-4)' }}>{p.formats}</span>
-                  <a className="v-btn v-btn--dark v-btn--md" href={`/plugins/${p.slug}`}>Get {p.name}</a>
-                </div>
-              </div>
-            </article>
-          ))}
+          {[duck, crusher].map((p, i) => <PluginCard key={p.slug} product={p} index={i} />)}
         </div>
       </section>
 

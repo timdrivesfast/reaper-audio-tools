@@ -101,6 +101,7 @@
 
 /* Cards */
 .v-grid2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 420px), 1fr)); gap: 24px; }
+.v-grid3 { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 360px), 1fr)); gap: 24px; }
 .v-card { background: #fff; border-radius: 24px; overflow: hidden; box-shadow: 0 0 0 1px var(--v-card-line); display: grid; grid-template-rows: subgrid; grid-row: span 2; row-gap: 0; }
 .v-card__media { padding: 9% 8% 10%; display: flex; align-items: center; }
 .v-card__media > * { width: 100%; }
