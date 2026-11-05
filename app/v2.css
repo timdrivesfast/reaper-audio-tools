@@ -170,3 +170,14 @@
 .v-dark .v-eyebrow { color: var(--v-on-dark-2); }
 .v-dark .v-body { color: #C9CEDC; }
 body:has(.v2) { background: var(--v-bg); font-family: var(--v-sans); color: var(--v-ink); }
+
+/* Home: Basic vs Pro suite panels */
+.v-suite { border-radius: 24px; padding: clamp(28px, 4vw, 44px); display: flex; flex-direction: column; gap: 14px; min-height: 340px; color: #111216; box-shadow: 0 0 0 1px var(--v-card-line); transition: transform .2s ease; }
+.v-suite.v-dark { color: #fff; }
+.v-suite:hover { transform: translateY(-2px); }
+.v-suite__list { list-style: none; margin: 6px 0 10px; padding: 0; display: grid; gap: 0; }
+.v-suite__list li { display: flex; justify-content: space-between; padding: 12px 0; border-top: 1px solid rgba(17,18,22,.14); font-weight: 500; }
+.v-dark .v-suite__list li { border-top-color: rgba(255,255,255,.16); }
+.v-suite__list .v-mono { font-size: 13px; letter-spacing: .06em; }
+.v-dark .v-link { color: #fff; }
+@media (prefers-reduced-motion: reduce) { .v-suite { transition: none; } .v-suite:hover { transform: none; } }

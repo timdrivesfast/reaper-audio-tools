@@ -6,8 +6,13 @@ import NotifyForm from '../components/v2/NotifyForm';
 import { products, site } from '../lib/site';
 import { homeFaq } from '../lib/faq';
 
+const suites = [
+  { id: 'basic', name: 'Basic Suite', title: 'Quick to learn', body: 'A light interface and a handful of controls per plugin. Load it, turn two knobs, move on.', href: '/plugins#basic', cta: 'See the Basic Suite' },
+  { id: 'pro', name: 'Pro Suite', title: 'Deeper control', body: 'A dark interface with more to dig into, for performance and sound design.', href: '/pro', cta: 'Explore the Pro Suite', dark: true },
+];
+
 export default function Home() {
-  const duck = products.easyduck, crusher = products.drumcrusher, modfx = products['modfx-pro'];
+  const crusher = products.drumcrusher;
   const org = { '@context': 'https://schema.org', '@type': 'Organization', name: site.name, url: site.url, logo: `${site.url}/images/v2/typemark.png` };
   return (
     <Shell>
@@ -38,30 +43,46 @@ export default function Home() {
         </div>
       </section>
 
-      <section id="plugins" className="v-wrap v-section" style={{ scrollMarginTop: 90 }}>
-        <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', gap: 20, flexWrap: 'wrap', marginBottom: 36 }}>
+      <section id="why" className="v-wrap v-section">
+        <div className="v-grid2" style={{ gap: 'clamp(24px, 5vw, 72px)', alignItems: 'start' }}>
           <div style={{ display: 'grid', gap: 14 }}>
-            <div className="v-eyebrow">Basic Suite</div>
-            <h2 className="v-h2">Plugins</h2>
+            <div className="v-eyebrow">Why Reaper</div>
+            <h2 className="v-h2">Pro sound without the setup.</h2>
           </div>
-          <p className="v-body" style={{ maxWidth: 380 }}>EasyDuck is free. DrumCrusher is $25. Both come with Mac and Windows installers.</p>
-        </div>
-        <div className="v-grid2">
-          {[duck, crusher].map((p, i) => <PluginCard key={p.slug} product={p} index={i} />)}
+          <div style={{ display: 'grid', gap: 16, maxWidth: 520 }}>
+            <p className="v-body" style={{ fontSize: 18 }}>Each plugin does one job. You get the controls you'd reach for anyway, labeled in plain words, so you can get a finished sound without reading a manual or building a routing chain.</p>
+            <p className="v-body" style={{ fontSize: 18 }}>VST3 and AU for Mac and Windows. Pay once, keep it. No subscription.</p>
+          </div>
         </div>
       </section>
 
-      <section id="pro" className="v-wrap v-section">
-        <a href="/pro" className="v-band v-stone" style={{ backgroundPosition: '60% 30%', color: '#111216' }}>
-          <div style={{ flex: '1 1 320px', display: 'flex', flexDirection: 'column', gap: 18, maxWidth: 440 }}>
-            <div className="v-eyebrow">Pro Suite</div>
-            <h2 className="v-h2">{modfx.name}</h2>
-            <p className="v-lede" style={{ fontSize: 17 }}>{modfx.tagline}</p>
-            <span className="v-btn v-btn--dark v-btn--lg" style={{ alignSelf: 'flex-start', marginTop: 8 }}>Explore the Pro Suite <span className="v-mono">→</span></span>
-          </div>
-          <div style={{ flex: '1.5 1 440px', minWidth: 0 }}><Frame src={modfx.ui} alt="ModFX Pro plugin" /></div>
-        </a>
+      <section id="suites" className="v-wrap v-section">
+        <div style={{ display: 'grid', gap: 14, marginBottom: 36 }}><div className="v-eyebrow">Two suites</div><h2 className="v-h2">Basic and Pro</h2></div>
+        <div className="v-grid2">
+          {suites.map((s) => (
+            <a key={s.id} href={s.href} className={`v-suite ${s.dark ? 'v-dark' : 'v-stone'}`}>
+              <div className="v-eyebrow">{s.name}</div>
+              <h3 className="v-h3" style={{ fontSize: 30 }}>{s.title}</h3>
+              <p className="v-body">{s.body}</p>
+              <ul className="v-suite__list">
+                {Object.values(products).filter((p) => p.suite === s.id).map((p) => (
+                  <li key={p.slug}><span>{p.name}</span><span className="v-mono">{p.free ? 'FREE' : p.priceLabel}</span></li>
+                ))}
+              </ul>
+              <span className="v-link" style={{ marginTop: 'auto' }}>{s.cta} <span className="v-mono">→</span></span>
+            </a>
+          ))}
+        </div>
       </section>
+
+      <section id="plugins" className="v-wrap v-section" style={{ scrollMarginTop: 90 }}>
+        <div style={{ display: 'grid', gap: 14, marginBottom: 36 }}><div className="v-eyebrow">Plugins</div><h2 className="v-h2">All plugins</h2></div>
+        <div className="v-grid3">
+          {Object.values(products).map((p, i) => <PluginCard key={p.slug} product={p} index={i} />)}
+        </div>
+      </section>
+
+      <Faq items={homeFaq} />
 
       <section id="notify" className="v-wrap v-section">
         <div className="v-grid2" style={{ gap: 'clamp(32px, 5vw, 72px)', alignItems: 'center' }}>
@@ -78,8 +99,6 @@ export default function Home() {
           </div>
         </div>
       </section>
-
-      <Faq items={homeFaq} />
     </Shell>
   );
 }
