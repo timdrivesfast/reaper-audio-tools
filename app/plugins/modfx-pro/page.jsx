@@ -8,7 +8,7 @@ const p = products['modfx-pro'];
 
 export const metadata = {
   title: 'ModFX Pro, performance FX plugin',
-  description: 'ModFX Pro is a performance FX board for VST3 and AU: 16 knob slots, 45 effects and an XY pad for processing, drops and scratching. $29.',
+  description: 'ModFX Pro is a performance FX board for VST3 and AU: 16 knob slots, 45 effects and an XY pad for processing, drops and scratching. $50.',
   openGraph: { images: [p.ui] },
 };
 
