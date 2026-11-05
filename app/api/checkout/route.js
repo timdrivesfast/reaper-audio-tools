@@ -28,6 +28,8 @@ export async function POST(request) {
       success_url: `${site.url}/thanks?plugin=${encodeURIComponent(slug)}&session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${site.url}/plugins/${slug}`,
       metadata: { product: slug },
+      // Tags these sessions in the Stripe Dashboard so the store's checkout can be told apart.
+      integration_identifier: 'rat-store-qkvmbzrt',
     });
     return NextResponse.json({ url: session.url });
   } catch (err) {

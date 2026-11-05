@@ -34,8 +34,8 @@ The plugins' Settings menu calls two site URLs (set in each plugin repo's `plugi
 
 1. Stripe Dashboard (start in test mode): **Settings → Managed Payments** → activate it. That makes Stripe (through Link) the merchant of record, so it handles sales tax and VAT. To sell as yourself instead, skip this and set `STRIPE_MANAGED_PAYMENTS=false`.
 2. **Product catalog → Create product** for DrumCrusher and ModFX Pro: one-time price $29 USD, and a product tax code marked "Eligible for Managed Payments" (downloadable software). Copy each price ID (`price_…`) into `STRIPE_PRICE_DRUMCRUSHER` and `STRIPE_PRICE_MODFX_PRO`.
-3. **Developers → API keys** → Secret key → `STRIPE_SECRET_KEY`.
-4. **Developers → Webhooks → Add endpoint**: URL `https://www.reaperaudiotools.com/api/stripe/webhook`, events `checkout.session.completed`, `checkout.session.async_payment_succeeded`, `charge.refunded`, `charge.dispute.created`. Its signing secret (`whsec_…`) → `STRIPE_WEBHOOK_SECRET`.
+3. **Developers → API keys → Create restricted key** with only **Checkout Sessions: Write** (everything else None). Put the `rk_…` key in `STRIPE_SECRET_KEY`. A restricted key can only start checkouts, so a leak can't touch the rest of the account.
+4. **Developers → Webhooks → Add endpoint**: URL `https://www.reaperaudiotools.com/api/stripe/webhook`, events `checkout.session.completed`, `checkout.session.async_payment_succeeded`, `checkout.session.async_payment_failed`, `charge.refunded`, `charge.dispute.created`. Its signing secret (`whsec_…`) → `STRIPE_WEBHOOK_SECRET`.
 5. Run `supabase/migrations/0005_stripe.sql` in Supabase.
 6. Buy a plugin on the site with the test card `4242 4242 4242 4242`. The license email should arrive and the key should activate the plugin.
 7. Go live: repeat steps 2 to 4 in live mode and swap in the live values.

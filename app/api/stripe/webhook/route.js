@@ -9,8 +9,8 @@ export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
 
 // Stripe → Developers → Webhooks → Add endpoint: https://www.reaperaudiotools.com/api/stripe/webhook
-// Events: checkout.session.completed, checkout.session.async_payment_succeeded, charge.refunded,
-// charge.dispute.created. Copy the signing secret (whsec_…) into STRIPE_WEBHOOK_SECRET.
+// Events: checkout.session.completed, checkout.session.async_payment_succeeded,
+// checkout.session.async_payment_failed, charge.refunded, charge.dispute.created. Copy the signing secret (whsec_…) into STRIPE_WEBHOOK_SECRET.
 export async function POST(request) {
   const raw = await request.text();
   if (!verifyStripeSignature(raw, request.headers.get('stripe-signature'), process.env.STRIPE_WEBHOOK_SECRET)) {
@@ -25,6 +25,8 @@ export async function POST(request) {
     const obj = event.data?.object || {};
     if (event.type === 'checkout.session.completed' || event.type === 'checkout.session.async_payment_succeeded') {
       if (obj.payment_status === 'paid') await issueLicense(supabase, obj);
+    } else if (event.type === 'checkout.session.async_payment_failed') {
+      console.warn('[stripe webhook] delayed payment failed, no license issued', obj.id);
     } else if (event.type === 'charge.refunded') {
       await revoke(supabase, obj.payment_intent, 'refund');
     } else if (event.type === 'charge.dispute.created') {
