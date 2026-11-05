@@ -1,74 +1,95 @@
-import { Header, Footer } from '../components/SiteChrome';
-import Faq from '../components/Faq';
-import WaitlistForm from '../components/WaitlistForm';
-import Slate from '../components/Slate';
-import EasyDuckDemo from '../components/EasyDuckDemo';
-import DrumCrusherDemo from '../components/DrumCrusherDemo';
-import { Button, Lcd, PriceTag, SectionHeading, ProductCard, ColorBand } from '../components/web';
-import { products } from '../lib/site';
+import { Shell, Frame } from '../components/v2/Chrome';
+import Faq from '../components/v2/Faq';
+import NotifyForm from '../components/v2/NotifyForm';
+import { products, site } from '../lib/site';
 import { homeFaq } from '../lib/faq';
 
 export default function Home() {
-  const duck = products.easyduck;
-  const crusher = products.drumcrusher;
+  const duck = products.easyduck, crusher = products.drumcrusher, modfx = products['modfx-pro'];
+  const org = { '@context': 'https://schema.org', '@type': 'Organization', name: site.name, url: site.url, logo: `${site.url}/images/v2/typemark.png` };
   return (
-    <div className="ratw" data-signature="coral">
-      <Header />
-      <main>
-        <section className="wrap hero">
-          <div className="hero__copy">
-            <h1 className="display-xl">Simple tools for making beats.</h1>
-            <p className="lede">Intuitive plugins for complex sounds. VST3 and AU for Mac and Windows.</p>
-            <div className="catalogue"><span>01 / EASYDUCK / OUT NOW</span><span>02 / DRUMCRUSHER / SOON</span></div>
-            <div className="row">
-              <Button variant="color" tone="coral" size="lg" href="/plugins/easyduck">Get EasyDuck</Button>
-              <Button variant="soft" size="lg" href="#plugins">All plugins</Button>
+    <Shell>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(org) }} />
+
+      <section id="top" className="v-hero v-stone">
+        <div className="v-wrap v-hero__in">
+          <div className="v-hero__copy">
+            <div className="v-row" style={{ gap: 10 }}>
+              {Object.values(products).map((p) => <div key={p.slug} className="v-chip"><span className="v-chip__dot" />{p.code} / {p.name.toUpperCase()} / OUT NOW</div>)}
+            </div>
+            <h1 className="v-h1">Intuitive tools for <span style={{ color: 'var(--v-indigo)' }}>complex sounds.</span></h1>
+            <p className="v-lede" style={{ maxWidth: 440 }}>Crafted by a team of audio engineers and industry professionals, Reaper Audio Tools are built to provide professional mixing solutions with an incredibly accessible form factor.</p>
+            <div className="v-row">
+              <a className="v-btn v-btn--dark v-btn--lg" href="/plugins/easyduck">Get EasyDuck free</a>
+              <a className="v-link" href="/pro">Explore Pro <span className="v-mono">→</span></a>
             </div>
           </div>
-          <a className="hero__media" href="/plugins/easyduck" aria-label="EasyDuck, sidechain emulator">
-            <Slate tilt label="The EasyDuck plugin: Trigger envelope, four knobs and a 16-step pattern" sticker={<img className="sticker sticker--tr" src="/images/sticker-calm.webp" width="624" height="640" alt="" />}>
-              <EasyDuckDemo autoplay />
-            </Slate>
-            <div className="hero__caption">
-              <span style={{ font: '600 17px/1.2 var(--font-ui)' }}>EasyDuck <span style={{ color: 'var(--ink-muted)', fontWeight: 400 }}>· {duck.kind}</span></span>
-              <span className="row" style={{ gap: 12, alignItems: 'baseline' }}>
-                <PriceTag price={duck.priceLabel} small />
-                <Lcd small>{duck.formats}</Lcd>
-              </span>
+          <a className="v-hero__art" href="/plugins/drumcrusher">
+            <Frame src={crusher.ui} alt="DrumCrusher plugin" style={{ borderRadius: 18 }} />
+            <div className="v-hero__caption">
+              <span style={{ fontWeight: 600, fontSize: 15, letterSpacing: '-.2px', color: '#111216' }}>DrumCrusher</span>
+              <span style={{ fontSize: 14, color: '#3D414A' }}>{crusher.kind}</span>
+              <span className="v-tag v-tag--dark">{crusher.priceLabel}</span>
+              <span className="v-tag v-tag--glass">{crusher.formats}</span>
             </div>
           </a>
-        </section>
-
-        <section id="plugins" className="wrap section stack" style={{ gap: 40, scrollMarginTop: 24 }}>
-          <SectionHeading title="Plugins" />
-          <div className="cards">
-            <ProductCard name={duck.name} tone={duck.tone} tagline={duck.tagline} price={duck.priceLabel} formats={duck.formats} href="/plugins/easyduck" buyLabel="Get EasyDuck"
-              media={<Slate label="EasyDuck plugin"><EasyDuckDemo /></Slate>} />
-            <ProductCard name={crusher.name} tone={crusher.tone} tagline={crusher.tagline} status="soon" href="#drumcrusher"
-              media={<Slate label="DrumCrusher concept"><DrumCrusherDemo animate={false} /></Slate>} />
-          </div>
-        </section>
-
-        <div id="drumcrusher" style={{ scrollMarginTop: 24 }}>
-          <ColorBand variant="screen" tone="cyan">
-            <div className="band-split">
-              <div>
-                <div className="eyebrow">02 / In development</div>
-                <h2 className="on-screen-title">DrumCrusher</h2>
-                <p style={{ margin: 0, fontSize: 20, lineHeight: 1.5, maxWidth: '40ch' }}>Drum bus processor with 3-band EQ, high-pass and low-pass filters, and a wet fader per band. No release date yet.</p>
-              </div>
-              <div className="has-sticker">
-                <img className="sticker sticker--tr" src="/images/sticker-angry.webp" width="640" height="639" alt="" />
-                <WaitlistForm list="drumcrusher" title="Get notified" lede="We'll email you once when it's released." button="Notify me" />
-              </div>
-            </div>
-          </ColorBand>
         </div>
+      </section>
 
-        <div style={{ height: 'var(--space-9)' }} aria-hidden="true"></div>
-        <Faq items={homeFaq} />
-      </main>
-      <Footer />
-    </div>
+      <section id="plugins" className="v-wrap v-section" style={{ scrollMarginTop: 90 }}>
+        <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', gap: 20, flexWrap: 'wrap', marginBottom: 36 }}>
+          <div style={{ display: 'grid', gap: 14 }}>
+            <div className="v-eyebrow">Basic Suite</div>
+            <h2 className="v-h2">Plugins</h2>
+          </div>
+          <p className="v-body" style={{ maxWidth: 380 }}>EasyDuck is free. DrumCrusher is $29. Both come with Mac and Windows installers.</p>
+        </div>
+        <div className="v-grid2">
+          {[duck, crusher].map((p, i) => (
+            <article key={p.slug} id={p.slug} className="v-card">
+              <div className="v-card__media v-stone" style={{ backgroundPosition: i ? '70% 60%' : '30% 40%' }}><Frame src={p.ui} alt={`${p.name} plugin`} /></div>
+              <div className="v-card__body">
+                <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}><h3 className="v-h3">{p.name}</h3><span className="v-tag">{p.free ? 'FREE' : p.priceLabel}</span></div>
+                <p className="v-body">{p.tagline}</p>
+                <div className="v-card__foot">
+                  <span className="v-mono" style={{ fontSize: 12, letterSpacing: '.06em', color: 'var(--v-ink-4)' }}>{p.formats}</span>
+                  <a className="v-btn v-btn--dark v-btn--md" href={`/plugins/${p.slug}`}>Get {p.name}</a>
+                </div>
+              </div>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section id="pro" className="v-wrap v-section">
+        <a href="/pro" className="v-band v-stone" style={{ backgroundPosition: '60% 30%', color: '#111216' }}>
+          <div style={{ flex: '1 1 320px', display: 'flex', flexDirection: 'column', gap: 18, maxWidth: 440 }}>
+            <div className="v-eyebrow">Pro Suite</div>
+            <h2 className="v-h2">{modfx.name}</h2>
+            <p className="v-lede" style={{ fontSize: 17 }}>{modfx.tagline}</p>
+            <span className="v-btn v-btn--dark v-btn--lg" style={{ alignSelf: 'flex-start', marginTop: 8 }}>Explore the Pro Suite <span className="v-mono">→</span></span>
+          </div>
+          <div style={{ flex: '1.5 1 440px', minWidth: 0 }}><Frame src={modfx.ui} alt="ModFX Pro plugin" /></div>
+        </a>
+      </section>
+
+      <section id="notify" className="v-wrap v-section">
+        <div className="v-grid2" style={{ gap: 'clamp(32px, 5vw, 72px)', alignItems: 'center' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 20, maxWidth: 520 }}>
+            <div className="v-eyebrow">Newsletter</div>
+            <h2 className="v-h2">Hear about new plugins first.</h2>
+            <p className="v-body" style={{ fontSize: 18 }}>One email when a new plugin is released. Nothing else.</p>
+          </div>
+          <div className="v-notify">
+            <img className="v-notify__sticker" src="/images/v2/sticker.webp" alt="" />
+            <h3 style={{ margin: 0, fontWeight: 600, fontSize: 28, letterSpacing: '-.03em' }}>Get notified</h3>
+            <p style={{ margin: 0, fontSize: 16, lineHeight: 1.5, color: '#C9CEDC', maxWidth: 320 }}>We'll email you when the next plugin is out.</p>
+            <NotifyForm list="newsletter" />
+          </div>
+        </div>
+      </section>
+
+      <Faq items={homeFaq} />
+    </Shell>
   );
 }

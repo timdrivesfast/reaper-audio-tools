@@ -33,7 +33,7 @@ The plugins' Settings menu calls two site URLs (set in each plugin repo's `plugi
 ## Connect Paddle
 
 1. Create a Paddle account and a sandbox account at sandbox-vendors.paddle.com.
-2. In sandbox: Catalog → Products → add your first paid plugin (DrumCrusher) with a price. Copy the price ID (`pri_…`) into `NEXT_PUBLIC_PADDLE_PRICE_DRUMCRUSHER`. EasyDuck is free and doesn't go through Paddle (see Free plugins below).
+2. In sandbox: Catalog → Products → add DrumCrusher and ModFX Pro, each with a $29 one-time price. Copy the price IDs (`pri_…`) into `NEXT_PUBLIC_PADDLE_PRICE_DRUMCRUSHER` and `NEXT_PUBLIC_PADDLE_PRICE_MODFX_PRO`. EasyDuck is free and doesn't go through Paddle (see Free plugins below).
 3. Developer tools → Authentication → create a client-side token (`test_…`) and put it in `NEXT_PUBLIC_PADDLE_CLIENT_TOKEN`.
 4. Checkout settings → add your site domain as an approved domain (and `localhost` for testing).
 5. Buy a paid plugin on your site with Paddle's test card `4242 4242 4242 4242`, any future date, any CVC.

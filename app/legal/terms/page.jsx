@@ -7,7 +7,7 @@ export default function Terms() {
   return (
     <LegalPage title="Terms of Service" updated="October 21, 2026">
       <h2>Who we are</h2>
-      <p>Reaper Audio Tools is operated by {site.sellerName}, a sole proprietor based in [city, state, country]. In these terms, "we" and "us" mean {site.sellerName} trading as Reaper Audio Tools, and "you" means the person buying or using our plugins. Contact: {site.supportEmail}.</p>
+      <p>Reaper Audio Tools is operated by {site.sellerName}, a sole proprietor based in Santa Monica, California, USA. In these terms, "we" and "us" mean {site.sellerName} trading as Reaper Audio Tools, and "you" means the person buying or using our plugins. Contact: {site.supportEmail}.</p>
 
       <h2>Orders and payment</h2>
       <p>Free plugins don't need payment. Enter your email and we send a license key and download links.</p>
@@ -19,7 +19,7 @@ export default function Terms() {
       <p>You may not resell, share, sublicense, rent or distribute the plugin or your license key, or reverse engineer, decompile or modify the plugin except where the law allows it.</p>
 
       <h2>Updates and support</h2>
-      <p>[Say whether updates are free, for how long, and what support you offer.] Email {site.supportEmail} with the plugin name, your DAW and your operating system.</p>
+      <p>Updates to a plugin you own are free for that version line (for example, every 1.x update). We give support by email. Email {site.supportEmail} with the plugin name, your DAW and your operating system.</p>
 
       <h2>Refunds</h2>
       <p>See our <a href="/legal/refunds">Refund Policy</a>.</p>
@@ -34,7 +34,7 @@ export default function Terms() {
       <p>We may update these terms. The date at the top shows the latest version. Continued use after a change means you accept the updated terms.</p>
 
       <h2>Governing law</h2>
-      <p>These terms are governed by the laws of [state, country].</p>
+      <p>These terms are governed by the laws of the State of California, USA.</p>
     </LegalPage>
   );
 }
