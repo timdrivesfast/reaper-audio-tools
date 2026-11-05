@@ -3,7 +3,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import crypto from 'node:crypto';
 import { generateLicenseKey, KEY_PATTERN, normalizeKey, signLicense, verifyLicense } from '../lib/server/license.js';
-import { verifyPaddleSignature } from '../lib/server/paddle.js';
+import { verifyStripeSignature, formEncode } from '../lib/server/stripe.js';
 
 test('license keys match the format and are unique', () => {
   const keys = new Set();
@@ -32,15 +32,22 @@ test('a signed license verifies, and a tampered one does not', () => {
   assert.ok(body.length > 0);
 });
 
-test('Paddle webhook signatures', () => {
-  const secret = 'pdl_ntfset_test_secret';
-  const raw = JSON.stringify({ event_id: 'evt_1', event_type: 'transaction.completed' });
-  const ts = Math.floor(Date.now() / 1000);
-  const h1 = crypto.createHmac('sha256', secret).update(`${ts}:${raw}`).digest('hex');
-  assert.equal(verifyPaddleSignature(raw, `ts=${ts};h1=${h1}`, secret), true);
-  assert.equal(verifyPaddleSignature(raw + ' ', `ts=${ts};h1=${h1}`, secret), false, 'body changed');
-  assert.equal(verifyPaddleSignature(raw, `ts=${ts};h1=${h1}`, 'wrong'), false, 'wrong secret');
-  assert.equal(verifyPaddleSignature(raw, `ts=${ts - 3600};h1=${crypto.createHmac('sha256', secret).update(`${ts - 3600}:${raw}`).digest('hex')}`, secret), false, 'too old');
-  assert.equal(verifyPaddleSignature(raw, null, secret), false);
-  assert.equal(verifyPaddleSignature(raw, `ts=${ts};h1=deadbeef;h1=${h1}`, secret), true, 'any h1 may match during secret rotation');
+test('Stripe webhook signatures', () => {
+  const secret = 'whsec_test_secret';
+  const raw = JSON.stringify({ id: 'evt_1', type: 'checkout.session.completed' });
+  const t = Math.floor(Date.now() / 1000);
+  const v1 = crypto.createHmac('sha256', secret).update(`${t}.${raw}`).digest('hex');
+  assert.equal(verifyStripeSignature(raw, `t=${t},v1=${v1}`, secret), true);
+  assert.equal(verifyStripeSignature(raw + ' ', `t=${t},v1=${v1}`, secret), false, 'body changed');
+  assert.equal(verifyStripeSignature(raw, `t=${t},v1=${v1}`, 'wrong'), false, 'wrong secret');
+  const old = t - 3600;
+  assert.equal(verifyStripeSignature(raw, `t=${old},v1=${crypto.createHmac('sha256', secret).update(`${old}.${raw}`).digest('hex')}`, secret), false, 'too old');
+  assert.equal(verifyStripeSignature(raw, null, secret), false);
+  assert.equal(verifyStripeSignature(raw, `t=${t},v1=deadbeef,v1=${v1}`, secret), true, 'any v1 may match during secret rotation');
+  assert.equal(verifyStripeSignature(raw, `t=${t},v0=${v1}`, secret), false, 'v0 is not a real signature');
+});
+
+test('Stripe form encoding', () => {
+  const s = formEncode({ mode: 'payment', line_items: [{ price: 'price_1', quantity: 1 }], managed_payments: { enabled: true }, skip: undefined }).toString();
+  assert.equal(decodeURIComponent(s), 'mode=payment&line_items[0][price]=price_1&line_items[0][quantity]=1&managed_payments[enabled]=true');
 });

@@ -28,7 +28,7 @@ export function Footer() {
             </div>
           ))}
         </div>
-        <div className="v-footer__fine">© {year} {site.sellerName}, trading as Reaper Audio Tools. Orders are processed by Paddle.com, our Merchant of Record.</div>
+        <div className="v-footer__fine">© {year} {site.sellerName}, trading as Reaper Audio Tools. Payments are processed by Stripe.</div>
       </div>
     </footer>
   );
