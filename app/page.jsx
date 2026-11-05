@@ -84,7 +84,7 @@ export default function Home() {
 
       <Faq items={homeFaq} />
 
-      <section id="notify" className="v-wrap v-section">
+      <section id="notify" className="v-wrap v-section" style={{ paddingBottom: 'var(--v-section)' }}>
         <div className="v-grid2" style={{ gap: 'clamp(32px, 5vw, 72px)', alignItems: 'center' }}>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 20, maxWidth: 520 }}>
             <div className="v-eyebrow">Newsletter</div>
