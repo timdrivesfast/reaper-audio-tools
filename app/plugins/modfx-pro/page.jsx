@@ -11,10 +11,10 @@ export const metadata = {
 };
 
 const features = [
-  { stat: '16 SLOTS', title: 'Knob board', body: 'Load up to 16 effects into knob slots and play them like hardware. Each slot shows its effect and value at a glance.' },
-  { stat: '45 EFFECTS', title: 'Effect library', body: 'Filters, delays, reverb, tape echo, crush, flanger, tape stop, stutter, pitch, auto-pan and more.' },
-  { stat: 'XY PAD', title: 'Process, drops, scratch', body: 'Three XY pad modes for shaping a sound, building drops and scratching, with hold, spring and touch behavior.' },
-  { stat: 'PRESETS', title: 'Sets', body: 'Save a whole board as a set and recall it in one click.' },
+  { stat: '16 SLOTS', title: 'Knob board', body: 'Up to 16 effects in series, each on its own knob slot, so you play them like hardware.' },
+  { stat: '45 EFFECTS', title: 'Effect library', body: 'Filters, delays and reverbs, modulation, distortion, dynamics, rhythmic effects like stutter and tape stop, pitch, and stereo tools.' },
+  { stat: 'XY PAD', title: 'Process, drops, scratch', body: 'Three XY pad modes: shape a sound, build a drop, or scratch it.' },
+  { stat: 'PHONE', title: 'Phone companion', body: 'Scan the QR code in the plugin and play the XY pad from your phone browser. No app, no account. It stays on your Wi-Fi.' },
 ];
 
 export default function Page() {

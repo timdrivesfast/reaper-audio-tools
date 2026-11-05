@@ -6,15 +6,16 @@ const p = products.drumcrusher;
 
 export const metadata = {
   title: 'DrumCrusher, drum bus processor plugin',
-  description: 'DrumCrusher is a drum bus processor for VST3 and AU with 3-band EQ, filters and per-band wet faders. $29.',
+  description: 'DrumCrusher is a drum bus processor for VST3 and AU: 3-band parallel compression with five character modes, filters and per-band wet faders. $29.',
   openGraph: { images: [p.ui] },
 };
 
 const features = [
-  { stat: '3 BANDS', title: 'Low, mid and high', body: 'Each band has its own amount, frequency and wet fader, with solo and mute, so you can crush the lows and leave the hats alone.' },
-  { stat: 'MASTER', title: 'Drive and air', body: 'Drive pushes the whole bus. Air brings back the top end. Mix blends the processed drums with the dry ones.' },
-  { stat: 'HPF · LPF', title: 'Filters', body: 'High-pass and low-pass filters on the master to clean up the low end or darken the kit.' },
-  { stat: 'A / B', title: 'Compare', body: 'Two settings slots. Flip between them to hear which one sits better in the mix.' },
+  { stat: '3 BANDS', title: 'Parallel compression', body: 'HI, MID and LO bands, each with its own Amount, Freq and Wet, plus solo and mute. Squash the lows and leave the hats open.' },
+  { stat: '5 MODES', title: 'Character', body: 'Tape (the default), Tube, FET, VCA and Crush. Crush goes wild inside the band but stays level-matched.' },
+  { stat: 'MASTER', title: 'Mix, Drive and Air', body: 'Mix blends crushed and dry drums. Drive pushes the bus. Air adds a short room that ducks under the hits, plus a gentle top-end lift.' },
+  { stat: 'HPF · LPF', title: 'Filters', body: 'High-pass and low-pass on the compressed signal only, so the dry drums keep their full range.' },
+  { stat: 'A / B', title: 'Compare', body: 'Two settings slots, saved with your session. Flip between them to hear which sits better.' },
 ];
 
 export default function Page() {
