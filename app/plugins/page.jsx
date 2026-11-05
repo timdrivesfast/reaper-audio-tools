@@ -23,11 +23,11 @@ export default function Shop() {
           <p className="v-body">VST3 and AU for Mac and Windows. Every plugin is a one-time purchase with no subscription, and free ones only need your email.</p>
         </div>
       </section>
-      {suites.map((s) => {
+      {suites.filter((s) => all.some((p) => p.suite === s.id)).map((s, si, shown) => {
         const list = all.filter((p) => p.suite === s.id);
         if (list.length === 0) return null;
         return (
-          <section key={s.id} id={s.id} className="v-wrap v-section" style={{ scrollMarginTop: 90, paddingBottom: 'var(--v-section)' }}>
+          <section key={s.id} id={s.id} className="v-wrap v-section" style={{ scrollMarginTop: 90, paddingBottom: si === shown.length - 1 ? 'var(--v-section)' : 0 }}>
             <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', gap: 20, flexWrap: 'wrap', marginBottom: 28 }}>
               <h2 className="v-h3" style={{ fontSize: 28 }}>{s.name}</h2>
               <p className="v-body" style={{ maxWidth: 380 }}>{s.note}</p>
