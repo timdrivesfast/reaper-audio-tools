@@ -1,4 +1,5 @@
 import { Shell, Frame } from '../components/v2/Chrome';
+import BuyButton from '../components/v2/BuyButton';
 import Faq from '../components/v2/Faq';
 import NotifyForm from '../components/v2/NotifyForm';
 import { products, site } from '../lib/site';
@@ -20,7 +21,7 @@ export default function Home() {
             <h1 className="v-h1">Intuitive tools for <span style={{ color: 'var(--v-indigo)' }}>complex sounds.</span></h1>
             <p className="v-lede" style={{ maxWidth: 440 }}>Crafted by a team of audio engineers and industry professionals, Reaper Audio Tools are built to provide professional mixing solutions with an incredibly accessible form factor.</p>
             <div className="v-row">
-              <a className="v-btn v-btn--dark v-btn--lg" href="/plugins/easyduck">Get EasyDuck free</a>
+              <BuyButton product={products.drumcrusher} label="Buy DrumCrusher" />
               <a className="v-link" href="/pro">Explore Pro <span className="v-mono">→</span></a>
             </div>
           </div>
