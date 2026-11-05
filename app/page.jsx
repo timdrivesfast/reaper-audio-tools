@@ -44,7 +44,7 @@ export default function Home() {
             <div className="v-eyebrow">Basic Suite</div>
             <h2 className="v-h2">Plugins</h2>
           </div>
-          <p className="v-body" style={{ maxWidth: 380 }}>EasyDuck is free. DrumCrusher is $29. Both come with Mac and Windows installers.</p>
+          <p className="v-body" style={{ maxWidth: 380 }}>EasyDuck is free. DrumCrusher is $25. Both come with Mac and Windows installers.</p>
         </div>
         <div className="v-grid2">
           {[duck, crusher].map((p, i) => <PluginCard key={p.slug} product={p} index={i} />)}
