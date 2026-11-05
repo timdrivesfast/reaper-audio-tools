@@ -7,7 +7,7 @@ import { products, site } from '../lib/site';
 import { homeFaq } from '../lib/faq';
 
 const suites = [
-  { id: 'basic', name: 'Basic Suite', title: 'Quick to learn', body: 'A light interface and a handful of controls per plugin. Load it, turn two knobs, move on.', href: '/plugins#basic', cta: 'See the Basic Suite' },
+  { id: 'basic', name: 'Basic Suite', title: 'Quick to learn', body: 'A light interface and a handful of controls per plugin. Load it, turn two knobs, move on.', href: '/basic', cta: 'See the Basic Suite' },
   { id: 'pro', name: 'Pro Suite', title: 'Deeper control', body: 'A dark interface with more to dig into, for performance and sound design.', href: '/pro', cta: 'Explore the Pro Suite', dark: true },
 ];
 

@@ -18,7 +18,7 @@ export default function ProductPage({ product: p, lead, art, features = [], chil
       <section className="v-hero v-stone">
         <div className="v-wrap v-hero__in">
           <div className="v-hero__copy">
-            <a className="v-back" href={p.suite === 'pro' ? '/pro' : '/#plugins'}>← {p.suite === 'pro' ? 'PRO SUITE' : 'BASIC SUITE'}</a>
+            <a className="v-back" href={p.suite === 'pro' ? '/pro' : '/basic'}>← {p.suite === 'pro' ? 'PRO SUITE' : 'BASIC SUITE'}</a>
             <div className="v-chip" style={{ alignSelf: 'flex-start' }}><span className="v-chip__dot" />{p.code} / {p.kind.toUpperCase()}</div>
             <h1 className="v-h1" style={{ fontSize: 'clamp(46px, 6vw, 80px)' }}>{p.name}</h1>
             <p className="v-lede">{lead || p.tagline}</p>
