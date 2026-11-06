@@ -182,3 +182,19 @@ body:has(.v2) { background: var(--v-bg); font-family: var(--v-sans); color: var(
 .v-suite__list .v-mono { font-size: 13px; letter-spacing: .06em; }
 .v-dark .v-link { color: #fff; }
 @media (prefers-reduced-motion: reduce) { .v-suite { transition: none; } .v-suite:hover { transform: none; } }
+
+/* Header: Suites dropdown */
+.v-drop { position: relative; }
+.v-drop__btn { all: unset; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; color: var(--v-on-dark); font-size: 14px; font-weight: 500; padding: 24px 0; }
+.v-drop__btn:hover, .v-drop__btn[aria-expanded="true"] { color: #fff; }
+.v-drop__btn:focus-visible { outline: 2px solid #fff; outline-offset: 4px; border-radius: 4px; }
+.v-drop__panel { display: none; position: absolute; top: 100%; left: 50%; transform: translateX(-50%); width: 520px; background: #fff; border-radius: 18px; padding: 18px; grid-template-columns: 1fr 1fr; gap: 14px; box-shadow: 0 24px 48px -12px rgba(15,16,30,.35), 0 0 0 1px rgba(17,18,22,.06); }
+.v-drop__panel[data-open="true"] { display: grid; }
+.v-drop__panel::before { content: ''; position: absolute; top: -6px; left: 0; right: 0; height: 6px; }
+.v-nav .v-drop__panel a { color: #111216; }
+.v-drop__col { display: grid; align-content: start; gap: 2px; }
+.v-drop__suite { display: grid; gap: 2px; padding: 10px 12px; border-radius: 12px; font-weight: 600; font-size: 15px; }
+.v-drop__suite span { font-weight: 400; font-size: 13px; color: var(--v-ink-4); }
+.v-drop__item { display: flex; justify-content: space-between; align-items: center; padding: 9px 12px; border-radius: 10px; font-size: 14px; }
+.v-drop__item .v-mono { font-size: 11px; letter-spacing: .06em; color: var(--v-ink-4); }
+.v-nav .v-drop__suite:hover, .v-nav .v-drop__item:hover { background: #F1F2F7; color: #111216; }
