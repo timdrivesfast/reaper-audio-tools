@@ -1,7 +1,7 @@
 import Header from './Header';
-import { products, site, footerColumns } from '../../lib/site';
+import { products, site, footerColumns, launch } from '../../lib/site';
 
-const TICK = Object.values(products).map((p) => `${p.code} ${p.name.toUpperCase()}  •  ${p.free ? 'FREE' : p.priceLabel}  •  `).join('');
+const TICK = Object.values(products).map((p) => `${p.code} ${p.name.toUpperCase()}  •  ${p.free ? 'FREE · OUT NOW' : launch.live ? p.priceLabel : `${p.priceLabel} · ${launch.label.toUpperCase()}`}  •  `).join('');
 
 export function Ticker({ text = TICK }) {
   return (

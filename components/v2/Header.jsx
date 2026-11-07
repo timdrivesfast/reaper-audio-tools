@@ -1,12 +1,14 @@
 'use client';
 
 import React from 'react';
-import { nav, suites, products } from '../../lib/site';
+import { nav, suites, products, launch } from '../../lib/site';
 
 const inSuite = (id) => Object.values(products).filter((p) => p.suite === id);
 
 /** Sticky indigo header: typemark, a Suites dropdown, links, and a menu button on small screens. */
-export default function Header({ cta = { label: 'Buy DrumCrusher', href: '/plugins/drumcrusher#buy' } }) {
+const defaultCta = launch.live ? { label: 'Buy DrumCrusher', href: '/plugins/drumcrusher#buy' } : { label: 'Join the waitlist', href: '/#waitlist' };
+
+export default function Header({ cta = defaultCta }) {
   const [open, setOpen] = React.useState(false);       // mobile menu
   const [drop, setDrop] = React.useState(false);       // desktop Suites dropdown
   const ref = React.useRef(null);

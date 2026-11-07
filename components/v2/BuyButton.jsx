@@ -1,9 +1,16 @@
 'use client';
 
 import React from 'react';
+import WaitlistForm from './WaitlistForm';
+import { launch } from '../../lib/site';
 
-/** Sends the buyer to Stripe Checkout for a paid plugin. */
-export default function BuyButton({ product, label, size = 'lg', variant = 'dark' }) {
+/** Sends the buyer to Stripe Checkout for a paid plugin. Before launch it's the waitlist form. */
+export default function BuyButton(props) {
+  if (!launch.live) return <WaitlistForm id={`waitlist-${props.product.slug}`} variant={props.variant || 'dark'} />;
+  return <Checkout {...props} />;
+}
+
+function Checkout({ product, label, size = 'lg', variant = 'dark' }) {
   const [note, setNote] = React.useState('');
   const [busy, setBusy] = React.useState(false);
   const buy = async () => {
