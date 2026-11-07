@@ -27,7 +27,7 @@ export default function Home() {
               {Object.values(products).map((p) => <a key={p.slug} href={`/plugins/${p.slug}`} className="v-chip v-chip--sm"><span className="v-chip__dot" />{p.code} {p.name.toUpperCase()}</a>)}
             </div>
             <h1 className="v-h1">Intuitive tools for <span style={{ color: 'var(--v-indigo)' }}>complex sounds.</span></h1>
-            <p className="v-lede" style={{ maxWidth: 440 }}>Crafted by a team of audio engineers and industry professionals, Reaper Audio Tools are built to provide professional mixing solutions with an incredibly accessible form factor.</p>
+            <p className="v-lede" style={{ maxWidth: 440 }}>Pro mixing tools, built by audio engineers and made easy to use.</p>
             {launch.live ? (
               <div className="v-row">
                 <BuyButton product={products.drumcrusher} label="Buy DrumCrusher" />

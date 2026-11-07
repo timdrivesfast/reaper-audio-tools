@@ -133,50 +133,73 @@ export function AudioDemo({ title = 'House loop', tone = 'coral', drySrc, wetSrc
   const real = !!(drySrc && wetSrc);
   const count = peaks ? peaks.dry.length : bars;
   const heights = React.useMemo(() => { const r = seeded(seed); return Array.from({ length: bars }, (_, i) => 0.25 + r() * 0.75 * (i % 8 === 0 ? 1 : 0.7)); }, [bars, seed]);
-  // Both versions play together in sync; DRY/WET only switches which one you hear.
+  // Both versions play together in sync through Web Audio (iOS won't play two <audio> elements
+  // at once); DRY/WET only switches which gain is up.
   const ensure = () => {
     if (!players.current && real) {
-      const make = (src) => { const a = new Audio(src); a.loop = true; a.preload = 'auto'; return a; };
-      players.current = { dry: make(drySrc), wet: make(wetSrc) };
+      const AC = window.AudioContext || window.webkitAudioContext;
+      const ctx = (window.__ratwCtx = window.__ratwCtx || new AC());
+      const load = (src) => fetch(src).then((r) => r.arrayBuffer()).then((b) => new Promise((ok, no) => ctx.decodeAudioData(b, ok, no)));
+      const dryGain = ctx.createGain(), wetGain = ctx.createGain();
+      dryGain.connect(ctx.destination); wetGain.connect(ctx.destination);
+      players.current = { ctx, dryGain, wetGain, sources: null, startAt: 0, offset: 0, buffers: Promise.all([load(drySrc), load(wetSrc)]) };
     }
     return players.current;
   };
-  React.useEffect(() => {
-    const p = players.current; if (!p) return;
-    p.dry.muted = wet; p.wet.muted = !wet;
-  }, [wet, playing]);
+  const setGains = (p, isWet, ramp = 0.02) => {
+    const now = p.ctx.currentTime;
+    p.dryGain.gain.setTargetAtTime(isWet ? 0 : 1, now, ramp); p.wetGain.gain.setTargetAtTime(isWet ? 1 : 0, now, ramp);
+  };
+  const stop = (p) => {
+    if (!p || !p.sources) return;
+    p.offset = (p.ctx.currentTime - p.startAt) % p.duration;
+    p.sources.forEach((src) => { try { src.stop(); } catch {} });
+    p.sources = null;
+  };
+  React.useEffect(() => { const p = players.current; if (p) setGains(p, wet); }, [wet]);
   React.useEffect(() => {
     const stopOthers = (e) => { if (e.detail !== id.current) setPlaying(false); };
     window.addEventListener('ratw-audio-play', stopOthers);
     return () => window.removeEventListener('ratw-audio-play', stopOthers);
   }, []);
+  const toggle = () => {
+    // resume inside the tap, which iOS requires
+    if (real) { const p = ensure(); if (p.ctx.state !== 'running') p.ctx.resume(); }
+    setPlaying(!playing);
+  };
   React.useEffect(() => {
     const p = real ? ensure() : null;
-    if (!playing) { if (p) { p.dry.pause(); p.wet.pause(); } return undefined; }
+    if (!playing) { stop(p); return undefined; }
     window.dispatchEvent(new CustomEvent('ratw-audio-play', { detail: id.current }));
+    let cancelled = false;
     if (p) {
-      p.dry.muted = wet; p.wet.muted = !wet;
-      p.wet.currentTime = p.dry.currentTime;
-      Promise.all([p.dry.play(), p.wet.play()]).catch(() => setPlaying(false));
+      p.buffers.then(([d, w]) => {
+        if (cancelled) return;
+        p.duration = d.duration;
+        const mk = (buf, gain) => { const src = p.ctx.createBufferSource(); src.buffer = buf; src.loop = true; src.connect(gain); return src; };
+        const at = p.ctx.currentTime + 0.05; const off = p.offset % d.duration;
+        p.sources = [mk(d, p.dryGain), mk(w, p.wetGain)];
+        setGains(p, wet, 0.001);
+        p.sources.forEach((src) => src.start(at, off));
+        p.startAt = at - off;
+      }).catch(() => setPlaying(false));
     }
     let raf; const start = performance.now() - t * 4000;
     const tick = (now) => {
-      if (p && p.dry.duration) {
-        if (Math.abs(p.wet.currentTime - p.dry.currentTime) > 0.05) p.wet.currentTime = p.dry.currentTime;
-        setT(p.dry.currentTime / p.dry.duration);
-      } else if (!p) setT(((now - start) / 4000) % 1);
+      if (p && p.sources && p.duration) setT((((p.ctx.currentTime - p.startAt) % p.duration) + p.duration) % p.duration / p.duration);
+      else if (!p) setT(((now - start) / 4000) % 1);
       raf = requestAnimationFrame(tick);
     };
     raf = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(raf);
+    return () => { cancelled = true; cancelAnimationFrame(raf); };
   }, [playing]);
-  React.useEffect(() => () => { const p = players.current; if (p) { p.dry.pause(); p.wet.pause(); } }, []);
+  React.useEffect(() => () => stop(players.current), []);
   const pt = peaks && peaks.repeats ? (t * peaks.repeats) % 1 : t;
   const W = 600, H = 150, bw = W / count;
   return (
     <div className="ratw ratw-card" {...toneAttrs(tone, { padding: 'var(--space-5)', display: 'grid', gap: 'var(--space-4)', ...style })}>
       <div style={{ display: 'flex', alignItems: 'center', gap: 14, flexWrap: 'wrap' }}>
-        <button type="button" aria-label={playing ? 'Pause' : 'Play'} onClick={() => setPlaying(!playing)} style={{ width: 52, height: 52, flex: 'none', borderRadius: '50%', border: 0, cursor: 'pointer', background: 'var(--surface)', boxShadow: playing ? 'var(--shadow-inset)' : 'var(--shadow-raised)', display: 'grid', placeItems: 'center' }}>
+        <button type="button" aria-label={playing ? 'Pause' : 'Play'} onClick={toggle} style={{ width: 52, height: 52, flex: 'none', borderRadius: '50%', border: 0, cursor: 'pointer', background: 'var(--surface)', boxShadow: playing ? 'var(--shadow-inset)' : 'var(--shadow-raised)', display: 'grid', placeItems: 'center' }}>
           <svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true">{playing ? <rect x="4" y="4" width="10" height="10" rx="2" fill="var(--accent)"></rect> : <path d="M5 3 L15 9 L5 15 Z" fill="var(--play)"></path>}</svg>
         </button>
         <div style={{ flex: 1, minWidth: 120 }}>

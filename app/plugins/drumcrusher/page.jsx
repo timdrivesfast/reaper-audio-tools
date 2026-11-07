@@ -21,11 +21,11 @@ const features = [
 ];
 
 // Audio examples. Real drum loops (from Cappy) with WET run through the DrumCrusher DSP at its
-// defaults, only CHARACTER changed. Files in /public/audio/drumcrusher.
+// AMOUNT 85 on every band, DRIVE 30, CHARACTER as named. Files in /public/audio/drumcrusher.
 const audioExamples = [
-  { title: 'Tape mode', drySrc: '/audio/drumcrusher/tape-dry.mp3', wetSrc: '/audio/drumcrusher/tape-wet.mp3', peaks: drumCrusherPeaks.tape },
-  { title: 'FET mode', drySrc: '/audio/drumcrusher/fet-dry.mp3', wetSrc: '/audio/drumcrusher/fet-wet.mp3', peaks: drumCrusherPeaks.fet },
-  { title: 'Crush mode', drySrc: '/audio/drumcrusher/crush-dry.mp3', wetSrc: '/audio/drumcrusher/crush-wet.mp3', peaks: drumCrusherPeaks.crush },
+  { title: 'Tape mode', drySrc: '/audio/drumcrusher/tape-dry-2.mp3', wetSrc: '/audio/drumcrusher/tape-wet-2.mp3', peaks: drumCrusherPeaks.tape },
+  { title: 'FET mode', drySrc: '/audio/drumcrusher/fet-dry-2.mp3', wetSrc: '/audio/drumcrusher/fet-wet-2.mp3', peaks: drumCrusherPeaks.fet },
+  { title: 'Crush mode', drySrc: '/audio/drumcrusher/crush-dry-2.mp3', wetSrc: '/audio/drumcrusher/crush-wet-2.mp3', peaks: drumCrusherPeaks.crush },
 ];
 
 export default function Page() {
@@ -33,7 +33,7 @@ export default function Page() {
     <ProductPage product={p} features={features} faq={drumCrusherFaq}>
       <AudioExamples examples={audioExamples} tone={p.tone}
         intro={["Drum loops with DrumCrusher off (DRY) and on (WET).",
-          'Every setting is at its default. Only CHARACTER changes between examples.']} />
+          'AMOUNT at 85 on all three bands and DRIVE at 30. Everything else is at its default.']} />
     </ProductPage>
   );
 }
