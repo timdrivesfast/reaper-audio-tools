@@ -20,21 +20,20 @@ const features = [
   { stat: 'A / B', title: 'Compare', body: 'Two settings slots, saved with your session. Flip between them to hear which sits better.' },
 ];
 
-// Audio examples. WET is the same boom bap loop with the drums run through the DrumCrusher
-// DSP at the named settings (everything else at its default, OUT at 0 dB). The keys are the
-// same in both. Files in /public/audio/drumcrusher.
+// Audio examples. Real drum loops (from Cappy) with WET run through the DrumCrusher DSP at its
+// defaults, only CHARACTER changed. Files in /public/audio/drumcrusher.
 const audioExamples = [
-  { title: 'Tape mode, 88 BPM', drySrc: '/audio/drumcrusher/tape-dry.mp3', wetSrc: '/audio/drumcrusher/tape-wet.mp3', peaks: drumCrusherPeaks.tape },
-  { title: 'FET mode, 92 BPM', drySrc: '/audio/drumcrusher/fet-dry.mp3', wetSrc: '/audio/drumcrusher/fet-wet.mp3', peaks: drumCrusherPeaks.fet },
-  { title: 'Crush mode, 88 BPM', drySrc: '/audio/drumcrusher/crush-dry.mp3', wetSrc: '/audio/drumcrusher/crush-wet.mp3', peaks: drumCrusherPeaks.crush },
+  { title: 'Tape mode', drySrc: '/audio/drumcrusher/tape-dry.mp3', wetSrc: '/audio/drumcrusher/tape-wet.mp3', peaks: drumCrusherPeaks.tape },
+  { title: 'FET mode', drySrc: '/audio/drumcrusher/fet-dry.mp3', wetSrc: '/audio/drumcrusher/fet-wet.mp3', peaks: drumCrusherPeaks.fet },
+  { title: 'Crush mode', drySrc: '/audio/drumcrusher/crush-dry.mp3', wetSrc: '/audio/drumcrusher/crush-wet.mp3', peaks: drumCrusherPeaks.crush },
 ];
 
 export default function Page() {
   return (
     <ProductPage product={p} features={features} faq={drumCrusherFaq}>
       <AudioExamples examples={audioExamples} tone={p.tone}
-        intro={["Boom bap loops with DrumCrusher off (DRY) and on (WET). It's on the drums. The keys are untouched.",
-          'Tape: Mix 75, Drive 55. FET: Mix 80, Drive 55. Crush: Mix 75, Drive 70. Everything else is at its default.']} />
+        intro={["Drum loops with DrumCrusher off (DRY) and on (WET).",
+          'Every setting is at its default. Only CHARACTER changes between examples.']} />
     </ProductPage>
   );
 }
