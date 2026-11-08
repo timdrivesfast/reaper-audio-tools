@@ -212,3 +212,5 @@ body:has(.v2) { background: var(--v-bg); font-family: var(--v-sans); color: var(
 .v-wait__done { height: 50px; display: flex; align-items: center; gap: 10px; font-weight: 500; font-size: 15px; }
 .v-wait__done span { width: 22px; height: 22px; border-radius: 11px; background: var(--v-cyan); color: #14323A; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; }
 @media (max-width: 420px) { .v-count__n { font-size: 26px; } }
+.v-count-inline { display: inline-flex; align-items: center; gap: 8px; font-family: var(--v-mono); font-size: 12.5px; letter-spacing: .08em; text-transform: uppercase; color: var(--v-ink-3, #3A3C48); }
+.v-count-inline::before { content: ''; width: 7px; height: 7px; border-radius: 4px; background: #F26B6B; box-shadow: 0 0 0 3px rgba(242,107,107,.18); }

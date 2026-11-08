@@ -1,12 +1,12 @@
 'use client';
 
 import React from 'react';
-import { nav, suites, products, launch } from '../../lib/site';
+import { nav, suites, products } from '../../lib/site';
 
 const inSuite = (id) => Object.values(products).filter((p) => p.suite === id);
 
 /** Sticky indigo header: typemark, a Suites dropdown, links, and a menu button on small screens. */
-const defaultCta = launch.live ? { label: 'Buy DrumCrusher', href: '/plugins/drumcrusher#buy' } : { label: 'Join the waitlist', href: '/#waitlist' };
+const defaultCta = { label: 'Get EasyDuck free', href: '/plugins/easyduck' };
 
 export default function Header({ cta = defaultCta }) {
   const [open, setOpen] = React.useState(false);       // mobile menu

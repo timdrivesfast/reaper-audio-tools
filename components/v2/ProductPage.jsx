@@ -28,7 +28,7 @@ export default function ProductPage({ product: p, lead, art, features = [], chil
                 <span className="v-price" style={{ fontSize: 30 }}>{p.free ? 'Free' : p.priceLabel}</span>
                 <span className="v-tag v-tag--glass">{p.formats}</span>
               </div>
-              {!p.free && !launch.live && <div style={{ display: 'grid', gap: 10 }}><div className="v-eyebrow">Launches {launch.label}</div><Countdown /></div>}
+              {!p.free && !launch.live && <Countdown inline />}
               {p.free ? <GetFreeForm product={p} /> : <div><BuyButton product={p} /></div>}
               <p className="v-fine">{p.free
                 ? "We'll email your license key and download links. No card needed."

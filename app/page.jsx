@@ -1,11 +1,8 @@
 import { Shell, Frame } from '../components/v2/Chrome';
-import BuyButton from '../components/v2/BuyButton';
 import PluginCard from '../components/v2/PluginCard';
 import Faq from '../components/v2/Faq';
 import NotifyForm from '../components/v2/NotifyForm';
-import Countdown from '../components/v2/Countdown';
-import WaitlistForm from '../components/v2/WaitlistForm';
-import { products, site, launch } from '../lib/site';
+import { products, site } from '../lib/site';
 import { homeFaq } from '../lib/faq';
 
 const suites = [
@@ -14,7 +11,7 @@ const suites = [
 ];
 
 export default function Home() {
-  const crusher = products.drumcrusher;
+  const duck = products.easyduck;
   const org = { '@context': 'https://schema.org', '@type': 'Organization', name: site.name, url: site.url, logo: `${site.url}/images/v2/typemark.png` };
   return (
     <Shell>
@@ -28,27 +25,18 @@ export default function Home() {
             </div>
             <h1 className="v-h1">Intuitive tools for <span style={{ color: 'var(--v-indigo)' }}>complex sounds.</span></h1>
             <p className="v-lede" style={{ maxWidth: 440 }}>Pro mixing tools, built by audio engineers and made easy to use.</p>
-            {launch.live ? (
-              <div className="v-row">
-                <BuyButton product={products.drumcrusher} label="Buy DrumCrusher" />
-                <a className="v-link" href="/pro">Explore Pro <span className="v-mono">→</span></a>
-              </div>
-            ) : (
-              <div id="waitlist" className="v-launch">
-                <div className="v-eyebrow">DrumCrusher and ModFX Pro launch {launch.label}</div>
-                <Countdown />
-                <WaitlistForm id="hero-waitlist" />
-                <p className="v-fine">EasyDuck is free and out now. <a className="v-link" href="/plugins/easyduck" style={{ fontSize: 14 }}>Get EasyDuck →</a></p>
-              </div>
-            )}
+            <div className="v-row">
+              <a className="v-btn v-btn--dark v-btn--lg" href="/plugins/easyduck">Get EasyDuck free</a>
+              <a className="v-link" href="/pro">Explore Pro <span className="v-mono">→</span></a>
+            </div>
           </div>
-          <a className="v-hero__art" href="/plugins/drumcrusher">
-            <Frame src={crusher.ui} alt="DrumCrusher plugin" style={{ borderRadius: 18 }} />
+          <a className="v-hero__art" href="/plugins/easyduck">
+            <Frame src={duck.ui} alt="EasyDuck plugin" style={{ borderRadius: 18 }} />
             <div className="v-hero__caption">
-              <span style={{ fontWeight: 600, fontSize: 15, letterSpacing: '-.2px', color: '#111216' }}>DrumCrusher</span>
-              <span style={{ fontSize: 14, color: '#3D414A' }}>{crusher.kind}</span>
-              <span className="v-tag v-tag--dark">{crusher.priceLabel}</span>
-              <span className="v-tag v-tag--glass">{crusher.formats}</span>
+              <span style={{ fontWeight: 600, fontSize: 15, letterSpacing: '-.2px', color: '#111216' }}>EasyDuck</span>
+              <span style={{ fontSize: 14, color: '#3D414A' }}>{duck.kind}</span>
+              <span className="v-tag v-tag--dark">FREE</span>
+              <span className="v-tag v-tag--glass">{duck.formats}</span>
             </div>
           </a>
         </div>
