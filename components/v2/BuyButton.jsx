@@ -6,7 +6,10 @@ import { launch } from '../../lib/site';
 
 /** Sends the buyer to Stripe Checkout for a paid plugin. Before launch it's the waitlist form. */
 export default function BuyButton(props) {
-  if (!launch.live) return <WaitlistForm id={`waitlist-${props.product.slug}`} variant={props.variant || 'dark'} />;
+  // ?buy=test shows the real Buy button before launch, for test purchases (Stripe test mode).
+  const [preview, setPreview] = React.useState(false);
+  React.useEffect(() => { try { setPreview(new URLSearchParams(window.location.search).get('buy') === 'test'); } catch {} }, []);
+  if (!launch.live && !preview) return <WaitlistForm id={`waitlist-${props.product.slug}`} variant={props.variant || 'dark'} />;
   return <Checkout {...props} />;
 }
 
