@@ -16,7 +16,7 @@ export default function Privacy() {
         <li><strong>License activation:</strong> your license key and an ID and name for your computer, so we can count how many computers use the license.</li>
         <li><strong>Signing in:</strong> when you sign in to see your plugins, we set one cookie that keeps you signed in for 30 days. It holds your email address and nothing else.</li>
         <li><strong>Abuse protection:</strong> when a form sends an email, we keep the address and a one-way hash of your IP address for a short time to stop the forms being used for spam.</li>
-        <li><strong>Site analytics:</strong> we don't use analytics or tracking cookies on this site.</li>
+        <li><strong>Site analytics:</strong> we use Vercel Web Analytics to count page views. It sets no cookies and doesn't identify you or follow you across other sites.</li>
       </ul>
 
       <h2>How we use it</h2>
