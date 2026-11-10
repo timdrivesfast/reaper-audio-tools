@@ -23,9 +23,9 @@ const features = [
 // Audio examples. Real drum loops (from Cappy) with WET run through the DrumCrusher DSP at its
 // AMOUNT 85 on every band, DRIVE 30, CHARACTER as named. Files in /public/audio/drumcrusher.
 const audioExamples = [
-  { title: 'Tape mode', drySrc: '/audio/drumcrusher/tape-dry-2.mp3', wetSrc: '/audio/drumcrusher/tape-wet-2.mp3', peaks: drumCrusherPeaks.tape },
-  { title: 'FET mode', drySrc: '/audio/drumcrusher/fet-dry-2.mp3', wetSrc: '/audio/drumcrusher/fet-wet-2.mp3', peaks: drumCrusherPeaks.fet },
-  { title: 'Crush mode', drySrc: '/audio/drumcrusher/crush-dry-2.mp3', wetSrc: '/audio/drumcrusher/crush-wet-2.mp3', peaks: drumCrusherPeaks.crush },
+  { title: 'Tape mode', drySrc: '/audio/drumcrusher/tape-dry-3.mp3', wetSrc: '/audio/drumcrusher/tape-wet-3.mp3', peaks: drumCrusherPeaks.tape },
+  { title: 'FET mode', drySrc: '/audio/drumcrusher/fet-dry-3.mp3', wetSrc: '/audio/drumcrusher/fet-wet-3.mp3', peaks: drumCrusherPeaks.fet },
+  { title: 'Crush mode', drySrc: '/audio/drumcrusher/crush-dry-3.mp3', wetSrc: '/audio/drumcrusher/crush-wet-3.mp3', peaks: drumCrusherPeaks.crush },
 ];
 
 export default function Page() {
