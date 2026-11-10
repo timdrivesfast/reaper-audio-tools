@@ -1,7 +1,7 @@
 import React from 'react';
 
 /** Scrolling marquee strip — the suite's brand motif. Every plugin runs one edge to edge across the top. */
-export function Ticker({ items = ['EASYDUCK', 'REAPER AUDIO TOOLS'], speed = 22, height = 20, background = 'var(--accent-ticker)', color = 'var(--ink-900)', paused = false, style }) {
+export function Ticker({ items = ['EASYDUCK', 'REAPER AUDIO TOOLS'], speed = 22, height = 20, background = 'var(--accent-ticker)', color = 'var(--ink-900)', paused = false, right, style }) {
   const unitRef = React.useRef(null);
   const trackRef = React.useRef(null);
   React.useEffect(() => {
@@ -28,10 +28,11 @@ export function Ticker({ items = ['EASYDUCK', 'REAPER AUDIO TOOLS'], speed = 22,
     </div>
   );
   return (
-    <div aria-hidden="true" style={{ height, background, overflow: 'hidden', display: 'flex', alignItems: 'center', fontFamily: 'var(--font-ui)', fontWeight: 700, fontSize: 9.5, letterSpacing: '1px', color, userSelect: 'none', ...style }}>
-      <div ref={trackRef} style={{ display: 'flex', willChange: 'transform' }}>
+    <div style={{ position: 'relative', height, background, overflow: 'hidden', display: 'flex', alignItems: 'center', fontFamily: 'var(--font-ui)', fontWeight: 700, fontSize: 9.5, letterSpacing: '1px', color, userSelect: 'none', ...style }}>
+      <div ref={trackRef} aria-hidden="true" style={{ display: 'flex', willChange: 'transform' }}>
         {Array.from({ length: 14 }, (_, i) => unit(i, i === 0 ? unitRef : undefined))}
       </div>
+      {right && <div style={{ position: 'absolute', right: 0, top: 0, bottom: 0, display: 'flex', alignItems: 'center', gap: 8, padding: '0 4px 0 18px', background: 'linear-gradient(90deg, transparent, ' + background + ' 14px)' }}>{right}</div>}
     </div>
   );
 }
