@@ -6,5 +6,5 @@ export const metadata = {
 };
 
 export default function Basic() {
-  return <SuitePage suite="basic" title="Basic Suite" lede="A light interface and a handful of controls per plugin. Load it, turn two knobs, move on. Pay once, no subscription." />;
+  return <SuitePage suite="basic" title="Basic Suite" lede="A light interface and a handful of controls per plugin. Load it, turn two knobs, move on." />;
 }

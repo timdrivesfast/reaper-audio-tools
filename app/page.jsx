@@ -50,7 +50,7 @@ export default function Home() {
           </div>
           <div style={{ display: 'grid', gap: 16, maxWidth: 520 }}>
             <p className="v-body" style={{ fontSize: 18 }}>Each plugin does one job. You get the controls you'd reach for anyway, labeled in plain words, so you can get a finished sound without reading a manual or building a routing chain.</p>
-            <p className="v-body" style={{ fontSize: 18 }}>VST3 and AU for Mac and Windows. Pay once, keep it. No subscription.</p>
+            <p className="v-body" style={{ fontSize: 18 }}>VST3 and AU for Mac and Windows.</p>
           </div>
         </div>
       </section>
