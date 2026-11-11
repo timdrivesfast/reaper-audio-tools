@@ -214,3 +214,23 @@ body:has(.v2) { background: var(--v-bg); font-family: var(--v-sans); color: var(
 @media (max-width: 420px) { .v-count__n { font-size: 26px; } }
 .v-count-inline { display: inline-flex; align-items: center; gap: 8px; font-family: var(--v-mono); font-size: 12.5px; letter-spacing: .08em; text-transform: uppercase; color: var(--v-ink-3, #3A3C48); }
 .v-count-inline::before { content: ''; width: 7px; height: 7px; border-radius: 4px; background: #F26B6B; box-shadow: 0 0 0 3px rgba(242,107,107,.18); }
+
+/* ModFX Pro phone companion */
+.v-phone { width: 100%; max-width: 260px; aspect-ratio: 660 / 1108; border-radius: 40px; padding: 9px; background: #0B0C12; box-shadow: 0 0 0 2px #2A2E44, 0 30px 60px -20px rgba(0,0,0,.6); position: relative; }
+.v-phone::before { content: ''; position: absolute; top: 15px; left: 50%; width: 30%; height: 18px; transform: translateX(-50%); background: #0B0C12; border-radius: 12px; z-index: 1; }
+.v-phone img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: top; border-radius: 32px; }
+.v-phones { display: flex; justify-content: center; align-items: center; gap: clamp(12px, 3vw, 40px); }
+.v-phones .v-phone { flex: 1 1 0; }
+.v-phones .v-phone:not(.v-phone--front) { transform: scale(.9); opacity: .9; }
+.v-phone--front { max-width: 290px; }
+@media (max-width: 640px) { .v-phones .v-phone:not(.v-phone--front) { display: none; } .v-phone--front { max-width: 250px; } }
+.v-steps { list-style: none; margin: 0; padding: 0; display: grid; gap: 22px; }
+.v-steps li { display: grid; grid-template-columns: 44px 1fr; gap: 16px; align-items: start; }
+.v-steps h3 { margin: 4px 0 6px; font-size: 20px; color: #fff; }
+.v-steps__n { width: 44px; height: 44px; border-radius: 50%; display: grid; place-items: center; font-family: var(--v-mono, ui-monospace); font-weight: 700; background: #4A4CA6; color: #fff; }
+.v-qrmenu { width: 100%; max-width: 360px; border-radius: 18px; box-shadow: 0 0 0 1px rgba(255,255,255,.08), 0 30px 60px -24px rgba(0,0,0,.7); }
+/* hero: phone over the plugin */
+.v-heroduo { position: relative; padding-right: clamp(40px, 9vw, 120px); padding-bottom: clamp(30px, 5vw, 60px); }
+.v-heroduo .v-phone { position: absolute; right: 0; bottom: 0; width: clamp(96px, 22%, 190px); border-radius: clamp(22px, 3vw, 34px); padding: clamp(5px, .7vw, 8px); }
+.v-heroduo .v-phone img { border-radius: clamp(17px, 2.4vw, 27px); }
+.v-heroduo .v-phone::before { top: clamp(9px, 1.2vw, 14px); height: clamp(8px, 1.1vw, 14px); }
