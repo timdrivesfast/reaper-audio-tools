@@ -1,3 +1,4 @@
+import { notifyOrder } from '../../../lib/server/notify';
 import { NextResponse } from 'next/server';
 import { db } from '../../../lib/server/supabase';
 import { generateLicenseKey, maxActivations } from '../../../lib/server/license';
@@ -44,6 +45,8 @@ export async function POST(request) {
       console.error('[free-license] insert', error);
       return NextResponse.json({ error: "That didn't go through. Try again in a minute." }, { status: 500 });
     }
+    const { count } = await supabase.from('licenses').select('id', { count: 'exact', head: true }).eq('product', product);
+    await notifyOrder({ product, email, total: count });
   }
 
   try {

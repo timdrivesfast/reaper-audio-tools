@@ -1,3 +1,4 @@
+import { notifyOrder, notifyRefund } from '../../../../lib/server/notify';
 import { NextResponse } from 'next/server';
 import { db } from '../../../../lib/server/supabase';
 import { verifyStripeSignature } from '../../../../lib/server/stripe';
@@ -58,10 +59,13 @@ async function issueLicense(supabase, session) {
   if (error && error.code === '23505') return; // a retry beat us to it
   if (error) throw error;
   await sendLicenseEmail({ to: email, name, product, key });
+  const { count } = await supabase.from('licenses').select('id', { count: 'exact', head: true }).eq('product', product).not('stripe_session_id', 'is', null);
+  await notifyOrder({ product, email, paid: true, amount: session.amount_total != null ? (session.amount_total / 100).toFixed(2).replace(/\.00$/, '') : undefined, total: count });
 }
 
 async function revoke(supabase, paymentIntent, reason) {
   if (!paymentIntent) return;
-  const { error } = await supabase.from('licenses').update({ status: 'revoked', revoked_reason: reason }).eq('stripe_payment_intent', paymentIntent);
+  const { data, error } = await supabase.from('licenses').update({ status: 'revoked', revoked_reason: reason }).eq('stripe_payment_intent', paymentIntent).select('id');
   if (error) throw error;
+  if (data?.length) await notifyRefund({ reason, count: data.length });
 }
