@@ -15,7 +15,7 @@ export default function Terms() {
       <p>Prices are shown in US dollars and are one-time purchases, not subscriptions. Sales tax or VAT is added at checkout based on your location, and checkout may show the price in your local currency.</p>
 
       <h2>Your license</h2>
-      <p>When you buy or download a plugin, including free plugins like EasyDuck, you get a personal, non-exclusive, non-transferable license to install and use it on up to {process.env.LICENSE_MAX_ACTIVATIONS || 2} computers you own or control. You can use it to make music for any purpose, including commercial releases. Audio you make with our plugins belongs to you.</p>
+      <p>When you buy or download a plugin, including free plugins like EasyDuck and DrumCrusher, you get a personal, non-exclusive, non-transferable license to install and use it on up to {process.env.LICENSE_MAX_ACTIVATIONS || 2} computers you own or control. You can use it to make music for any purpose, including commercial releases. Audio you make with our plugins belongs to you.</p>
       <p>You may not resell, share, sublicense, rent or distribute the plugin or your license key, or reverse engineer, decompile or modify the plugin except where the law allows it.</p>
 
       <h2>Updates and support</h2>

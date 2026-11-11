@@ -8,7 +8,7 @@ const p = products.drumcrusher;
 
 export const metadata = {
   title: 'DrumCrusher, drum bus processor plugin',
-  description: 'DrumCrusher is a drum bus processor for VST3 and AU: 3-band parallel compression with five character modes, filters and per-band wet faders. $25.',
+  description: 'DrumCrusher is a drum bus processor for VST3 and AU: 3-band parallel compression with five character modes, filters and per-band wet faders. Free.',
   openGraph: { images: [p.ui] },
 };
 

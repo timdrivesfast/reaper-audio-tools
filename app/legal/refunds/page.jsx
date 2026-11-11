@@ -6,7 +6,7 @@ export const metadata = { title: 'Refund Policy' };
 export default function Refunds() {
   return (
     <LegalPage title="Refund Policy" updated="November 4, 2026">
-      <p>If a paid plugin isn't right for you, you can get a full refund within {site.refundDays} days of purchase. Free plugins like EasyDuck have nothing to refund.</p>
+      <p>If a paid plugin isn't right for you, you can get a full refund within {site.refundDays} days of purchase. Free plugins like EasyDuck and DrumCrusher have nothing to refund.</p>
 
       <h2>How to request a refund</h2>
       <p>Email {site.supportEmail} with the email you bought with and which plugin, and we'll refund it. You can also find your order at <a href="https://app.link.com" rel="noopener">app.link.com</a>, since purchases are sold through Link, Stripe's checkout, and ask there.</p>
