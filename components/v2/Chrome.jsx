@@ -20,6 +20,7 @@ export function Footer() {
           <div className="v-footer__brand">
             <img src="/images/v2/typemark.png" alt="Reaper Audio Tools" />
             <a href={`mailto:${site.supportEmail}`}>{site.supportEmail}</a>
+            {(site.social || []).map((s) => <a key={s.href} href={s.href} rel="me noopener" target="_blank">{s.label} {s.handle}</a>)}
           </div>
           {footerColumns.map((c) => (
             <div key={c.title} className="v-footer__col">
