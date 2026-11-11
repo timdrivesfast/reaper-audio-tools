@@ -11,6 +11,13 @@ export function Ticker({ text = TICK }) {
   );
 }
 
+const InstagramIcon = () => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5.5" /><circle cx="12" cy="12" r="4.2" /><circle cx="17.4" cy="6.6" r="1.1" fill="currentColor" stroke="none" /></svg>
+);
+const MailIcon = () => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="3" /><path d="M4 7l8 6 8-6" /></svg>
+);
+
 export function Footer() {
   const year = new Date().getFullYear();
   return (
@@ -19,8 +26,10 @@ export function Footer() {
         <div className="v-footer__cols">
           <div className="v-footer__brand">
             <img src="/images/v2/typemark.png" alt="Reaper Audio Tools" />
-            <a href={`mailto:${site.supportEmail}`}>{site.supportEmail}</a>
-            {(site.social || []).map((s) => <a key={s.href} href={s.href} rel="me noopener" target="_blank">{s.label} {s.handle}</a>)}
+            <div className="v-footer__contact">
+              {(site.social || []).map((s) => <a key={s.href} href={s.href} rel="me noopener" target="_blank" aria-label={`${s.label} ${s.handle}`}><InstagramIcon />{s.handle}</a>)}
+              <a href={`mailto:${site.supportEmail}`}><MailIcon />{site.supportEmail}</a>
+            </div>
           </div>
           {footerColumns.map((c) => (
             <div key={c.title} className="v-footer__col">

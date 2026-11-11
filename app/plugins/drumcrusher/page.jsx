@@ -25,10 +25,9 @@ const audioExamples = [
 
 export default function Page() {
   return (
-    <ProductPage description={drumCrusherDescription} product={p} features={features} faq={drumCrusherFaq}>
+    <ProductPage lead="Parallel compression for your drum bus. Three bands, five modes." description={drumCrusherDescription} product={p} specs={[['Extras', 'A/B compare']]} features={features} faq={drumCrusherFaq}>
       <AudioExamples examples={audioExamples} tone={p.tone}
-        intro={["Drum loops with DrumCrusher off (DRY) and on (WET).",
-          'AMOUNT at 85 on all three bands and DRIVE at 30. Everything else is at its default.']} />
+        intro="Drum loops with DrumCrusher off and on. Flip DRY and WET." note="AMOUNT 85 · DRIVE 30" />
     </ProductPage>
   );
 }

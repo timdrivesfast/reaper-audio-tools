@@ -7,7 +7,7 @@ import { site, launch } from '../../lib/site';
 import { productSchema, breadcrumbSchema, jsonLd } from '../../lib/seo';
 
 /** Shared layout for a plugin page: stone hero with the plugin, features, specs, FAQ. */
-export default function ProductPage({ product: p, lead, art, features = [], children, faq, description }) {
+export default function ProductPage({ product: p, lead, art, features = [], children, faq, description, specs = [] }) {
   const computers = process.env.LICENSE_MAX_ACTIVATIONS || '2';
   const schema = [productSchema(p, { description, features }), breadcrumbSchema([['Home', '/'], [p.suite === 'pro' ? 'Pro Suite' : 'Basic Suite', p.suite === 'pro' ? '/pro' : '/basic'], [p.name, `/plugins/${p.slug}`]])];
   return (
@@ -27,11 +27,7 @@ export default function ProductPage({ product: p, lead, art, features = [], chil
               </div>
               {!p.free && !launch.live && <Countdown inline />}
               {p.free ? <GetFreeForm product={p} /> : <div><BuyButton product={p} /></div>}
-              <p className="v-fine">{p.free
-                ? "We'll email your license key and download links. No card needed."
-                : launch.live
-                  ? `One-time purchase. Your license key and download links arrive by email. Works on ${computers} computers.`
-                  : `Join the waitlist and we'll email you the moment it's out. One-time purchase, ${p.priceLabel}.`}</p>
+              <p className="v-fine">{p.free ? 'No card needed.' : launch.live ? `One-time purchase. Works on ${computers} computers.` : "We'll email you the moment it's out."}</p>
             </div>
           </div>
           <div className="v-hero__art">{art || <Frame src={p.ui} alt={`${p.name} plugin`} style={{ borderRadius: 18 }} />}</div>
@@ -42,31 +38,26 @@ export default function ProductPage({ product: p, lead, art, features = [], chil
 
       {features.length > 0 && (
         <section className="v-wrap v-section">
-          <div style={{ display: 'grid', gap: 14, marginBottom: 36 }}><div className="v-eyebrow">{p.name}</div><h2 className="v-h2">Controls</h2></div>
-          <div className="v-tiles">
+          <h2 className="v-h2" style={{ marginBottom: 'clamp(28px, 4vw, 44px)' }}>What's inside</h2>
+          <div className="v-feats">
             {features.map((f) => (
-              <div key={f.title} className="v-tile">
-                {f.stat && <span className="v-tag" style={{ justifySelf: 'start' }}>{f.stat}</span>}
+              <div key={f.title} className="v-feat">
+                {f.stat && <span className="v-feat__stat">{f.stat}</span>}
                 <h3>{f.title}</h3>
-                <p className="v-body">{f.body}</p>
+                <p>{f.body}</p>
               </div>
             ))}
           </div>
+          <dl className="v-specrow">
+            <div><dt>Formats</dt><dd>{p.formats.replace(/ · /g, ', ')}</dd></div>
+            <div><dt>Runs on</dt><dd>Mac, Windows</dd></div>
+            <div><dt>Price</dt><dd>{p.free ? 'Free' : `${p.priceLabel} once`}</dd></div>
+            <div><dt>License</dt><dd>{computers} computers</dd></div>
+            {specs.map(([k, v]) => <div key={k}><dt>{k}</dt><dd>{v}</dd></div>)}
+            {!p.free && <div><dt>Refunds</dt><dd><a href="/legal/refunds">{site.refundDays} days</a></dd></div>}
+          </dl>
         </section>
       )}
-
-      <section className="v-wrap v-section">
-        <div className="v-faq">
-          <h2 className="v-h2">Specs</h2>
-          <dl className="v-specs" style={{ gridColumn: 'span 2' }}>
-            <dt>Formats</dt><dd>{p.formats.replace(/ · /g, ', ')}</dd>
-            <dt>Platforms</dt><dd>Mac (VST3, AU), Windows (VST3)</dd>
-            <dt>Price</dt><dd>{p.free ? 'Free' : `${p.priceLabel}, one-time`}</dd>
-            <dt>License</dt><dd>{computers} computers per license</dd>
-            {!p.free && <><dt>Refunds</dt><dd>Within {site.refundDays} days. <a href="/legal/refunds" style={{ textDecoration: 'underline' }}>Refund policy</a></dd></>}
-          </dl>
-        </div>
-      </section>
 
       {faq && <Faq items={faq} />}
     </Shell>

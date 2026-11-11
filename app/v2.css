@@ -24,7 +24,7 @@
   --v-mono: 'Geist Mono', ui-monospace, monospace;
   --v-wrap: 1320px;
   --v-gutter: clamp(20px, 4vw, 40px);
-  --v-section: clamp(80px, 10vw, 140px);
+  --v-section: clamp(72px, 8vw, 116px);
   --v-stone: url('/images/v2/stone.webp');
 }
 
@@ -234,3 +234,27 @@ body:has(.v2) { background: var(--v-bg); font-family: var(--v-sans); color: var(
 .v-heroduo .v-phone { position: absolute; right: 0; bottom: 0; width: clamp(96px, 22%, 190px); border-radius: clamp(22px, 3vw, 34px); padding: clamp(5px, .7vw, 8px); }
 .v-heroduo .v-phone img { border-radius: clamp(17px, 2.4vw, 27px); }
 .v-heroduo .v-phone::before { top: clamp(9px, 1.2vw, 14px); height: clamp(8px, 1.1vw, 14px); }
+
+/* Product page: what's inside (hairlines, no boxes) */
+.v-feats { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0 clamp(20px, 3vw, 40px); }
+@media (max-width: 900px) { .v-feats { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 32px 24px; } }
+@media (max-width: 520px) { .v-feats { grid-template-columns: 1fr; gap: 26px; } }
+.v-feat { border-top: 2px solid var(--v-ink, #15161C); padding-top: 18px; display: grid; gap: 8px; align-content: start; }
+.v-feat__stat { font-family: var(--v-mono); font-size: 11px; letter-spacing: .1em; color: var(--v-ink-4); }
+.v-feat h3 { margin: 0; font-size: 20px; font-weight: 600; letter-spacing: -.02em; }
+.v-feat p { margin: 0; color: var(--v-ink-3, #4A4D58); font-size: 16px; line-height: 1.45; }
+.v-specrow { display: flex; flex-wrap: wrap; gap: 14px clamp(24px, 4vw, 56px); margin: clamp(40px, 5vw, 64px) 0 0; padding-top: 22px; border-top: 1px solid var(--v-line); }
+.v-specrow > div { display: grid; gap: 4px; }
+.v-specrow dt { font-family: var(--v-mono); font-size: 11px; letter-spacing: .1em; color: var(--v-ink-4); text-transform: uppercase; }
+.v-specrow dd { margin: 0; font-size: 15px; color: var(--v-ink-2); }
+.v-specrow a { text-decoration: underline; text-underline-offset: 3px; }
+/* Product page: listen */
+.v-listen__head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 12px 40px; margin-bottom: clamp(24px, 3vw, 36px); }
+.v-listen__head .v-body { margin: 0; max-width: 420px; }
+.v-listen__note { margin: 6px 0 0; font-family: var(--v-mono); font-size: 12px; letter-spacing: .08em; color: var(--v-ink-4); }
+.v-listen__grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr)); gap: 16px; background: transparent; }
+/* Footer: contact with icons */
+.v-footer__contact { display: flex; flex-direction: column; gap: 12px; }
+.v-footer__contact a { display: inline-flex; align-items: center; gap: 10px; color: #fff; font-size: 15px; }
+.v-footer__contact a:hover { color: var(--v-on-dark-2); }
+.v-footer__contact svg { width: 20px; height: 20px; flex: none; }
