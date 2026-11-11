@@ -19,7 +19,7 @@ export default function Faq({ items, title = 'FAQ', id = 'faq' }) {
                 <button type="button" className="v-faq__q" aria-expanded={isOpen} onClick={() => setOpen(isOpen ? -1 : i)}>
                   <span>{f.q}</span><span className="v-faq__sign" aria-hidden="true">{isOpen ? '−' : '+'}</span>
                 </button>
-                {isOpen && <p className="v-faq__a">{f.a}</p>}
+                <p className="v-faq__a" hidden={!isOpen}>{f.a}</p>
               </div>
             );
           })}

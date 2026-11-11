@@ -1,7 +1,8 @@
 import LegalPage from '../../components/LegalPage';
 import { site } from '../../lib/site';
 
-export const metadata = { title: 'Contact' };
+export const metadata = {
+  alternates: { canonical: '/contact' }, title: 'Contact' };
 
 export default function Contact() {
   return (

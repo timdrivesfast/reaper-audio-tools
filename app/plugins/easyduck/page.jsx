@@ -3,6 +3,7 @@ import EasyDuckDemo from '../../../components/EasyDuckDemo';
 import Slate from '../../../components/Slate';
 import { AudioDemo } from '../../../components/web';
 import { products } from '../../../lib/site';
+import { easyDuckFeatures as features, easyDuckDescription } from '../../../lib/catalog';
 import { easyDuckFaq } from '../../../lib/faq';
 import { audioPeaks } from '../../../lib/audioPeaks';
 
@@ -17,17 +18,11 @@ const audioExamples = [
 
 export const metadata = {
   title: 'EasyDuck, sidechain emulator plugin',
-  description: "EasyDuck is a sidechain emulation plugin for VST3 and AU. It needs no input signal, so there's no routing. Put it on any track to duck or pump it.",
+  description: easyDuckDescription,
+  alternates: { canonical: '/plugins/easyduck' },
   openGraph: { images: [duck.image] },
 };
 
-const features = [
-  { stat: '4 KNOBS', title: 'Trigger envelope', body: 'Attack 1 to 150 ms, Decay 20 to 600 ms, Length 0 to 300 ms, Depth 0 to 100%. A hard, deep cut for boom bap or a soft pump for house. Or drag the curve.' },
-  { stat: 'UP TO 1/16', title: 'Pattern', body: 'Velocity per step, swing and triplets. 1/4, 1/8 or 1/16 notes across 1 or 2 bars.' },
-  { stat: 'HOST CLOCK', title: 'Sync', body: "Follows your DAW's tempo and time signature. Set them by hand when running standalone." },
-  { stat: 'ANALOG', title: 'Juice', body: 'Adds a little analog bump and noise to push the pump and add grit.' },
-  { stat: '6 PRESETS', title: 'Presets', body: 'Disco, Boom Bap, Rock, Deep House, Techno and Trance.' },
-];
 
 export default function EasyDuckPage() {
   const art = (
@@ -40,7 +35,7 @@ export default function EasyDuckPage() {
   return (
     <ProductPage product={duck} art={art} features={features} faq={easyDuckFaq}
       lead="A sidechain emulation plugin that doesn't need an input signal. No routing or busses. Put it on any track to duck or pump that track."
-      description="EasyDuck is a sidechain emulation plugin for VST3 and AU. It needs no input signal, so there's no routing. Put it on any track to duck or pump it.">
+      description={easyDuckDescription}>
       <section id="interface" className="v-dark v-section" style={{ paddingBottom: 'var(--v-section)', marginTop: 0 }}>
         <div className="v-wrap" style={{ display: 'grid', gap: 40 }}>
           <div style={{ display: 'grid', gap: 12, maxWidth: 720 }}>

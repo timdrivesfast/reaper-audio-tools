@@ -4,18 +4,20 @@ import Faq from '../components/v2/Faq';
 import NotifyForm from '../components/v2/NotifyForm';
 import { products, site } from '../lib/site';
 import { homeFaq } from '../lib/faq';
+import { pluginListSchema, jsonLd } from '../lib/seo';
 
 const suites = [
   { id: 'basic', name: 'Basic Suite', title: 'Quick to learn', body: 'Free plugins with a light interface and a handful of controls each. Load it, turn two knobs, move on.', href: '/basic', cta: 'See the Basic Suite' },
   { id: 'pro', name: 'Pro Suite', title: 'Deeper control', body: 'A dark interface with more to dig into, for performance and sound design.', href: '/pro', cta: 'Explore the Pro Suite', dark: true },
 ];
 
+export const metadata = { alternates: { canonical: '/' } };
+
 export default function Home() {
   const duck = products.easyduck;
-  const org = { '@context': 'https://schema.org', '@type': 'Organization', name: site.name, url: site.url, logo: `${site.url}/images/v2/typemark.png` };
   return (
     <Shell>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(org) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={jsonLd(pluginListSchema('Reaper Audio Tools plugins', Object.values(products)))} />
 
       <section id="top" className="v-hero v-stone">
         <div className="v-wrap v-hero__in">

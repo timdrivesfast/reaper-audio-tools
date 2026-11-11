@@ -1,7 +1,7 @@
 import LegalPage from '../../../components/LegalPage';
 import { site } from '../../../lib/site';
 
-export const metadata = { title: 'Refund Policy' };
+export const metadata = { alternates: { canonical: '/legal/refunds' }, title: 'Refund Policy' };
 
 export default function Refunds() {
   return (

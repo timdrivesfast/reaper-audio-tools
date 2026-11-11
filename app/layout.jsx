@@ -2,6 +2,7 @@ import './globals.css';
 import './v2.css';
 import { site } from '../lib/site';
 import { Analytics } from '@vercel/analytics/next';
+import { orgSchema, websiteSchema, jsonLd } from '../lib/seo';
 
 export const metadata = {
   metadataBase: new URL(site.url),
@@ -19,6 +20,8 @@ export default function RootLayout({ children }) {
       <head>
         <link rel="preload" href="/fonts/Geist-latin.woff2" as="font" type="font/woff2" crossOrigin="anonymous" />
         <link rel="preload" href="/fonts/GeistMono-latin.woff2" as="font" type="font/woff2" crossOrigin="anonymous" />
+        <script type="application/ld+json" dangerouslySetInnerHTML={jsonLd([orgSchema, websiteSchema])} />
+        <link rel="alternate" type="text/plain" href="/llms.txt" title="Plain-text summary for AI assistants" />
       </head>
       <body>{children}<Analytics /></body>
     </html>

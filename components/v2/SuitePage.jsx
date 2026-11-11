@@ -1,12 +1,14 @@
 import { Shell, Frame } from './Chrome';
 import BuyButton from './BuyButton';
 import { products } from '../../lib/site';
+import { pluginListSchema, breadcrumbSchema, jsonLd } from '../../lib/seo';
 
 /** A suite's page: a hero, then one band per plugin in the suite. Basic is light, Pro is dark. */
 export default function SuitePage({ suite, title, lede, dark = false, cta }) {
   const list = Object.values(products).filter((p) => p.suite === suite);
   return (
     <Shell cta={cta}>
+      <script type="application/ld+json" dangerouslySetInnerHTML={jsonLd([pluginListSchema(title, list), breadcrumbSchema([['Home', '/'], [title, `/${suite}`]])])} />
       <section className={`v-hero ${dark ? 'v-dark' : 'v-stone'}`}>
         <div className="v-wrap v-hero__in" style={{ display: 'grid', gap: 20 }}>
           <div className="v-eyebrow">{list.length} {list.length === 1 ? 'plugin' : 'plugins'}</div>

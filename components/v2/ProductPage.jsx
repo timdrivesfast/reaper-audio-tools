@@ -4,18 +4,15 @@ import BuyButton from './BuyButton';
 import GetFreeForm from './GetFreeForm';
 import Countdown from './Countdown';
 import { site, launch } from '../../lib/site';
+import { productSchema, breadcrumbSchema, jsonLd } from '../../lib/seo';
 
 /** Shared layout for a plugin page: stone hero with the plugin, features, specs, FAQ. */
 export default function ProductPage({ product: p, lead, art, features = [], children, faq, description }) {
   const computers = process.env.LICENSE_MAX_ACTIVATIONS || '2';
-  const schema = {
-    '@context': 'https://schema.org', '@type': 'SoftwareApplication', name: p.name, applicationCategory: 'MultimediaApplication',
-    operatingSystem: 'macOS, Windows', description: description || p.tagline, image: `${site.url}${p.ui}`,
-    offers: { '@type': 'Offer', price: String(p.price || 0), priceCurrency: 'USD' }, publisher: { '@type': 'Organization', name: site.name },
-  };
+  const schema = [productSchema(p, { description, features }), breadcrumbSchema([['Home', '/'], [p.suite === 'pro' ? 'Pro Suite' : 'Basic Suite', p.suite === 'pro' ? '/pro' : '/basic'], [p.name, `/plugins/${p.slug}`]])];
   return (
     <Shell cta={p.free ? undefined : { label: launch.live ? `Buy ${p.name}` : 'Join the waitlist', href: '#buy' }}>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema).replace(/</g, '\\u003c') }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={jsonLd(schema)} />
       <section className="v-hero v-stone">
         <div className="v-wrap v-hero__in">
           <div className="v-hero__copy">

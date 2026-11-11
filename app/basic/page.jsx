@@ -1,6 +1,7 @@
 import SuitePage from '../../components/v2/SuitePage';
 
 export const metadata = {
+  alternates: { canonical: '/basic' },
   title: 'Basic Suite',
   description: 'Reaper Audio Tools Basic Suite: EasyDuck and DrumCrusher, both free. Light interface, a few controls per plugin. VST3 and AU for Mac and Windows.',
 };
