@@ -257,4 +257,5 @@ body:has(.v2) { background: var(--v-bg); font-family: var(--v-sans); color: var(
 .v-footer__contact { display: flex; flex-direction: column; gap: 12px; }
 .v-footer__contact a { display: inline-flex; align-items: center; gap: 10px; color: #fff; font-size: 15px; }
 .v-footer__contact a:hover { color: var(--v-on-dark-2); }
+.v-footer__social { display: flex; flex-wrap: wrap; gap: 12px 22px; }
 .v-footer__contact svg { width: 20px; height: 20px; flex: none; }
