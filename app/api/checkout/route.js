@@ -1,36 +1,30 @@
 import { NextResponse } from 'next/server';
 import { stripe, priceIdFor } from '../../../lib/server/stripe';
-import { products, site } from '../../../lib/site';
+import { cartSlugs, checkoutParams } from '../../../lib/server/checkout';
+import { site } from '../../../lib/site';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
 
 /**
- * POST { product } -> { url } of a Stripe Checkout page for that plugin.
+ * POST { products: [slug, …], from: 'cart' | 'buy_now' } (or the older { product: slug })
+ * -> { url } of a Stripe Checkout page with one line per plugin.
  * Uses Managed Payments (Stripe as merchant of record: sales tax and VAT handled)
  * unless STRIPE_MANAGED_PAYMENTS=false.
  */
 export async function POST(request) {
   let body;
   try { body = await request.json(); } catch { body = {}; }
-  const slug = String(body?.product || '').toLowerCase();
-  const p = products[slug];
-  if (!p || p.free || p.status !== 'available') return NextResponse.json({ error: "That plugin isn't for sale." }, { status: 400 });
-  const price = priceIdFor(slug);
-  if (!process.env.STRIPE_SECRET_KEY || !price) {
+  const slugs = cartSlugs(body?.products ?? body?.product);
+  if (!slugs.length) return NextResponse.json({ error: "That plugin isn't for sale." }, { status: 400 });
+  const prices = Object.fromEntries(slugs.map((s) => [s, priceIdFor(s)]));
+  if (!process.env.STRIPE_SECRET_KEY || slugs.some((s) => !prices[s])) {
     return NextResponse.json({ error: "Checkout isn't connected yet. Email us and we'll sort you out." }, { status: 503 });
   }
   try {
-    const session = await stripe('POST', '/checkout/sessions', {
-      mode: 'payment',
-      line_items: [{ price, quantity: 1 }],
-      managed_payments: process.env.STRIPE_MANAGED_PAYMENTS === 'false' ? undefined : { enabled: true },
-      success_url: `${site.url}/thanks?plugin=${encodeURIComponent(slug)}&session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${site.url}/plugins/${slug}`,
-      metadata: { product: slug },
-      // Tags these sessions in the Stripe Dashboard so the store's checkout can be told apart.
-      integration_identifier: 'rat-store-qkvmbzrt',
-    });
+    const session = await stripe('POST', '/checkout/sessions', checkoutParams({
+      slugs, prices, siteUrl: site.url, managed: process.env.STRIPE_MANAGED_PAYMENTS !== 'false', from: body?.from,
+    }));
     return NextResponse.json({ url: session.url });
   } catch (err) {
     console.error('[checkout]', err.message);

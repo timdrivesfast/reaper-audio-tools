@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "test": "node --test tests/license.test.mjs",
+    "test": "node --test tests/license.test.mjs tests/cart.test.mjs",
     "license:keys": "node scripts/generate-signing-keys.mjs"
   },
   "dependencies": {

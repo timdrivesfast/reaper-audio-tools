@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { nav, suites, products } from '../../lib/site';
+import { CartButton, CartDrawer } from './Cart';
 
 const inSuite = (id) => Object.values(products).filter((p) => p.suite === id);
 
@@ -42,7 +43,8 @@ export default function Header({ cta = defaultCta }) {
               </div>
             </div>
           ) : <a key={l.href} className="v-nav__link" href={l.href}>{l.label}</a>)}
-          <a className="v-btn v-btn--light v-btn--sm" href={cta.href}>{cta.label}</a>
+          <a className="v-btn v-btn--light v-btn--sm v-header__cta" href={cta.href}>{cta.label}</a>
+          <CartButton />
           <button type="button" className="v-burger" aria-expanded={open} aria-controls="v-menu" aria-label="Menu" onClick={() => setOpen(!open)}>
             <svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true">{open ? <path d="M5 5l10 10M15 5L5 15" stroke="currentColor" strokeWidth="2" strokeLinecap="round" /> : <path d="M3 6h14M3 10h14M3 14h14" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />}</svg>
           </button>
@@ -53,6 +55,7 @@ export default function Header({ cta = defaultCta }) {
           ? suites.map((s) => <a key={s.href} href={s.href} onClick={() => setOpen(false)}>{s.name}</a>)
           : [<a key={l.href} href={l.href} onClick={() => setOpen(false)}>{l.label}</a>])}
       </nav>
+      <CartDrawer />
     </header>
   );
 }
