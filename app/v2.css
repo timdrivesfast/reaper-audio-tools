@@ -215,26 +215,43 @@ body:has(.v2) { background: var(--v-bg); font-family: var(--v-sans); color: var(
 .v-count-inline { display: inline-flex; align-items: center; gap: 8px; font-family: var(--v-mono); font-size: 12.5px; letter-spacing: .08em; text-transform: uppercase; color: var(--v-ink-3, #3A3C48); }
 .v-count-inline::before { content: ''; width: 7px; height: 7px; border-radius: 4px; background: #F26B6B; box-shadow: 0 0 0 3px rgba(242,107,107,.18); }
 
-/* ModFX Pro phone companion */
-.v-phone { width: 100%; max-width: 260px; aspect-ratio: 660 / 1108; border-radius: 40px; padding: 9px; background: #0B0C12; box-shadow: 0 0 0 2px #2A2E44, 0 30px 60px -20px rgba(0,0,0,.6); position: relative; }
-.v-phone::before { content: ''; position: absolute; top: 15px; left: 50%; width: 30%; height: 18px; transform: translateX(-50%); background: #0B0C12; border-radius: 12px; z-index: 1; }
-.v-phone img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: top; border-radius: 32px; }
-.v-phones { display: flex; justify-content: center; align-items: center; gap: clamp(12px, 3vw, 40px); }
+/* ModFX Pro phone companion: floating 3D phones */
+.v-phone { --ry: 0deg; --rx: 6deg; --rz: 0deg; --float: 14px; --delay: 0s;
+  position: relative; width: 100%; max-width: 260px; aspect-ratio: 660 / 1108; container-type: inline-size; perspective: 1400px; }
+.v-phone__body { position: absolute; inset: 0; border-radius: 15cqw; padding: 3.4cqw;
+  background: linear-gradient(140deg, #5B5F70 0%, #23252E 18%, #121318 42%, #2B2D38 64%, #0B0C10 82%, #45485A 100%);
+  box-shadow: inset 0 0 0 1.2cqw #0A0B0F, inset 0.5cqw 0.5cqw 0.6cqw rgba(255,255,255,.22), inset -0.5cqw -0.6cqw 0.8cqw rgba(0,0,0,.6),
+    0 2px 0 rgba(255,255,255,.05);
+  transform: rotateX(var(--rx)) rotateY(var(--ry)) rotateZ(var(--rz)); transform-style: preserve-3d;
+  animation: v-phone-float 6.5s ease-in-out var(--delay) infinite; }
+.v-phone__body img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: top; border-radius: 11.6cqw; background: #0B0C12; }
+.v-phone__glass { position: absolute; inset: 3.4cqw; border-radius: 11.6cqw; pointer-events: none;
+  background: linear-gradient(118deg, rgba(255,255,255,.16) 0%, rgba(255,255,255,.04) 26%, transparent 27%, transparent 100%); }
+.v-phone__island { position: absolute; top: 5.6cqw; left: 50%; width: 27%; height: 6.4cqw; transform: translateX(-50%); background: #050508; border-radius: 4cqw; }
+.v-phone__btn { position: absolute; width: 1.1cqw; border-radius: 1cqw; background: linear-gradient(90deg, #2A2C36, #5B5F70); }
+.v-phone__btn--a { left: -0.9cqw; top: 22%; height: 7%; }
+.v-phone__btn--b { left: -0.9cqw; top: 31%; height: 11%; }
+.v-phone__btn--c { right: -0.9cqw; top: 26%; height: 14%; }
+.v-phone__shadow { position: absolute; left: 12%; right: 12%; bottom: -9%; height: 7%; border-radius: 50%;
+  background: radial-gradient(closest-side, rgba(0,0,0,.55), rgba(0,0,0,0)); filter: blur(6px);
+  animation: v-phone-shadow 6.5s ease-in-out var(--delay) infinite; }
+@keyframes v-phone-float { 0%, 100% { translate: 0 0; } 50% { translate: 0 calc(var(--float) * -1); } }
+@keyframes v-phone-shadow { 0%, 100% { transform: scale(1); opacity: 1; } 50% { transform: scale(.86); opacity: .7; } }
+@media (prefers-reduced-motion: reduce) { .v-phone__body, .v-phone__shadow { animation: none; } }
+.v-phones { display: flex; justify-content: center; align-items: center; padding-block: 10px 40px; }
 .v-phones .v-phone { flex: 1 1 0; }
-.v-phones .v-phone:not(.v-phone--front) { transform: scale(.9); opacity: .9; }
-.v-phone--front { max-width: 290px; }
-@media (max-width: 640px) { .v-phones .v-phone:not(.v-phone--front) { display: none; } .v-phone--front { max-width: 250px; } }
+.v-phones .v-phone--left { --ry: 24deg; --rz: -3deg; --delay: -2.2s; max-width: 240px; margin-right: -2%; z-index: 1; }
+.v-phones .v-phone--front { --ry: 0deg; --rx: 4deg; max-width: 290px; z-index: 2; }
+.v-phones .v-phone--right { --ry: -24deg; --rz: 3deg; --delay: -4.1s; max-width: 240px; margin-left: -2%; z-index: 1; }
+@media (max-width: 640px) { .v-phones .v-phone--left, .v-phones .v-phone--right { display: none; } .v-phones .v-phone--front { max-width: 250px; } }
 .v-steps { list-style: none; margin: 0; padding: 0; display: grid; gap: 22px; }
 .v-steps li { display: grid; grid-template-columns: 44px 1fr; gap: 16px; align-items: start; }
 .v-steps h3 { margin: 4px 0 6px; font-size: 20px; color: #fff; }
 .v-steps__n { width: 44px; height: 44px; border-radius: 50%; display: grid; place-items: center; font-family: var(--v-mono, ui-monospace); font-weight: 700; background: #4A4CA6; color: #fff; }
 .v-qrmenu { width: 100%; max-width: 360px; border-radius: 18px; box-shadow: 0 0 0 1px rgba(255,255,255,.08), 0 30px 60px -24px rgba(0,0,0,.7); }
-/* hero: phone over the plugin */
+/* hero: phone floating over the plugin */
 .v-heroduo { position: relative; padding-right: clamp(40px, 9vw, 120px); padding-bottom: clamp(30px, 5vw, 60px); }
-.v-heroduo .v-phone { position: absolute; right: 0; bottom: 0; width: clamp(96px, 22%, 190px); border-radius: clamp(22px, 3vw, 34px); padding: clamp(5px, .7vw, 8px); }
-.v-heroduo .v-phone img { border-radius: clamp(17px, 2.4vw, 27px); }
-.v-heroduo .v-phone::before { top: clamp(9px, 1.2vw, 14px); height: clamp(8px, 1.1vw, 14px); }
-
+.v-heroduo .v-phone { --ry: -16deg; --rz: 3deg; --float: 8px; position: absolute; right: 0; bottom: 0; width: clamp(96px, 22%, 190px); }
 /* Product page: what's inside (hairlines, no boxes) */
 .v-feats { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0 clamp(20px, 3vw, 40px); }
 @media (max-width: 900px) { .v-feats { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 32px 24px; } }
