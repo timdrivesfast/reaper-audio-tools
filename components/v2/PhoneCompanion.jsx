@@ -35,7 +35,7 @@ export default function PhoneCompanion() {
           <p className="v-body" style={{ fontSize: 18 }}>Scan the QR code and the XY pad opens on your phone.</p>
         </div>
         <div className="v-phones">
-          {SCREENS.map((s, i) => <Phone key={s.src} {...s} className={['v-phone--left', 'v-phone--front', 'v-phone--right'][i]} />)}
+          {SCREENS.map((s, i) => <Phone key={s.src} {...s} className={['v-phone--left', 'v-phone--front', 'v-phone--right v-phone--edge-r'][i]} />)}
         </div>
         <div className="v-grid2" style={{ alignItems: 'center', gap: 'clamp(32px, 5vw, 72px)' }}>
           <ol className="v-steps">
