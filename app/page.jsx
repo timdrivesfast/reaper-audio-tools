@@ -1,5 +1,6 @@
 import { Shell, Frame } from '../components/v2/Chrome';
 import PluginCard from '../components/v2/PluginCard';
+import BuyButton from '../components/v2/BuyButton';
 import Faq from '../components/v2/Faq';
 import NotifyForm from '../components/v2/NotifyForm';
 import { products, site } from '../lib/site';
@@ -14,9 +15,9 @@ const suites = [
 export const metadata = { alternates: { canonical: '/' } };
 
 export default function Home() {
-  const duck = products.easyduck;
+  const mfx = products['modfx-pro'];
   return (
-    <Shell>
+    <Shell cta={{ label: 'Buy ModFX Pro', href: '/plugins/modfx-pro#buy' }}>
       <script type="application/ld+json" dangerouslySetInnerHTML={jsonLd(pluginListSchema('Reaper Audio Tools plugins', Object.values(products)))} />
 
       <section id="top" className="v-hero v-stone">
@@ -25,22 +26,25 @@ export default function Home() {
             <div className="v-row" style={{ gap: 8 }}>
               {Object.values(products).map((p) => <a key={p.slug} href={`/plugins/${p.slug}`} className="v-chip v-chip--sm"><span className="v-chip__dot" />{p.code} {p.name.toUpperCase()}</a>)}
             </div>
-            <h1 className="v-h1">Intuitive tools for <span style={{ color: 'var(--v-indigo)' }}>complex sounds.</span></h1>
-            <p className="v-lede" style={{ maxWidth: 440 }}>Pro mixing tools, built by audio engineers and made easy to use.</p>
+            <h1 className="v-h1">ModFX Pro is <span style={{ color: 'var(--v-indigo)' }}>out now.</span></h1>
+            <p className="v-lede" style={{ maxWidth: 460 }}>{mfx.tagline}</p>
             <div className="v-row">
-              <a className="v-btn v-btn--dark v-btn--lg" href="/plugins/easyduck">Get EasyDuck free</a>
-              <a className="v-link" href="/pro">Explore Pro <span className="v-mono">→</span></a>
+              <BuyButton product={mfx} />
+              <a className="v-link" href="/plugins/modfx-pro">See ModFX Pro <span className="v-mono">→</span></a>
+            </div>
+            <p className="v-fine">One-time purchase. {mfx.formats} for Mac and Windows. EasyDuck and DrumCrusher are free: <a href="/basic">see the Basic Suite</a>.</p>
+          </div>
+          <div className="v-hero__art">
+            <a href="/plugins/modfx-pro" style={{ display: 'block' }}>
+              <Frame src={mfx.ui} alt="ModFX Pro plugin" style={{ borderRadius: 18 }} />
+            </a>
+            <div className="v-hero__caption">
+              <span style={{ fontWeight: 600, fontSize: 15, letterSpacing: '-.2px', color: '#111216' }}>ModFX Pro</span>
+              <span style={{ fontSize: 14, color: '#3D414A' }}>{mfx.kind}</span>
+              <span className="v-tag v-tag--dark">{mfx.priceLabel}</span>
+              <span className="v-tag v-tag--glass">{mfx.formats}</span>
             </div>
           </div>
-          <a className="v-hero__art" href="/plugins/easyduck">
-            <Frame src={duck.ui} alt="EasyDuck plugin" style={{ borderRadius: 18 }} />
-            <div className="v-hero__caption">
-              <span style={{ fontWeight: 600, fontSize: 15, letterSpacing: '-.2px', color: '#111216' }}>EasyDuck</span>
-              <span style={{ fontSize: 14, color: '#3D414A' }}>{duck.kind}</span>
-              <span className="v-tag v-tag--dark">FREE</span>
-              <span className="v-tag v-tag--glass">{duck.formats}</span>
-            </div>
-          </a>
         </div>
       </section>
 
