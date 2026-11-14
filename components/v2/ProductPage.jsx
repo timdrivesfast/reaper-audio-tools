@@ -26,7 +26,7 @@ export default function ProductPage({ product: p, lead, art, features = [], chil
                 <span className="v-tag v-tag--glass">{p.formats}</span>
               </div>
               {!p.free && !launch.live && <Countdown inline />}
-              {p.free ? <GetFreeForm product={p} /> : <div><BuyButton product={p} /></div>}
+              {p.free ? <GetFreeForm product={p} /> : <div><BuyButton product={p} addToCart /></div>}
               <p className="v-fine">{p.free ? 'No card needed.' : launch.live ? `One-time purchase. Works on ${computers} computers.` : "We'll email you the moment it's out."}</p>
             </div>
           </div>

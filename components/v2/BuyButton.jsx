@@ -15,7 +15,7 @@ export default function BuyButton(props) {
   return <Checkout {...props} />;
 }
 
-function Checkout({ product, label, size = 'lg', variant = 'dark' }) {
+function Checkout({ product, label, size = 'lg', variant = 'dark', addToCart = false }) {
   const { items } = useCart();
   const inCart = items.includes(product.slug);
   const add = () => { cart.add(product.slug); track('add_to_cart', { products: [product.slug], value: product.price }); };
@@ -37,9 +37,9 @@ function Checkout({ product, label, size = 'lg', variant = 'dark' }) {
     <span style={{ display: 'inline-flex', flexDirection: 'column', gap: 8 }}>
       <span className="v-buyrow">
         <button type="button" className={`v-btn v-btn--${variant} v-btn--${size}`} onClick={buy} disabled={busy}>{busy ? 'Opening checkout' : (label || `Buy ${product.name} · ${product.priceLabel}`)}</button>
-        {inCart
+        {addToCart && (inCart
           ? <button type="button" className={`v-addcart v-addcart--${variant}`} onClick={() => cart.show(true)}>In cart · View</button>
-          : <button type="button" className={`v-addcart v-addcart--${variant}`} onClick={add}>Add to cart</button>}
+          : <button type="button" className={`v-addcart v-addcart--${variant}`} onClick={add}>Add to cart</button>)}
       </span>
       {note && <span role="status" className="v-fine">{note}</span>}
     </span>
