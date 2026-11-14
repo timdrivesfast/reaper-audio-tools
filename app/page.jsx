@@ -30,7 +30,7 @@ export default function Home() {
             <p className="v-lede" style={{ maxWidth: 460 }}>{mfx.tagline}</p>
             <div className="v-row">
               <BuyButton product={mfx} />
-              <a className="v-link" href="/plugins/modfx-pro">See ModFX Pro <span className="v-mono">→</span></a>
+              <a className="v-btn v-btn--light v-btn--lg" href="/plugins/easyduck#buy">Get EasyDuck free</a>
             </div>
             <p className="v-fine">One-time purchase. {mfx.formats} for Mac and Windows. EasyDuck and DrumCrusher are free: <a href="/basic">see the Basic Suite</a>.</p>
           </div>
