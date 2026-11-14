@@ -10,20 +10,9 @@ const STEPS = [
   ['Play', 'The pad and knobs stay synced with the plugin.'],
 ];
 
+/** A phone showing a companion screen: one flat image with the iPhone frame drawn in (made from the plain screen). */
 export function Phone({ src, alt, style, className = '' }) {
-  return (
-    <div className={`v-phone ${className}`} style={style}>
-      <div className="v-phone__body">
-        <img src={src} alt={alt} loading="lazy" />
-        <span className="v-phone__glass" aria-hidden="true" />
-        <span className="v-phone__island" aria-hidden="true" />
-        <span className="v-phone__btn v-phone__btn--a" aria-hidden="true" />
-        <span className="v-phone__btn v-phone__btn--b" aria-hidden="true" />
-        <span className="v-phone__btn v-phone__btn--c" aria-hidden="true" />
-      </div>
-      <span className="v-phone__shadow" aria-hidden="true" />
-    </div>
-  );
+  return <img className={`v-phone ${className}`} src={src.replace(/\.webp$/, '-framed.webp')} alt={alt} style={style} loading="lazy" width="864" height="1768" />;
 }
 
 export default function PhoneCompanion() {
@@ -35,7 +24,7 @@ export default function PhoneCompanion() {
           <p className="v-body" style={{ fontSize: 18 }}>Scan the QR code and the XY pad opens on your phone.</p>
         </div>
         <div className="v-phones">
-          {SCREENS.map((s, i) => <Phone key={s.src} {...s} className={['v-phone--left', 'v-phone--front', 'v-phone--right v-phone--edge-r'][i]} />)}
+          {SCREENS.map((s, i) => <Phone key={s.src} {...s} className={['v-phone--left', 'v-phone--front', 'v-phone--right'][i]} />)}
         </div>
         <div className="v-grid2" style={{ alignItems: 'center', gap: 'clamp(32px, 5vw, 72px)' }}>
           <ol className="v-steps">
